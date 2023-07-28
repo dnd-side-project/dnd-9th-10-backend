@@ -1,15 +1,15 @@
-package com.dnd.friends;
+package com.dnd.bbok;
 
-import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.tags.Tag;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-@Tag(name="서버 작동 체크")
+@Api(tags = "Health Controller: 서버 동작 체크")
 @RestController
 public class HealthController {
 
-  @Operation(summary = "health-check")
+  @ApiOperation(value = "서버 동작 체크")
   @GetMapping("/health")
   public String healthCheck() {
     return "hello";

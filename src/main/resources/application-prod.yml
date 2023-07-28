@@ -1,0 +1,15 @@
+# 배포 개발 환경 구성
+
+spring:
+  datasource:
+    hikari:
+      driver-class-name: com.mysql.cj.jdbc.Driver
+      url: jdbc:mysql://${DATABASE_URL}:3306/foreco_mysql?&useSSL=false&serverTimezone=Asia/Seoul&characterEncoding=UTF-8
+      username: ${DATABASE_USERNAME}
+      password: ${DATABASE_PASSWORD}
+
+
+#spring.datasource.driver-class-name=org.mariadb.jdbc.Driver
+#spring.datasource.url=jdbc:mariadb://${DATABASE_URL}:3306/aws_mariadb
+#spring.datasource.username=${DATABASE_USERNAME}
+#spring.datasource.password=${DATABASE_PASSWORD}

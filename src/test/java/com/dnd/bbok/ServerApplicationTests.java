@@ -1,4 +1,4 @@
-package com.dnd.friends;
+package com.dnd.bbok;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

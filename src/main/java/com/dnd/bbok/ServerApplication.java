@@ -1,4 +1,4 @@
-package com.dnd.friends;
+package com.dnd.bbok;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
