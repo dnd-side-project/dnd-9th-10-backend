@@ -23,7 +23,7 @@ echo "Start updated server in ${TARGET_PORT}.."
 sudo systemctl start bbok-${TARGET_PORT}
 echo "Done."
 
-# ALB의 타겟그룹 변경
+# ALB 의 타겟그룹 변경
 aws configure set region ap-northeast-2
 
 echo "Change Target Group to bbok-target-group-${TARGET_PORT}"
@@ -37,21 +37,21 @@ aws elbv2 modify-listener --listener-arn arn:aws:elasticloadbalancing:ap-northea
 echo "Done."
 
 
-# 함수로 타겟 그룹의 상태를 확인하고, 해당 타겟 그룹이 healthy한지 검사하는 함수 정의
+# 함수로 타겟 그룹의 상태를 확인하고, 해당 타겟 그룹이 healthy 한지 검사하는 함수 정의
 check_target_group_health() {
   local target_group_arn=$1
 
   # aws elbv2 describe-target-health 명령어를 사용하여 타겟 그룹의 상태 정보를 JSON 형식으로 받아옴
   local target_health_json=$(aws elbv2 describe-target-health --target-group-arn $target_group_arn)
 
-  # target-health를 파싱하여 인스턴스 상태 확인
+  # target-health 를 파싱하여 인스턴스 상태 확인
   local health_status=$(echo $target_health_json | jq -r '.TargetHealthDescriptions[0].TargetHealth.State')
 
   # 타겟 그룹의 상태 출력
-  # echo "Target Group ARN: $target_group_arn"
+  echo "Target Group ARN: $target_group_arn"
   echo "Target Group Health Status: $health_status"
 
-  # target-health 상태가 healthy이면 1을 반환, 아니면 0을 반환
+  # target-health 상태가 healthy 이면 1을 반환, 아니면 0을 반환
   if [ "$health_status" = "healthy" ]; then
     return 1
   else
@@ -64,7 +64,7 @@ check_target_group_health() {
 echo "Check target group status"
 for RETRY_COUNT in 1 2 3 4 5 6 7 8 9 10
 do
-    # echo "> #${RETRY_COUNT} trying..."
+    echo "> #${RETRY_COUNT} trying..."
     check_target_group_health $TARGET_GROUP_ARN
 	if [ $? -eq 1 ]; then
         echo "> Target Group is healthy."
@@ -77,7 +77,7 @@ do
 done
 
 
-# Healthy한게 확인되었다면 기존 서버 종료
+# Healthy 한게 확인되었다면 기존 서버 종료
 echo "STOP ${CURRENT_PORT} Server.."
 sudo systemctl stop bbok-${CURRENT_PORT}
 echo "Deploy Success!"

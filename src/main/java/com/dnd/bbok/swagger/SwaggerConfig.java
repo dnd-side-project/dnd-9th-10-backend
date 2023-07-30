@@ -24,7 +24,7 @@ public class SwaggerConfig {
   private ApiInfo apiInfo() {
     return new ApiInfoBuilder()
         .title("BBOK Swagger API")
-        .description("DND 9th 10조 뽁!의 Swagger docs 입니다.")
+        .description("DND 9th 10조의 Swagger docs 입니다.")
         .version("1.0")
         .build();
   }
