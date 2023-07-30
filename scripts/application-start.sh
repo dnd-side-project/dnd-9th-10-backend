@@ -40,7 +40,7 @@ check_target_group_health() {
   local target_group_arn=$1
 
   # aws elbv2 describe-target-health 명령어를 사용하여 타겟 그룹의 상태 정보를 JSON 형식으로 받아옴
-  local target_health_json=$(aws elbv2 describe-target-health --target-group-arn $target_group_arn)
+  local target_health_json=$(aws elbv2 describe-target-health --target-group-arn $target_group_arn --region ap-northeast-2)
 
   # target-health를 파싱하여 인스턴스 상태 확인
   local health_status=$(echo $target_health_json | jq -r '.TargetHealthDescriptions[0].TargetHealth.State')
