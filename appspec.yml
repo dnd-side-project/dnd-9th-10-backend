@@ -1,0 +1,10 @@
+version: 0.0
+os: linux
+files:
+  - source: /
+    destination: /home/ubuntu/backend-server
+    overwrite: yes
+hooks:
+  ApplicationStart:
+    - location: ./scripts/application-start.sh
+      timeout: 900
