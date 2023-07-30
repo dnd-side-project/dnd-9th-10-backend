@@ -4,6 +4,7 @@ spring:
     hikari:
       username: sa
       password:
+      driver-class-name: org.h2.Driver
       url: jdbc:h2:tcp://localhost/~/test
   jpa:
     hibernate:
@@ -12,7 +13,7 @@ spring:
       hibernate:
         # show_sql: true
         format_sql: true
-        dialect: org.hibernate.dialect.H2Dialect
+        dialect: org.hibernate.dialect.MySQLDialect
   h2:
     console:
       enabled: true
@@ -20,3 +21,4 @@ spring:
   mvc:
     pathmatch:
       matching-strategy: ant_path_matcher
+
