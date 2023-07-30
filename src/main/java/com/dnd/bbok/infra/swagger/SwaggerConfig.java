@@ -1,4 +1,4 @@
-package com.dnd.bbok.swagger;
+package com.dnd.bbok.infra.swagger;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -15,7 +15,7 @@ public class SwaggerConfig {
   public Docket api() {
     return new Docket(DocumentationType.OAS_30)
         .select()
-        .apis(RequestHandlerSelectors.basePackage("com.dnd.bbok"))
+        .apis(RequestHandlerSelectors.basePackage("com.dnd.bbok.domain"))
         .paths(PathSelectors.any())
         .build()
         .apiInfo(apiInfo());

@@ -1,3 +1,5 @@
+# 개발 작업하실 때에는 dev.yml파일을 따로 생성해서 하는 걸 추천드려요
+# active를 dev로 바꾸면 됩니다!
 spring:
   profiles:
-    active: dev
+    active: prod
