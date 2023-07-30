@@ -24,6 +24,8 @@ sudo systemctl start bbok-${TARGET_PORT}
 echo "Done."
 
 # ALB의 타겟그룹 변경
+aws configure set region ap-northeast-2
+
 echo "Change Target Group to bbok-target-group-${TARGET_PORT}"
 if [ ${TARGET_PORT} -eq 8081 ]; then
   TARGET_GROUP_ARN=arn:aws:elasticloadbalancing:ap-northeast-2:661687591703:targetgroup/bbok-target-group-8081/0d8134e7b84fba6c
@@ -40,13 +42,13 @@ check_target_group_health() {
   local target_group_arn=$1
 
   # aws elbv2 describe-target-health 명령어를 사용하여 타겟 그룹의 상태 정보를 JSON 형식으로 받아옴
-  local target_health_json=$(aws elbv2 describe-target-health --target-group-arn $target_group_arn --region ap-northeast-2)
+  local target_health_json=$(aws elbv2 describe-target-health --target-group-arn $target_group_arn)
 
   # target-health를 파싱하여 인스턴스 상태 확인
   local health_status=$(echo $target_health_json | jq -r '.TargetHealthDescriptions[0].TargetHealth.State')
 
   # 타겟 그룹의 상태 출력
-  echo "Target Group ARN: $target_group_arn"
+  # echo "Target Group ARN: $target_group_arn"
   echo "Target Group Health Status: $health_status"
 
   # target-health 상태가 healthy이면 1을 반환, 아니면 0을 반환
@@ -62,7 +64,7 @@ check_target_group_health() {
 echo "Check target group status"
 for RETRY_COUNT in 1 2 3 4 5 6 7 8 9 10
 do
-    echo "> #${RETRY_COUNT} trying..."
+    # echo "> #${RETRY_COUNT} trying..."
     check_target_group_health $TARGET_GROUP_ARN
 	if [ $? -eq 1 ]; then
         echo "> Target Group is healthy."
