@@ -31,7 +31,7 @@ public class FriendDto {
   private final boolean status;
 
   /**
-   * mock 제공을 위한 기본생성 Dto
+   * mock 제공을 위한 기본생성자
    */
   public FriendDto() {
     this.id = 1L;
