@@ -19,7 +19,7 @@ public class BbokCharacterDto {
    * mock 제공을 위한 기본생성
    */
   public BbokCharacterDto() {
-    this.iconUrl = "선인장 아이콘 url";
+    this.iconUrl = "https://i.ibb.co/6v7YXHZ/cactus.png";
     this.name = "인장이";
   }
 

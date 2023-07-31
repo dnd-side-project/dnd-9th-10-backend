@@ -36,7 +36,7 @@ public class FriendDto {
   public FriendDto() {
     this.id = 1L;
     this.countingDay = 23;
-    this.characterUrl = "캐릭터 url";
+    this.characterUrl = "https://i.ibb.co/ZgfdtSY/hedgehog.png";
     this.name = "김도리";
     this.countingDiary = 6;
     this.score = 58L;
