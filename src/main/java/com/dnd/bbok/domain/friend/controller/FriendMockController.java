@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("api/v1")
+@RequestMapping("/api/v1")
 @Api(tags = "Mock 친구 관련 컨트롤러")
 public class FriendMockController {
 
