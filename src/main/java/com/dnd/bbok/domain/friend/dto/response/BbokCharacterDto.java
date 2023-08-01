@@ -1,5 +1,6 @@
 package com.dnd.bbok.domain.friend.dto.response;
 
+import com.dnd.bbok.domain.friend.entity.BbokCharacter;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 
@@ -8,6 +9,9 @@ import lombok.Getter;
  */
 @Getter
 public class BbokCharacterDto {
+
+  @ApiModelProperty(value = "캐릭터 타입(인장이, 고스미)")
+  private final BbokCharacter type;
 
   @ApiModelProperty(value = "캐릭터 아이콘 Url")
   private final String iconUrl;
@@ -19,8 +23,9 @@ public class BbokCharacterDto {
    * mock 제공을 위한 기본생성
    */
   public BbokCharacterDto() {
+    this.type = BbokCharacter.CACTUS;
     this.iconUrl = "https://i.ibb.co/6v7YXHZ/cactus.png";
-    this.name = "인장이";
+    this.name = this.type.getName();
   }
 
 }
