@@ -11,6 +11,9 @@ public class BookmarkInfoDto {
   @ApiModelProperty(value = "북마크한 글귀 리스트")
   private final List<SayingInfoDto> bookmarks = new ArrayList<>();
 
+  /**
+   * mock 을 위한 기본 생성자
+   */
   public BookmarkInfoDto() {
     bookmarks.add(new SayingInfoDto());
   }
