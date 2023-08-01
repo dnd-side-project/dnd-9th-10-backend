@@ -31,12 +31,12 @@ public class FriendDto {
   private final boolean status;
 
   /**
-   * mock 제공을 위한 기본생성 Dto
+   * mock 제공을 위한 기본생성자
    */
   public FriendDto() {
     this.id = 1L;
     this.countingDay = 23;
-    this.characterUrl = "캐릭터 url";
+    this.characterUrl = "https://i.ibb.co/ZgfdtSY/hedgehog.png";
     this.name = "김도리";
     this.countingDiary = 6;
     this.score = 58L;
