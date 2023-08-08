@@ -5,8 +5,8 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Date;
 
 @Getter
 @NoArgsConstructor
@@ -15,7 +15,7 @@ public class DiaryRequestDto {
     private Emoji emoji;
 
     @ApiModelProperty(value = "일기 날짜")
-    private Date date;
+    private LocalDate date;
 
     @ApiModelProperty(value = "일기 내용")
     private String content;

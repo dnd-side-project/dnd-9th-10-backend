@@ -6,13 +6,13 @@ import lombok.Getter;
 @Getter
 public class TagDto {
     @ApiModelProperty(value = "태그 id")
-    private final int id;
+    private final Long id;
 
     @ApiModelProperty(value = "태그 이름")
     private final String tag;
 
     public TagDto() {
-        this.id = 1;
+        this.id = 1L;
         this.tag = "가스라이팅";
     }
 }

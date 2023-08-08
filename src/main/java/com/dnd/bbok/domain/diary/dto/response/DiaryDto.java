@@ -4,14 +4,14 @@ import com.dnd.bbok.domain.diary.entity.Emoji;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 @Getter
 public class DiaryDto {
     @ApiModelProperty(value = "일기 고유 ID")
-    private final int id;
+    private final Long id;
 
     @ApiModelProperty(value = "일기에 사용한 이모지")
     private final Emoji emoji;
@@ -20,7 +20,7 @@ public class DiaryDto {
     private final String emojiUrl;
 
     @ApiModelProperty(value = "일기 작성 날짜")
-    private final Date date;
+    private final LocalDate date;
 
     @ApiModelProperty(value = "일기 내용")
     private final String content;
@@ -37,11 +37,11 @@ public class DiaryDto {
     @ApiModelProperty(value = "스티커 JSON")
     private final String sticker;
 
-    public DiaryDto(int id) {
+    public DiaryDto(Long id) {
         this.id = id;
         this.emoji = Emoji.ANGRY;
         this.emojiUrl = "https://i.ibb.co/zbHrDVm/angry.png";
-        this.date = new Date();
+        this.date = LocalDate.now();
         this.content = "다람쥐 헌 쳇바퀴에 타고파";
         this.tags = new ArrayList<>();
         tags.add("거짓말");

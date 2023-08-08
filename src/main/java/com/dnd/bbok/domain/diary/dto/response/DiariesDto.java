@@ -6,7 +6,7 @@ import lombok.Getter;
 import java.util.ArrayList;
 
 @Getter
-public class DiaryListDto {
+public class DiariesDto {
 
     @ApiModelProperty("일화 목록")
     private final ArrayList<DiaryDto> diaries;
@@ -29,7 +29,7 @@ public class DiaryListDto {
     @ApiModelProperty("현재 페이지에 담긴 데이터 개수")
     private final int numberOfElements;
 
-    public DiaryListDto(ArrayList<DiaryDto> diaries) {
+    public DiariesDto(ArrayList<DiaryDto> diaries) {
         this.diaries = diaries;
         this.offset = 0;
         this.pageNumber = 0;
