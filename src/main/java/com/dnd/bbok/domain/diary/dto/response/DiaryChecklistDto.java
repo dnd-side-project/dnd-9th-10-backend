@@ -11,7 +11,7 @@ public class DiaryChecklistDto {
     private final Boolean isChecked;
 
     public DiaryChecklistDto(String criteria, boolean isChecked) {
-        this.id = new Random().nextLong(21);
+        this.id = Math.abs(new Random().nextLong() % 21);
         this.criteria = criteria;
         this.isChecked = isChecked;
     }
