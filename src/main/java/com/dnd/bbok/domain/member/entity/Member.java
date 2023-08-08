@@ -19,7 +19,7 @@ import org.hibernate.annotations.GenericGenerator;
 @Getter
 @NoArgsConstructor
 public class Member extends BaseTimeEntity {
-  
+
   @Id
   @GeneratedValue(generator = "uuid")
   @GenericGenerator(name = "uuid", strategy = "uuid2")
