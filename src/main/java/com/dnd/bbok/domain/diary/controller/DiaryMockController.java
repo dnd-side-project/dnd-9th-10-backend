@@ -53,13 +53,13 @@ public class DiaryMockController {
 
     @ApiOperation("태그 목록 조회")
     @GetMapping("diary/tag")
-    public ResponseEntity<DataResponse<DiaryTagDto>> getTagList() {
+    public ResponseEntity<DataResponse<DiaryTagDto>> getTags() {
         return new ResponseEntity<>(DataResponse.of(HttpStatus.OK , "태그 목록 조회 성공", new DiaryTagDto()), HttpStatus.OK);
     }
 
     @ApiOperation("스티커 목록 조회")
     @GetMapping("diary/sticker")
-    public ResponseEntity<DataResponse<DiaryStickerDto>> getStickerList() {
+    public ResponseEntity<DataResponse<DiaryStickerDto>> getStickers() {
         return new ResponseEntity<>(DataResponse.of(HttpStatus.OK, "스티커 목록 조회 성공", new DiaryStickerDto()), HttpStatus.OK);
     }
 
