@@ -40,7 +40,7 @@ public class MemberSignUpService {
       return createSignUpResult(member);
     }
 
-    //2-2. 존재하지 않는다면, user를 생성해서 넣어준다.
+    //존재하지 않는다면, user를 생성해서 넣어준다.
     Member member = signUp(kakaoUserInfo);
     return createSignUpResult(member);
   }
