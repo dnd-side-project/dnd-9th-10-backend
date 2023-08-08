@@ -28,7 +28,7 @@ public class MemberService {
         )
         .username("NONE")
         .role(Role.ROLE_GUEST)
-        .profileUrl("기본 이미지 url")
+        .profileUrl("https://i.ibb.co/JQbdnX6/guest.png")
         .oauth2Provider(OAuth2Provider.GUEST)
         .build();
   }
