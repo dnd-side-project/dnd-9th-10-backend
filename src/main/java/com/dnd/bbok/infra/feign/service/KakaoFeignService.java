@@ -65,7 +65,6 @@ public class KakaoFeignService {
   private String getKakaoToken(String code) {
     KakaoTokenResponseDto token = kakaoTokenClient.getToken(
         KakaoTokenRequestDto.newInstance(kakaoInfo, code).toString());
-//    log.info(token.toString());
     return token.getAccessToken();
   }
 
