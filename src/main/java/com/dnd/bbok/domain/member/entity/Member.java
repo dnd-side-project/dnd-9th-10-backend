@@ -5,14 +5,19 @@ import com.github.f4b6a3.uuid.UuidCreator;
 import java.util.UUID;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.PrePersist;
+import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.GenericGenerator;
 
 @Entity
 @Getter
+@NoArgsConstructor
 public class Member extends BaseTimeEntity {
 
   @Id
@@ -22,13 +27,53 @@ public class Member extends BaseTimeEntity {
   private UUID id;
 
   /**
-   * id를 UUID로 저장했을 때의 단점(Long 보다 큰 용량을 차지)을 해결하기 위한 조치
-   * https://velog.io/@jsb100800/Spring-boot-JPA-PK-MAPPING
-   * https://cano721.tistory.com/214
+   * 역할(Guest, Social)
    */
+  @Enumerated(EnumType.STRING)
+  private Role role;
+
+  /**
+   * 회원번호 (oauthProvider#회원번호)
+   * 게스트 로그인한 사용자의 이름을 나타내기 위해서 생성했습니다.
+   */
+  private String userNumber;
+
+  /**
+   * SNS 로그인한 사용자의 이름
+   * 게스트 로그인 사용자의 이름은 NONE으로 설정했습니다.
+   */
+  private String username;
+
+  /**
+   * profile 이미지 url
+   */
+  private String profileUrl;
+
+  /**
+   * OAuth 제공자
+   */
+  @Enumerated(EnumType.STRING)
+  private OAuth2Provider oauth2Provider;
+
+
+
   @PrePersist
   public void createId() {
     this.id = UuidCreator.getTimeOrdered();
   }
 
+  @Builder
+  public Member(String profileUrl, String userNumber,
+      Role role, OAuth2Provider oauth2Provider, String username) {
+    this.userNumber = userNumber;
+    this.username = username;
+    this.profileUrl = profileUrl;
+    this.role = role;
+    this.oauth2Provider = oauth2Provider;
+  }
+
+  public void updateInfo(String profileUrl, String username) {
+    this.profileUrl = profileUrl;
+    this.username = username;
+  }
 }

@@ -18,3 +18,11 @@ spring:
   mvc:
     pathmatch:
       matching-strategy: ant_path_matcher
+
+oauth2:
+  kakao:
+    infoUrl: https://kapi.kakao.com
+    baseUrl: https://kauth.kakao.com
+    clientId: 3fca0db05482af0333a5fb5b9dc5b345
+    redirectUri: http://localhost:8080/api/v1/account/kakao/result
+    secretKey: ${SECRET_KEY}
