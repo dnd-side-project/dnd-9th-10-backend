@@ -8,7 +8,7 @@ import java.util.Random;
 public class DiaryChecklistDto {
     private final Long id;
     private final String criteria;
-    private final boolean isChecked;
+    private final Boolean isChecked;
 
     public DiaryChecklistDto(String criteria, boolean isChecked) {
         this.id = new Random().nextLong(21);

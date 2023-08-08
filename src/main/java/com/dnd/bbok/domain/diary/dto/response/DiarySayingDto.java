@@ -7,7 +7,7 @@ import lombok.Getter;
 @Getter
 public class DiarySayingDto extends SayingInfoDto {
     @ApiModelProperty(value = "북마크 되어있는지 여부")
-    private final boolean isMarked;
+    private final Boolean isMarked;
 
     public DiarySayingDto() {
         super();
