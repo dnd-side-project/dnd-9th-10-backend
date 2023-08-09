@@ -15,17 +15,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/api/v1/checklist")
+@RequestMapping("/api/v1/checklistt")
 @Api(tags = "Mock 체크리스트 관련 컨트롤러")
 public class ChecklistMockController {
-
-  @ApiOperation(value = "기본 체크리스트 제공")
-  @GetMapping("")
-  public ResponseEntity<DataResponse<BasicChecklistDto>> getBasicChecklist() {
-    BasicChecklistDto basicChecklist = new BasicChecklistDto();
-    return new ResponseEntity<>(
-        DataResponse.of(HttpStatus.OK, "기본 체크리스트 제공 성공", basicChecklist), HttpStatus.OK);
-  }
 
   @ApiOperation(value = "사용자 정의 체크리스트 추가")
   @PostMapping("")
