@@ -1,4 +1,4 @@
-package com.dnd.bbok.domain.saying.controller;
+package com.dnd.bbok.mock;
 
 import com.dnd.bbok.domain.saying.dto.request.BookmarkRequestDto;
 import com.dnd.bbok.domain.saying.dto.response.BookmarkInfoDto;
