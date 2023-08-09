@@ -1,4 +1,4 @@
-package com.dnd.bbok.domain.diary.controller;
+package com.dnd.bbok.mock;
 
 import com.dnd.bbok.domain.diary.dto.request.DiaryRequestDto;
 import com.dnd.bbok.domain.diary.dto.response.*;

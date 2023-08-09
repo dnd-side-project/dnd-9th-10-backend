@@ -1,4 +1,4 @@
-package com.dnd.bbok.domain.friend.controller;
+package com.dnd.bbok.mock;
 
 import com.dnd.bbok.domain.checklist.dto.request.ChecklistInfoRequestDto;
 import com.dnd.bbok.domain.checklist.dto.response.MyChecklistDto;
