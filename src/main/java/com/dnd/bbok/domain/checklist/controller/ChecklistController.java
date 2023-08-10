@@ -30,6 +30,7 @@ ChecklistController {
     private final MemberChecklistUseCaseService memberChecklistUseCaseService;
 
     @ApiOperation(value = "기본 체크리스트 제공")
+    @PreAuthorize("isAuthenticated()")
     @GetMapping("")
     public ResponseEntity<DataResponse<BasicChecklistDto>> getBasicChecklist() throws InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
 
