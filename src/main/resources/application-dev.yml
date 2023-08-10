@@ -1,22 +1,28 @@
 # 로컬 개발 환경 구성
 spring:
   datasource:
-    hikari:
-      username: sa
-      password:
-      url: jdbc:h2:tcp://localhost/~/test
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://${DATABASE_URL}:3306/bbok-dev
+    username: ${DATABASE_USERNAME}
+    password: ${DATABASE_PASSWORD}
   jpa:
     hibernate:
-      ddl-auto: create
+      ddl-auto: update
     properties:
       hibernate:
-        # show_sql: true
         format_sql: true
-        dialect: org.hibernate.dialect.H2Dialect
-  h2:
-    console:
-      enabled: true
-      path: /h2-console
+        highlight_sql: true
+        use_sql_comments: true
+    show-sql: true
+    database-platform: org.hibernate.dialect.MySQL8Dialect
   mvc:
     pathmatch:
       matching-strategy: ant_path_matcher
+
+oauth2:
+  kakao:
+    infoUrl: https://kapi.kakao.com
+    baseUrl: https://kauth.kakao.com
+    clientId: 3fca0db05482af0333a5fb5b9dc5b345
+    redirectUri: https://bbok.kro.kr/api/v1/account/kakao/result
+    secretKey: ${SECRET_KEY}
