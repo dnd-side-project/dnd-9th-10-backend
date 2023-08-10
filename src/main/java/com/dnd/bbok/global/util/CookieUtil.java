@@ -1,6 +1,6 @@
 package com.dnd.bbok.global.util;
 
-import static com.dnd.bbok.global.jwt.JwtTokenProvider.REFRESH_TOKEN_EXPIRE_LENGTH_MS;
+import static com.dnd.bbok.domain.jwt.service.JwtTokenProvider.REFRESH_TOKEN_EXPIRE_LENGTH_MS;
 
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseCookie;
@@ -26,17 +26,5 @@ public class CookieUtil {
         .build();
 
     httpHeaders.add(HttpHeaders.SET_COOKIE, cookie.toString());
-  }
-
-  public static void resetRefreshToken(HttpHeaders headers) {
-    ResponseCookie cookie = ResponseCookie.from("refreshToken", "")
-        .httpOnly(true)
-        .secure(true)
-        .maxAge(0)
-        .path("/")
-        .sameSite("None")
-        .build();
-
-    headers.add(HttpHeaders.SET_COOKIE, cookie.toString());
   }
 }
