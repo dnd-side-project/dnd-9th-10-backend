@@ -1,8 +1,11 @@
 package com.dnd.bbok.domain.member.service;
 
+import static com.dnd.bbok.global.exception.ErrorCode.*;
+
 import com.dnd.bbok.domain.member.entity.Member;
 import com.dnd.bbok.domain.member.entity.OAuth2Provider;
 import com.dnd.bbok.domain.member.entity.Role;
+import com.dnd.bbok.domain.member.exception.MemberNotFoundException;
 import com.dnd.bbok.domain.member.repository.MemberRepository;
 import java.util.Optional;
 import java.util.UUID;
@@ -17,8 +20,7 @@ public class MemberService {
   private final MemberRepository memberRepository;
 
   public Member saveGuestMember() {
-    Member guest = createGuestMember();
-    return memberRepository.save(guest);
+    return memberRepository.save(createGuestMember());
   }
 
   private Member createGuestMember() {
@@ -41,8 +43,9 @@ public class MemberService {
     return memberRepository.save(member);
   }
 
-  public Optional<Member> getMemberById(UUID uuid) {
+  public Member getMemberById(UUID uuid) {
     log.info("해당 uuid를 가진 멤버를 찾습니다.");
-    return memberRepository.findById(uuid);
+    return memberRepository.findById(uuid)
+        .orElseThrow(()->new MemberNotFoundException(MEMBER_NOT_FOUND));
   }
 }
