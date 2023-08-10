@@ -1,4 +1,4 @@
-# 배포 개발 환경 구성
+# 로컬 개발 환경 구성
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
