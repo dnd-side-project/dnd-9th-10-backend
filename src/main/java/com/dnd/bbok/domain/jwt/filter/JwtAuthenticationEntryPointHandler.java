@@ -1,4 +1,4 @@
-package com.dnd.bbok.global.jwt;
+package com.dnd.bbok.domain.jwt.filter;
 
 import static com.dnd.bbok.global.exception.ErrorCode.RESOURCE_UNAUTHORIZED;
 

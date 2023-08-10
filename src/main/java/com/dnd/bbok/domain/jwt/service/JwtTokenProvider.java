@@ -1,5 +1,6 @@
-package com.dnd.bbok.global.jwt;
+package com.dnd.bbok.domain.jwt.service;
 
+import com.dnd.bbok.domain.jwt.dto.SessionUser;
 import com.dnd.bbok.domain.member.entity.Member;
 import com.dnd.bbok.domain.member.entity.Role;
 import com.dnd.bbok.domain.member.repository.MemberRepository;
@@ -17,6 +18,8 @@ import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 import io.jsonwebtoken.security.SignatureException;
 import java.security.Key;
+import java.time.Duration;
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Base64;
 import java.util.Date;
@@ -47,7 +50,7 @@ public class JwtTokenProvider {
       + "HJ3oMvI61Id26fdQHgWE1QMLcrhOmRzTxkCU+gesx5ANkSSIrPHNswIDAQAB";
 
   //accessToken 만료시간
-  public static final Long ACCESS_TOKEN_EXPIRE_LENGTH_MS = 1000L * 60 * 60; // 1hour
+  public static final Long ACCESS_TOKEN_EXPIRE_LENGTH_MS = 1000L * 60 * 60 * 24; //1일
 
   //refreshToken 만료시간
   public static final Long REFRESH_TOKEN_EXPIRE_LENGTH_MS = 1000L * 60 * 60 * 24 * 14; //2주
@@ -144,5 +147,17 @@ public class JwtTokenProvider {
   }
 
 
+  public boolean isTokenExpirationSafe(String token) {
+    Instant expiration = extractAllClaims(token).getExpiration().toInstant();
+    Instant now = Instant.now();
+    return hasTokenExpMoreThanThreeDays(expiration, now);
+  }
 
+  private boolean hasTokenExpMoreThanThreeDays(Instant expiration, Instant now) {
+    return (Duration.between(now, expiration).compareTo(Duration.ofDays(3)) >= 0);
+  }
+
+  public void saveRefreshTokenInRedis(Member member, String refreshToken) {
+    refreshTokenRepository.save(new RefreshToken(member.getId(), refreshToken));
+  }
 }

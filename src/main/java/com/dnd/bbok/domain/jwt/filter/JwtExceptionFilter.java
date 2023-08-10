@@ -1,5 +1,6 @@
-package com.dnd.bbok.global.jwt;
+package com.dnd.bbok.domain.jwt.filter;
 
+import com.dnd.bbok.domain.jwt.exception.JwtException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.dnd.bbok.global.exception.ErrorResponse;
 import java.io.IOException;

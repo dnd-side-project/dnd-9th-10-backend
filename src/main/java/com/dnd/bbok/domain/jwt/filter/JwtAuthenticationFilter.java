@@ -1,7 +1,8 @@
-package com.dnd.bbok.global.jwt;
+package com.dnd.bbok.domain.jwt.filter;
 
 import static org.springframework.http.HttpHeaders.AUTHORIZATION;
 
+import com.dnd.bbok.domain.jwt.service.JwtTokenProvider;
 import java.io.IOException;
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
