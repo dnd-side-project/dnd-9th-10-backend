@@ -24,7 +24,8 @@ import java.lang.reflect.InvocationTargetException;
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/checklist")
 @Api(tags = "체크리스트 관련 컨트롤러")
-public class ChecklistController {
+public class
+ChecklistController {
     private final BasicChecklistService basicChecklistService;
     private final MemberChecklistUseCaseService memberChecklistUseCaseService;
 

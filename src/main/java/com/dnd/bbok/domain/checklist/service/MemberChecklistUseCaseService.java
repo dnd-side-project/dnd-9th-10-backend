@@ -21,30 +21,26 @@ public class MemberChecklistUseCaseService {
     private final MemberService memberService;
     private final MemberChecklistService memberChecklistService;
 
-    public List<MemberChecklist> createMemberChecklistEntities(MemberChecklistRequestDto checklistRequestDto, UUID uuid) {
+    public void createMemberChecklistEntities(MemberChecklistRequestDto checklistRequestDto, UUID uuid) {
         Member member = memberService.getMemberById(uuid)
         .orElseThrow(() -> new MemberNotFoundException(MEMBER_NOT_FOUND));
         List<MemberChecklist> checklist = new ArrayList<>();
 
-        checklistRequestDto.getBadChecklist().forEach(ele -> {
-            checklist.add(MemberChecklist.builder()
-                    .member(member)
-                    .criteria(ele)
-                    .isGood(false)
-                    .isUsed(true)
-                    .build());
-        });
+        checklistRequestDto.getBadChecklist().forEach(ele -> checklist.add(MemberChecklist.builder()
+                .member(member)
+                .criteria(ele)
+                .isGood(false)
+                .isUsed(true)
+                .build()));
 
-        checklistRequestDto.getGoodChecklist().forEach(ele -> {
-            checklist.add(MemberChecklist.builder()
-                    .member(member)
-                    .criteria(ele)
-                    .isGood(true)
-                    .isUsed(true)
-                    .build());
-        });
+        checklistRequestDto.getGoodChecklist().forEach(ele -> checklist.add(MemberChecklist.builder()
+                .member(member)
+                .criteria(ele)
+                .isGood(true)
+                .isUsed(true)
+                .build()));
 
 
-        return memberChecklistService.createMemberChecklist(checklist);
+        memberChecklistService.createMemberChecklist(checklist);
     }
 }
