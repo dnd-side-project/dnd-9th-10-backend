@@ -4,7 +4,7 @@ import com.dnd.bbok.domain.checklist.dto.request.MemberChecklistRequestDto;
 import com.dnd.bbok.domain.checklist.dto.response.BasicChecklistDto;
 import com.dnd.bbok.domain.checklist.service.BasicChecklistService;
 import com.dnd.bbok.domain.checklist.service.MemberChecklistUseCaseService;
-import com.dnd.bbok.global.jwt.SessionUser;
+import com.dnd.bbok.domain.jwt.dto.SessionUser;
 import com.dnd.bbok.global.response.DataResponse;
 import com.dnd.bbok.global.response.MessageResponse;
 import io.swagger.annotations.Api;
