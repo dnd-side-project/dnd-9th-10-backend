@@ -1,4 +1,4 @@
-package com.dnd.bbok.global.jwt;
+package com.dnd.bbok.domain.jwt.dto;
 
 import com.dnd.bbok.domain.member.entity.Member;
 import java.io.Serializable;

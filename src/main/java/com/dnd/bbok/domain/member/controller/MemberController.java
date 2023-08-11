@@ -1,11 +1,13 @@
 package com.dnd.bbok.domain.member.controller;
 
+import static com.dnd.bbok.domain.member.service.MemberSignUpService.setCookieAndHeader;
+
 import com.dnd.bbok.domain.member.dto.response.LoginResponseDto;
 import com.dnd.bbok.domain.member.dto.response.MemberInfoResponseDto;
 import com.dnd.bbok.domain.member.dto.response.MemberSimpleInfoResponse;
 import com.dnd.bbok.domain.member.service.MemberInfoService;
 import com.dnd.bbok.domain.member.service.MemberSignUpService;
-import com.dnd.bbok.global.jwt.SessionUser;
+import com.dnd.bbok.domain.jwt.dto.SessionUser;
 import com.dnd.bbok.global.response.DataResponse;
 import com.dnd.bbok.infra.feign.dto.response.KakaoUserInfoResponseDto;
 import com.dnd.bbok.infra.feign.service.KakaoFeignService;
@@ -43,7 +45,7 @@ public class MemberController {
   public ResponseEntity<DataResponse<MemberSimpleInfoResponse>> guestLogin() {
 
     LoginResponseDto guestLoginResponse = memberSignUpService.loginGuestMember();
-    HttpHeaders headers = memberSignUpService.setCookieAndHeader(guestLoginResponse);
+    HttpHeaders headers = setCookieAndHeader(guestLoginResponse);
 
     return new ResponseEntity<>(DataResponse.of(HttpStatus.CREATED,
         "게스트 회원 가입 성공", guestLoginResponse.getMember()), headers, HttpStatus.CREATED);
@@ -89,7 +91,7 @@ public class MemberController {
     //코드를 통해 액세스 토큰 발급한 후, 유저 정보를 가져온다.
     KakaoUserInfoResponseDto kakaoUserInfo = kakaoFeignService.getKakaoInfoWithToken(code);
     LoginResponseDto kakaoLoginResponse = memberSignUpService.loginKakaoMember(kakaoUserInfo);
-    HttpHeaders headers = memberSignUpService.setCookieAndHeader(kakaoLoginResponse);
+    HttpHeaders headers = setCookieAndHeader(kakaoLoginResponse);
 
     return new ResponseEntity<>(
         DataResponse.of(

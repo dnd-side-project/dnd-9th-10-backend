@@ -1,10 +1,11 @@
 package com.dnd.bbok.domain.member.service;
 
+import com.dnd.bbok.domain.jwt.dto.ReIssueTokenDto;
 import com.dnd.bbok.domain.member.dto.response.MemberSimpleInfoResponse;
 import com.dnd.bbok.global.util.CookieUtil;
 import com.dnd.bbok.global.util.HttpHeaderUtil;
 import com.dnd.bbok.infra.feign.dto.response.KakaoUserInfoResponseDto;
-import com.dnd.bbok.global.jwt.JwtTokenProvider;
+import com.dnd.bbok.domain.jwt.service.JwtTokenProvider;
 import com.dnd.bbok.domain.member.dto.response.LoginResponseDto;
 import com.dnd.bbok.domain.member.entity.Member;
 import com.dnd.bbok.domain.member.entity.OAuth2Provider;
@@ -45,9 +46,15 @@ public class MemberSignUpService {
     return createSignUpResult(member);
   }
 
+  /**
+   * member 정보를 가지고 accessToken 과 refreshToken 을 생성한다.
+   */
   private LoginResponseDto createSignUpResult(Member member) {
     String accessToken = jwtTokenProvider.createAccessToken(member.getId(), member.getRole());
     String refreshToken = jwtTokenProvider.createRefreshToken(member.getId());
+
+    // refreshToken은 redis에 따로 저장해둔다.
+    jwtTokenProvider.saveRefreshTokenInRedis(member, refreshToken);
     return new LoginResponseDto(accessToken, refreshToken, new MemberSimpleInfoResponse(member));
   }
 
@@ -60,10 +67,18 @@ public class MemberSignUpService {
     member.updateInfo(kakaoUserInfo.getProfileImg(), kakaoUserInfo.getUsername());
   }
 
-  public HttpHeaders setCookieAndHeader(LoginResponseDto loginResult) {
+  public static HttpHeaders setCookieAndHeader(LoginResponseDto loginResult) {
     HttpHeaders headers = new HttpHeaders();
     CookieUtil.setRefreshCookie(headers, loginResult.getRefreshToken());
     HttpHeaderUtil.setAccessToken(headers, loginResult.getAccessToken());
     return headers;
   }
+
+  public static HttpHeaders setCookieAndHeader(ReIssueTokenDto reIssueTokenDto) {
+    HttpHeaders headers = new HttpHeaders();
+    HttpHeaderUtil.setAccessToken(headers, reIssueTokenDto.getAccessToken());
+    CookieUtil.setRefreshCookie(headers, reIssueTokenDto.getRefreshToken());
+    return headers;
+  }
+
 }

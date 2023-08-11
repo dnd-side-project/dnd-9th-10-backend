@@ -19,7 +19,10 @@ public enum ErrorCode {
   RESOURCE_FORBIDDEN(HttpStatus.FORBIDDEN, "R001", "해당 리소스에 대한 권한이 없습니다."),
 
   // Member
-  MEMBER_NOT_FOUND(HttpStatus.NOT_FOUND, "M001", "해당 uuid를 가진 멤버를 찾을 수 없습니다.");
+  MEMBER_NOT_FOUND(HttpStatus.NOT_FOUND, "M001", "해당 uuid를 가진 멤버를 찾을 수 없습니다."),
+
+  // JWT
+  REFRESH_JWT_EXPIRED(HttpStatus.UNAUTHORIZED, "J003", "만료된 리프레시 토큰입니다.");
 
   private final HttpStatus status;
   private final String code;
