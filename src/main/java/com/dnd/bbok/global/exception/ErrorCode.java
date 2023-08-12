@@ -25,6 +25,8 @@ public enum ErrorCode {
   CHARACTER_NOT_FOUND(HttpStatus.NOT_FOUND, "F001", "해당 이름을 가진 캐릭터를 찾을 수 없습니다."),
   OTHER_FRIEND_ALREADY_ACTIVE(HttpStatus.BAD_REQUEST, "F002", "동시에 2명 이상의 친구를 생성할 수 없습니다."),
 
+  // Diary
+  INVALID_MEMBER_CHECKLIST_ID(HttpStatus.BAD_REQUEST, "D001","Member Checklist Id가 올바르지 않습니다."),
   // JWT
   REFRESH_JWT_EXPIRED(HttpStatus.UNAUTHORIZED, "J003", "만료된 리프레시 토큰입니다.");
 

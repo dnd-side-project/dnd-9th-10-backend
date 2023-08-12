@@ -1,6 +1,7 @@
-package com.dnd.bbok.domain.diary.service;
+package com.dnd.bbok.domain.tag.service;
 
-import com.dnd.bbok.domain.diary.repository.FriendTagRepository;
+import com.dnd.bbok.domain.tag.repository.FriendTagRepository;
+import com.dnd.bbok.domain.friend.entity.Friend;
 import com.dnd.bbok.domain.tag.entity.FriendTag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -17,5 +18,12 @@ public class FriendTagEntityService {
 
     public List<FriendTag> getFriendTags(long friendId) {
         return this.friendTagRepository.findAllByFriendId(friendId);
+    }
+
+    public FriendTag createTag(String name, Friend friend) {
+        return this.friendTagRepository.save(FriendTag.builder()
+                .name(name)
+                .friend(friend)
+                .build());
     }
 }

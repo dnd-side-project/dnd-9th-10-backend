@@ -24,8 +24,5 @@ public class DiaryRequestDto {
     private ArrayList<String> tags;
 
     @ApiModelProperty(value = "체크한 적합 체크리스트 id 배열")
-    private ArrayList<String> goodChecklist;
-
-    @ApiModelProperty(value = "체크한 부적합 체크리스트 id 배열")
-    private ArrayList<String> badChecklist;
+    private ArrayList<ChecklistDto> checklist;
 }

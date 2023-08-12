@@ -1,4 +1,4 @@
-package com.dnd.bbok.domain.diary.repository;
+package com.dnd.bbok.domain.tag.repository;
 
 import com.dnd.bbok.domain.tag.entity.FriendTag;
 import org.springframework.data.jpa.repository.JpaRepository;

@@ -9,6 +9,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+
+import lombok.Builder;
 import lombok.Getter;
 
 /**
@@ -33,4 +35,10 @@ public class DiaryChecklist {
   @JoinColumn(name = "member_checklist_id")
   private MemberChecklist memberChecklist;
 
+  @Builder
+  public DiaryChecklist(boolean isChecked, Diary diary, MemberChecklist memberChecklist) {
+    this.isChecked = isChecked;
+    this.diary = diary;
+    this.memberChecklist = memberChecklist;
+  }
 }

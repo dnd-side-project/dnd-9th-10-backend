@@ -1,6 +1,9 @@
 package com.dnd.bbok.domain.diary.service;
 
-import com.dnd.bbok.domain.diary.repository.FriendRepository;
+import com.dnd.bbok.domain.diary.dto.request.DiaryRequestDto;
+import com.dnd.bbok.domain.diary.entity.Diary;
+import com.dnd.bbok.domain.diary.repository.DiaryRepository;
+import com.dnd.bbok.domain.friend.entity.Friend;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -10,5 +13,15 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor
 public class DiaryEntityService {
-    private final FriendRepository friendRepository;
+    private final DiaryRepository diaryRepository;
+
+    public Diary createDiary(Friend friend, DiaryRequestDto diaryRequestDto) {
+        Diary diary = Diary.builder()
+                .friend(friend)
+                .contents(diaryRequestDto.getContent())
+                .emoji(diaryRequestDto.getEmoji())
+                .diaryDate(diaryRequestDto.getDate())
+                .build();
+        return this.diaryRepository.save(diary);
+    }
 }

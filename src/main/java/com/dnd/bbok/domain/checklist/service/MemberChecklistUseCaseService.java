@@ -15,7 +15,7 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class MemberChecklistUseCaseService {
     private final MemberService memberService;
-    private final MemberChecklistService memberChecklistService;
+    private final MemberChecklistEntityService memberChecklistEntityService;
 
     public void createMemberChecklistEntities(MemberChecklistRequestDto checklistRequestDto, UUID uuid) {
         Member member = memberService.getMemberById(uuid);
@@ -36,6 +36,6 @@ public class MemberChecklistUseCaseService {
                 .build()));
 
 
-        memberChecklistService.createMemberChecklist(checklist);
+        memberChecklistEntityService.createMemberChecklist(checklist);
     }
 }
