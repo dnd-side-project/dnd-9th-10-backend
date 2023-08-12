@@ -3,7 +3,6 @@ package com.dnd.bbok.mock;
 import com.dnd.bbok.domain.checklist.dto.request.ChecklistInfoRequestDto;
 import com.dnd.bbok.domain.checklist.dto.response.MyChecklistDto;
 import com.dnd.bbok.domain.friend.dto.request.FriendRequestDto;
-import com.dnd.bbok.domain.friend.dto.response.BbokCharactersDto;
 import com.dnd.bbok.domain.friend.dto.response.FriendsDto;
 import com.dnd.bbok.global.response.DataResponse;
 import com.dnd.bbok.global.response.MessageResponse;
@@ -22,14 +21,6 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/v1")
 @Api(tags = "Mock 친구 관련 컨트롤러")
 public class FriendMockController {
-
-  @ApiOperation(value = "캐릭터 정보 제공")
-  @GetMapping("/character")
-  public ResponseEntity<DataResponse<BbokCharactersDto>> getBbokCharacter() {
-    BbokCharactersDto characters = new BbokCharactersDto();
-    return new ResponseEntity<>(
-        DataResponse.of(HttpStatus.OK, "캐릭터 목록 제공 성공", characters), HttpStatus.OK);
-  }
 
   @ApiOperation(value = "친구 목록 조회")
   @GetMapping("/friend")
