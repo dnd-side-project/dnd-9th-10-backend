@@ -1,10 +1,7 @@
 package com.dnd.bbok.domain.member.controller;
 
-import static com.dnd.bbok.domain.member.service.MemberSignUpService.setCookieAndHeader;
-
 import com.dnd.bbok.domain.member.dto.response.LoginResponseDto;
 import com.dnd.bbok.domain.member.dto.response.MemberInfoResponseDto;
-import com.dnd.bbok.domain.member.dto.response.MemberSimpleInfoResponse;
 import com.dnd.bbok.domain.member.service.MemberInfoService;
 import com.dnd.bbok.domain.member.service.MemberSignUpService;
 import com.dnd.bbok.domain.jwt.dto.SessionUser;
@@ -42,13 +39,10 @@ public class MemberController {
       value = "게스트 회원가입",
       notes = "요청 보내면 바로 게스트가 생성되고, accessToken이 발급됩니다.")
   @PostMapping("/api/v1/guest/signup")
-  public ResponseEntity<DataResponse<MemberSimpleInfoResponse>> guestLogin() {
-
+  public ResponseEntity<DataResponse<LoginResponseDto>> guestLogin() {
     LoginResponseDto guestLoginResponse = memberSignUpService.loginGuestMember();
-    HttpHeaders headers = setCookieAndHeader(guestLoginResponse);
-
     return new ResponseEntity<>(DataResponse.of(HttpStatus.CREATED,
-        "게스트 회원 가입 성공", guestLoginResponse.getMember()), headers, HttpStatus.CREATED);
+        "게스트 회원 가입 성공", guestLoginResponse), HttpStatus.CREATED);
   }
 
   /**
@@ -86,16 +80,13 @@ public class MemberController {
       value = "카카오 계정 회원가입",
       notes = "인가 코드를 입력하고 요청보내면, 사용자의 정보를 저장한 후 사용자의 Id를 확인할 수 있습니다.")
   @PostMapping("/api/v1/kakao/signup")
-  public ResponseEntity<DataResponse<MemberSimpleInfoResponse>> kakaoLogin(@RequestParam("code") String code) {
-
+  public ResponseEntity<DataResponse<LoginResponseDto>> kakaoLogin(@RequestParam("code") String code) {
     //코드를 통해 액세스 토큰 발급한 후, 유저 정보를 가져온다.
     KakaoUserInfoResponseDto kakaoUserInfo = kakaoFeignService.getKakaoInfoWithToken(code);
     LoginResponseDto kakaoLoginResponse = memberSignUpService.loginKakaoMember(kakaoUserInfo);
-    HttpHeaders headers = setCookieAndHeader(kakaoLoginResponse);
-
     return new ResponseEntity<>(
         DataResponse.of(
-            HttpStatus.CREATED, "카카오 계정으로 회원가입 성공", kakaoLoginResponse.getMember()), headers, HttpStatus.CREATED);
+            HttpStatus.CREATED, "카카오 계정으로 회원가입 성공", kakaoLoginResponse), HttpStatus.CREATED);
   }
 
 }
