@@ -4,6 +4,8 @@ import static javax.persistence.FetchType.*;
 import static javax.persistence.GenerationType.*;
 
 import com.dnd.bbok.domain.friend.entity.Friend;
+import lombok.Getter;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -14,6 +16,7 @@ import javax.persistence.ManyToOne;
  * 친구가 가지고 있는 태그 정보
  */
 @Entity
+@Getter
 public class FriendTag {
 
   @Id

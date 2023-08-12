@@ -42,15 +42,6 @@ public class DiaryMockController {
         return new ResponseEntity<>(DataResponse.of(HttpStatus.OK, "일기 목록 조회 성공", list), HttpStatus.OK);
     }
 
-    @ApiOperation(value = "일기 등록")
-    @PostMapping("{id}/diary")
-    public ResponseEntity<DataResponse<DiaryCreateDto>> createDiary(
-            @Parameter(name = "id", in = ParameterIn.PATH, description = "친구 id") @PathVariable("id") Long id,
-            @RequestBody DiaryRequestDto diaryRequestDto) {
-        DiaryCreateDto createDiaryDto = new DiaryCreateDto();
-        return new ResponseEntity<>(DataResponse.of(HttpStatus.OK , "일기 생성 성공", createDiaryDto), HttpStatus.OK);
-    }
-
     @ApiOperation("태그 목록 조회")
     @GetMapping("diary/tag")
     public ResponseEntity<DataResponse<DiaryTagDto>> getTags() {

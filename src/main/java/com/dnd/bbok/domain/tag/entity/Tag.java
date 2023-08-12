@@ -3,6 +3,8 @@ package com.dnd.bbok.domain.tag.entity;
 import static javax.persistence.GenerationType.*;
 
 import com.sun.istack.NotNull;
+import lombok.Builder;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -20,5 +22,6 @@ public class Tag {
 
   @NotNull
   private String name;
+
 
 }
