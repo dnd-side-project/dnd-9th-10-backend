@@ -7,6 +7,4 @@ public class ChecklistDto {
     private Long id;
     private Boolean isGood;
     private Boolean isChecked;
-
-
 }

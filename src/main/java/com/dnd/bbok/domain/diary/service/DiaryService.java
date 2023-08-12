@@ -3,7 +3,6 @@ package com.dnd.bbok.domain.diary.service;
 import com.dnd.bbok.domain.diary.dto.request.ChecklistDto;
 import com.dnd.bbok.domain.diary.dto.request.DiaryRequestDto;
 import com.dnd.bbok.domain.diary.entity.Diary;
-import com.dnd.bbok.domain.diary.repository.DiaryRepository;
 import com.dnd.bbok.domain.friend.entity.Friend;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

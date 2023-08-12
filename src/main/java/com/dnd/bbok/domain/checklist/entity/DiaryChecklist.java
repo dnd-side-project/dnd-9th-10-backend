@@ -12,6 +12,7 @@ import javax.persistence.ManyToOne;
 
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 /**
  * 일기에서 사용중인 기준을 보여줍니다.
@@ -19,6 +20,7 @@ import lombok.Getter;
  */
 @Entity
 @Getter
+@NoArgsConstructor
 public class DiaryChecklist {
 
   @Id

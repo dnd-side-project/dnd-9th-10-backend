@@ -1,7 +1,6 @@
 package com.dnd.bbok.domain.saying.dto.response;
 
 import io.swagger.annotations.ApiModelProperty;
-import lombok.Builder;
 import lombok.Getter;
 
 @Getter

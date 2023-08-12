@@ -20,13 +20,11 @@ public class DiaryChecklistEntityService {
     private final DiaryChecklistRepository diaryChecklistRepository;
 
     public void createDiaryChecklist(Diary diary, List<MemberChecklist> memberChecklist, List<ChecklistDto> checklistDtos) {
-        memberChecklist.forEach(checklist -> {
-            this.diaryChecklistRepository.save(DiaryChecklist.builder()
-                    .diary(diary)
-                    .isChecked((checklistDtos.stream().filter(ele -> Objects.equals(ele.getId(), checklist.getId())).findFirst().orElseThrow()).getIsChecked())
-                    .memberChecklist(checklist)
-                    .build()
-            );
-        });
+        memberChecklist.forEach(checklist -> this.diaryChecklistRepository.save(DiaryChecklist.builder()
+                .diary(diary)
+                .isChecked((checklistDtos.stream().filter(ele -> Objects.equals(ele.getId(), checklist.getId())).findFirst().orElseThrow()).getIsChecked())
+                .memberChecklist(checklist)
+                .build()
+        ));
     }
 }
