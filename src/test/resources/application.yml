@@ -21,10 +21,10 @@ logging:
 cloud:
   aws:
     credentials:
-      access-key: ${S3_ACCESS}
-      secret-key: ${S3_SECRET}
+      access-key: bbok
+      secret-key: bbok
     s3:
-      bucket: ${S3_BUCKET}
+      bucket: bbok-bucket
     stack:
       auto: false
     region:
