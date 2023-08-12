@@ -20,6 +20,11 @@ logging:
             sql: trace
 cloud:
   aws:
+    credentials:
+      access-key: bbok
+      secret-key: bbok
+    s3:
+      bucket: bbok-bucket
     stack:
       auto: false
     region:
