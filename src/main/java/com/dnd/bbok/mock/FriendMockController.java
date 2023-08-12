@@ -2,7 +2,6 @@ package com.dnd.bbok.mock;
 
 import com.dnd.bbok.domain.checklist.dto.request.ChecklistInfoRequestDto;
 import com.dnd.bbok.domain.checklist.dto.response.MyChecklistDto;
-import com.dnd.bbok.domain.friend.dto.request.FriendRequestDto;
 import com.dnd.bbok.domain.friend.dto.response.FriendsDto;
 import com.dnd.bbok.global.response.DataResponse;
 import com.dnd.bbok.global.response.MessageResponse;
@@ -12,7 +11,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -30,13 +28,6 @@ public class FriendMockController {
         DataResponse.of(HttpStatus.OK, "친구 목록 조회 성공", friends), HttpStatus.OK);
   }
 
-  @ApiOperation(value = "친구 등록")
-  @PostMapping("/friend")
-  public ResponseEntity<MessageResponse> createFriend(
-      @RequestBody FriendRequestDto requestFriend) {
-    return new ResponseEntity<>(
-        MessageResponse.of(HttpStatus.CREATED, "친구 등록 성공"), HttpStatus.CREATED);
-  }
 
   @ApiOperation(value = "나만의 기준 조회")
   @GetMapping("/friend/checklist")

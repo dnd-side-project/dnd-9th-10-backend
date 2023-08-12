@@ -13,10 +13,13 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Getter
+@NoArgsConstructor
 public class Friend extends BaseTimeEntity {
 
   @Id
@@ -29,7 +32,7 @@ public class Friend extends BaseTimeEntity {
   @NotNull
   private String name;
 
-  private boolean status;
+  private boolean active;
 
   @NotNull
   private Long friendScore;
@@ -40,5 +43,14 @@ public class Friend extends BaseTimeEntity {
   @ManyToOne(fetch = LAZY)
   @JoinColumn(name = "member_id")
   private Member member;
+
+  @Builder
+  public Friend(BbokCharacter bbok, String name, boolean active, Long friendScore, Member member) {
+    this.bbok = bbok;
+    this.name = name;
+    this.active = active;
+    this.friendScore = friendScore;
+    this.member = member;
+  }
 
 }
