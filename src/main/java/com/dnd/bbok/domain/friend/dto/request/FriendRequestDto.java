@@ -4,8 +4,8 @@ import static com.dnd.bbok.global.exception.ErrorCode.CHARACTER_NOT_FOUND;
 
 import com.dnd.bbok.domain.friend.entity.BbokCharacter;
 import com.dnd.bbok.domain.friend.entity.Friend;
-import com.dnd.bbok.domain.friend.exception.CharacterNotFoundException;
 import com.dnd.bbok.domain.member.entity.Member;
+import com.dnd.bbok.global.exception.BusinessException;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -43,7 +43,7 @@ public class FriendRequestDto {
         bbok = BbokCharacter.SIDE_HEDGEHOG;
         break;
       default:
-        throw new CharacterNotFoundException(CHARACTER_NOT_FOUND);
+        throw new BusinessException(CHARACTER_NOT_FOUND);
     }
     return bbok;
   }

@@ -5,8 +5,8 @@ import static com.dnd.bbok.global.exception.ErrorCode.*;
 import com.dnd.bbok.domain.member.entity.Member;
 import com.dnd.bbok.domain.member.entity.OAuth2Provider;
 import com.dnd.bbok.domain.member.entity.Role;
-import com.dnd.bbok.domain.member.exception.MemberNotFoundException;
 import com.dnd.bbok.domain.member.repository.MemberRepository;
+import com.dnd.bbok.global.exception.BusinessException;
 import java.util.Optional;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
@@ -46,6 +46,6 @@ public class MemberService {
   public Member getMemberById(UUID uuid) {
     log.info("해당 uuid를 가진 멤버를 찾습니다.");
     return memberRepository.findById(uuid)
-        .orElseThrow(()->new MemberNotFoundException(MEMBER_NOT_FOUND));
+        .orElseThrow(()->new BusinessException(MEMBER_NOT_FOUND));
   }
 }
