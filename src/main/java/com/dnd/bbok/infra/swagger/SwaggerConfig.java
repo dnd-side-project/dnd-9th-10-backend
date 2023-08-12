@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import springfox.documentation.RequestHandler;
 import springfox.documentation.builders.ApiInfoBuilder;
 import springfox.documentation.builders.PathSelectors;
@@ -52,6 +53,7 @@ public class SwaggerConfig {
   @Bean
   public Docket securedApi() {
     return new Docket(DocumentationType.OAS_30)
+        .ignoredParameterTypes(AuthenticationPrincipal.class)
         .groupName("Security API")
         .securityContexts(List.of(securityContext()))
         .securitySchemes(List.of(apiKey()))

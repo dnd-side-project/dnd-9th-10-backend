@@ -14,13 +14,8 @@ public class BbokCharactersDto {
   @ApiModelProperty(value = "캐릭터 목록")
   private final List<BbokCharacterDto> characters = new ArrayList<>();
 
-  /**
-   * mock 제공을 위한 기본생성
-   */
-  public BbokCharactersDto() {
-    characters.add(new BbokCharacterDto());
+  public BbokCharactersDto(List<BbokCharacterDto> dtos) {
+    characters.addAll(dtos);
   }
-
-
 
 }

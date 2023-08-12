@@ -26,3 +26,15 @@ oauth2:
     clientId: 3fca0db05482af0333a5fb5b9dc5b345
     redirectUri: https://bbok.kro.kr/api/v1/account/kakao/result
     secretKey: ${SECRET_KEY}
+
+cloud:
+  aws:
+    credentials:
+      access-key: ${S3_ACCESS}
+      secret-key: ${S3_SECRET}
+    s3:
+      bucket: ${S3_BUCKET}
+    stack:
+      auto: false
+    region:
+      static: ap-northeast-2
