@@ -3,9 +3,9 @@ package com.dnd.bbok.domain.friend.service;
 import static com.dnd.bbok.global.exception.ErrorCode.OTHER_FRIEND_ALREADY_ACTIVE;
 
 import com.dnd.bbok.domain.friend.entity.Friend;
-import com.dnd.bbok.domain.friend.exception.FriendCreationException;
 import com.dnd.bbok.domain.friend.repository.FriendRepository;
 import com.dnd.bbok.domain.member.entity.Member;
+import com.dnd.bbok.global.exception.BusinessException;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -30,7 +30,7 @@ public class FriendService {
     List<Friend> otherFriends = friendRepository.findOtherFriend(member.getId());
     for(Friend each : otherFriends) {
       if(each.isActive()) {
-        throw new FriendCreationException(OTHER_FRIEND_ALREADY_ACTIVE);
+        throw new BusinessException(OTHER_FRIEND_ALREADY_ACTIVE);
       }
     }
   }
