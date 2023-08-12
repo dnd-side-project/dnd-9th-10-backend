@@ -1,7 +1,6 @@
 package com.dnd.bbok.domain.member.service;
 
 import com.dnd.bbok.domain.jwt.dto.ReIssueTokenDto;
-import com.dnd.bbok.domain.member.dto.response.MemberSimpleInfoResponse;
 import com.dnd.bbok.global.util.CookieUtil;
 import com.dnd.bbok.global.util.HttpHeaderUtil;
 import com.dnd.bbok.infra.feign.dto.response.KakaoUserInfoResponseDto;
@@ -55,7 +54,7 @@ public class MemberSignUpService {
 
     // refreshToken은 redis에 따로 저장해둔다.
     jwtTokenProvider.saveRefreshTokenInRedis(member, refreshToken);
-    return new LoginResponseDto(accessToken, refreshToken, new MemberSimpleInfoResponse(member));
+    return new LoginResponseDto(accessToken, refreshToken, member.getId().toString());
   }
 
   private Member signUp(KakaoUserInfoResponseDto kakaoUserInfo) {
