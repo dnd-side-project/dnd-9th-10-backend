@@ -4,6 +4,9 @@ import static javax.persistence.FetchType.*;
 import static javax.persistence.GenerationType.*;
 
 import com.dnd.bbok.domain.diary.entity.Diary;
+import lombok.Builder;
+import lombok.NoArgsConstructor;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -14,6 +17,7 @@ import javax.persistence.ManyToOne;
  * 다이어리가 가지고 있는 태그 정보
  */
 @Entity
+@NoArgsConstructor
 public class DiaryTag {
 
   @Id
@@ -26,6 +30,11 @@ public class DiaryTag {
 
   @ManyToOne(fetch = LAZY)
   @JoinColumn(name = "tag_id")
-  private Tag tag;
+  private FriendTag friendTag;
 
+  @Builder
+  public DiaryTag(Diary diary, FriendTag friendTag) {
+    this.diary = diary;
+    this.friendTag = friendTag;
+  }
 }

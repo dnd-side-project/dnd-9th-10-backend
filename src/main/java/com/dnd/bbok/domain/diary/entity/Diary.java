@@ -14,10 +14,14 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+
+import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Getter
+@NoArgsConstructor
 public class Diary extends BaseTimeEntity {
 
   @Id
@@ -33,9 +37,6 @@ public class Diary extends BaseTimeEntity {
   @NotNull
   private LocalDate diaryDate;
 
-  @NotNull
-  private Long diaryScore;
-
   /**
    * 일화와 친구를 다대일 관계 매핑
    */
@@ -43,4 +44,11 @@ public class Diary extends BaseTimeEntity {
   @JoinColumn(name = "friend_id")
   private Friend friend;
 
+  @Builder
+  public Diary(Emoji emoji, String contents, LocalDate diaryDate, Friend friend) {
+    this.emoji = emoji;
+    this.contents = contents;
+    this.diaryDate = diaryDate;
+    this.friend = friend;
+  }
 }

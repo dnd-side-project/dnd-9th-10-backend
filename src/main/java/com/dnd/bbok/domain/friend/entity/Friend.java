@@ -44,6 +44,10 @@ public class Friend extends BaseTimeEntity {
   @JoinColumn(name = "member_id")
   private Member member;
 
+  public void setFriendScore(Long friendScore) {
+    this.friendScore = friendScore;
+  }
+
   @Builder
   public Friend(BbokCharacter bbok, String name, boolean active, Long friendScore, Member member) {
     this.bbok = bbok;

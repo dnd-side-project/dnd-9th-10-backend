@@ -4,6 +4,11 @@ import static javax.persistence.FetchType.*;
 import static javax.persistence.GenerationType.*;
 
 import com.dnd.bbok.domain.friend.entity.Friend;
+import com.sun.istack.NotNull;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -14,6 +19,8 @@ import javax.persistence.ManyToOne;
  * 친구가 가지고 있는 태그 정보
  */
 @Entity
+@Getter
+@NoArgsConstructor
 public class FriendTag {
 
   @Id
@@ -24,8 +31,12 @@ public class FriendTag {
   @JoinColumn(name = "friend_id")
   private Friend friend;
 
-  @ManyToOne(fetch = LAZY)
-  @JoinColumn(name = "tag_id")
-  private Tag tag;
+  @NotNull
+  private String name;
 
+  @Builder
+  public FriendTag(String name, Friend friend) {
+    this.name = name;
+    this.friend = friend;
+  }
 }

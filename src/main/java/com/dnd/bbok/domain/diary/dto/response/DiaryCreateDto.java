@@ -9,10 +9,10 @@ public class DiaryCreateDto {
     private final DiarySayingDto saying;
 
     @ApiModelProperty(value = "친구 적합도")
-    private final int friendPercentage;
+    private final Long friendPercentage;
 
-    public DiaryCreateDto() {
-        this.saying = new DiarySayingDto();
-        this.friendPercentage = 37;
+    public DiaryCreateDto(DiarySayingDto saying, Long friendPercentage) {
+        this.saying = saying;
+        this.friendPercentage = friendPercentage;
     }
 }

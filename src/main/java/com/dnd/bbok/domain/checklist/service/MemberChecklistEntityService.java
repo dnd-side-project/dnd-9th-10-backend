@@ -10,10 +10,14 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-public class MemberChecklistService {
+public class MemberChecklistEntityService {
     private final MemberChecklistRepository memberChecklistRepository;
 
-    public List<MemberChecklist> createMemberChecklist(List<MemberChecklist> checklist) {
-        return memberChecklistRepository.saveAll(checklist);
+    public void createMemberChecklist(List<MemberChecklist> checklist) {
+        memberChecklistRepository.saveAll(checklist);
+    }
+
+    public List<MemberChecklist> getMemberChecklistInIds(List<Long> ids) {
+        return this.memberChecklistRepository.findByIdIn(ids);
     }
 }
