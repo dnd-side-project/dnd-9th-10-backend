@@ -12,13 +12,13 @@ public class LoginResponseDto {
   @ApiModelProperty("발급된 리프레쉬 토큰")
   private final String refreshToken;
 
-  @ApiModelProperty("멤버의 id만 반환되는 dto")
-  private final MemberSimpleInfoResponse member;
+  @ApiModelProperty("멤버의 id")
+  private final String memberId;
 
-  public LoginResponseDto(String accessToken, String refreshToken, MemberSimpleInfoResponse member) {
+  public LoginResponseDto(String accessToken, String refreshToken, String memberId) {
     this.accessToken = accessToken;
     this.refreshToken = refreshToken;
-    this.member = member;
+    this.memberId = memberId;
   }
 
 }
