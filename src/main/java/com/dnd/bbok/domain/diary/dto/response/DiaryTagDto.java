@@ -14,8 +14,6 @@ public class DiaryTagDto {
 
     public DiaryTagDto(List<FriendTag> tags) {
         this.tags = new ArrayList<>();
-        tags.forEach(tag -> {
-            this.tags.add(new TagDto(tag.getId(), tag.getName()));
-        });
+        tags.forEach(tag -> this.tags.add(new TagDto(tag.getId(), tag.getName())));
     }
 }
