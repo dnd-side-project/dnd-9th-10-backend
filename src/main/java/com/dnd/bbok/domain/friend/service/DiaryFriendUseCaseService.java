@@ -9,6 +9,7 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * Friend, Diary 관련 서비스
@@ -36,4 +37,11 @@ public class DiaryFriendUseCaseService {
     return new FriendsDto(friends);
   }
 
+
+  //TODO: 점수 받으면 friend에 업데이트하는 서비스(friendId, score)
+  @Transactional
+  public void updateScore(Long friendId, Long score) {
+    Friend friend = friendService.getFriend(friendId);
+    friend.changeFriendScore(score);
+  }
 }

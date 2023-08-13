@@ -1,5 +1,6 @@
 package com.dnd.bbok.domain.friend.service;
 
+import static com.dnd.bbok.global.exception.ErrorCode.FRIEND_NOT_FOUND;
 import static com.dnd.bbok.global.exception.ErrorCode.OTHER_FRIEND_ALREADY_ACTIVE;
 
 import com.dnd.bbok.domain.friend.entity.Friend;
@@ -7,6 +8,7 @@ import com.dnd.bbok.domain.friend.repository.FriendRepository;
 import com.dnd.bbok.domain.member.entity.Member;
 import com.dnd.bbok.global.exception.BusinessException;
 import java.util.List;
+import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -27,11 +29,22 @@ public class FriendService {
 
   @Transactional(readOnly = true)
   public void checkOtherActiveFriend(Member member) {
-    List<Friend> otherFriends = friendRepository.findOtherFriend(member.getId());
+    List<Friend> otherFriends = friendRepository.findAllFriends(member.getId());
     for(Friend each : otherFriends) {
       if(each.isActive()) {
         throw new BusinessException(OTHER_FRIEND_ALREADY_ACTIVE);
       }
     }
   }
+
+  @Transactional(readOnly = true)
+  public List<Friend> findFriendsOfMember(UUID memberId) {
+    return friendRepository.findAllFriends(memberId);
+  }
+
+  public Friend getFriend(Long friendId) {
+    return friendRepository.findFriendById(friendId)
+        .orElseThrow(() -> new BusinessException(FRIEND_NOT_FOUND));
+  }
+
 }

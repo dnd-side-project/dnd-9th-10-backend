@@ -44,7 +44,7 @@ public class Friend extends BaseTimeEntity {
   @JoinColumn(name = "member_id")
   private Member member;
 
-  public void setFriendScore(Long friendScore) {
+  public void changeFriendScore(Long friendScore) {
     this.friendScore = friendScore;
   }
 
