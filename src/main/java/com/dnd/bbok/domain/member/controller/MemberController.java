@@ -92,6 +92,7 @@ public class MemberController {
   @ApiOperation(
       value = "게스트 로그인",
       notes = "게스트 계정으로 로그인할 수 있습니다.")
+  @PreAuthorize("isAuthenticated()")
   @GetMapping("/api/v1/guest/login")
   public ResponseEntity<DataResponse<LoginResponseDto>> guestLogin(
       @AuthenticationPrincipal SessionUser sessionUser
