@@ -38,9 +38,9 @@ public class MemberController {
   @ApiOperation(
       value = "게스트 회원가입",
       notes = "요청 보내면 바로 게스트가 생성되고, accessToken이 발급됩니다.")
-  @PostMapping("/api/v1/guest/signup")
-  public ResponseEntity<DataResponse<LoginResponseDto>> guestLogin() {
-    LoginResponseDto guestLoginResponse = memberSignUpService.loginGuestMember();
+  @PostMapping("/api/v1/guest/login")
+  public ResponseEntity<DataResponse<LoginResponseDto>> guestSignup() {
+    LoginResponseDto guestLoginResponse = memberSignUpService.signUpGusetMember();
     return new ResponseEntity<>(DataResponse.of(HttpStatus.CREATED,
         "게스트 회원 가입 성공", guestLoginResponse), HttpStatus.CREATED);
   }
@@ -87,6 +87,18 @@ public class MemberController {
     return new ResponseEntity<>(
         DataResponse.of(
             HttpStatus.CREATED, "카카오 계정으로 회원가입 성공", kakaoLoginResponse), HttpStatus.CREATED);
+  }
+
+  @ApiOperation(
+      value = "게스트 로그인",
+      notes = "게스트 계정으로 로그인할 수 있습니다.")
+  @GetMapping("/api/v1/guest/login")
+  public ResponseEntity<DataResponse<LoginResponseDto>> guestLogin(
+      @AuthenticationPrincipal SessionUser sessionUser
+  ) {
+    LoginResponseDto loginResponse = memberSignUpService.loginGuestMember(sessionUser.getUuid());
+    return new ResponseEntity<>(DataResponse.of(HttpStatus.OK,
+        "게스트 로그인 성공", loginResponse), HttpStatus.OK);
   }
 
 }

@@ -9,6 +9,7 @@ import com.dnd.bbok.domain.member.dto.response.LoginResponseDto;
 import com.dnd.bbok.domain.member.entity.Member;
 import com.dnd.bbok.domain.member.entity.OAuth2Provider;
 import java.util.Optional;
+import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;
@@ -22,7 +23,7 @@ public class MemberSignUpService {
   private final JwtTokenProvider jwtTokenProvider;
   private final MemberService memberService;
 
-  public LoginResponseDto loginGuestMember() {
+  public LoginResponseDto signUpGusetMember() {
     Member guest = memberService.saveGuestMember();
     return createSignUpResult(guest);
   }
@@ -42,6 +43,11 @@ public class MemberSignUpService {
 
     //존재하지 않는다면, user를 생성해서 넣어준다.
     Member member = signUp(kakaoUserInfo);
+    return createSignUpResult(member);
+  }
+
+  public LoginResponseDto loginGuestMember(UUID memberId) {
+    Member member = memberService.getMemberById(memberId);
     return createSignUpResult(member);
   }
 
@@ -79,5 +85,4 @@ public class MemberSignUpService {
     CookieUtil.setRefreshCookie(headers, reIssueTokenDto.getRefreshToken());
     return headers;
   }
-
 }
