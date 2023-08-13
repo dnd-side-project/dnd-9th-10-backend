@@ -1,5 +1,6 @@
 package com.dnd.bbok.domain.checklist.dto.response;
 
+import com.dnd.bbok.domain.checklist.entity.MemberChecklist;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 
@@ -15,12 +16,9 @@ public class ChecklistInfoDto {
   @ApiModelProperty(value = "기준 설명")
   private final String criteria;
 
-  /**
-   * mock을 위한 기본생성자
-   */
-  public ChecklistInfoDto() {
-    this.id = 3L;
-    this.criteria = "기준 설명";
+  public ChecklistInfoDto(MemberChecklist memberChecklist) {
+    this.id = memberChecklist.getId();
+    this.criteria = memberChecklist.getCriteria();
   }
 
 }

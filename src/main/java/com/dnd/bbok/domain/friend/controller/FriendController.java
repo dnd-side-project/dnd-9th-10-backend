@@ -1,5 +1,7 @@
 package com.dnd.bbok.domain.friend.controller;
 
+import com.dnd.bbok.domain.checklist.dto.response.MyChecklistDto;
+import com.dnd.bbok.domain.checklist.service.MemberChecklistUseCaseService;
 import com.dnd.bbok.domain.friend.dto.request.FriendRequestDto;
 import com.dnd.bbok.domain.friend.dto.response.BbokCharactersDto;
 import com.dnd.bbok.domain.friend.service.MemberFriendUseCaseService;
@@ -29,6 +31,11 @@ public class FriendController {
   private final IconService iconService;
   private final MemberFriendUseCaseService memberFriendUseCaseService;
 
+
+
+
+  private final MemberChecklistUseCaseService memberChecklistUseCaseService;
+
   @ApiOperation(value = "캐릭터 정보 제공")
   @GetMapping("/character")
   @PreAuthorize("isAuthenticated()")
@@ -49,4 +56,33 @@ public class FriendController {
         MessageResponse.of(HttpStatus.CREATED, "친구 등록 성공"), HttpStatus.CREATED);
   }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  @ApiOperation(value = "나만의 기준 조회")
+  @GetMapping("/friend/checklist")
+  @PreAuthorize("isAuthenticated()")
+  public ResponseEntity<DataResponse<MyChecklistDto>> getChecklist(
+      @AuthenticationPrincipal SessionUser sessionUser
+  ) {
+    //해당 uuid를 가진 member와 체크리스트를 들고온다.
+    MyChecklistDto myChecklist = memberChecklistUseCaseService.getMemberChecklist(sessionUser.getUuid());
+    return new ResponseEntity<>(
+        DataResponse.of(HttpStatus.OK, "기준 조회 성공", myChecklist), HttpStatus.OK);
+  }
 }
