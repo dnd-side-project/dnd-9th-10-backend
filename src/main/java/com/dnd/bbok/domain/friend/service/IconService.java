@@ -22,6 +22,13 @@ public class IconService {
 
   private final S3Downloader s3Downloader;
 
+  /**
+   * 하나의 Icon url만 반환하는 로직
+   */
+  public String getIconUrl(BbokCharacter bbok) {
+    return s3Downloader.getIconUrl(bbok.getIconFile());
+  }
+
   public BbokCharactersDto getCharacterIcon() {
     List<BbokCharacterDto> list = new ArrayList<>();
     //1. 모든 캐릭터를 가져온다.

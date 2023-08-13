@@ -1,6 +1,6 @@
 package com.dnd.bbok.domain.common;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import javax.persistence.Column;
 import javax.persistence.EntityListeners;
 import javax.persistence.MappedSuperclass;
@@ -16,10 +16,10 @@ public abstract class BaseTimeEntity {
 
   @CreatedDate
   @Column(name = "CREATED_AT")
-  private LocalDateTime createdAt;
+  private LocalDate createdAt;
 
   @LastModifiedDate
   @Column(name = "MODIFIED_AT")
-  private LocalDateTime modifiedAt;
+  private LocalDate modifiedAt;
 
 }

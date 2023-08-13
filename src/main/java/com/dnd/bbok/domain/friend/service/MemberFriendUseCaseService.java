@@ -19,7 +19,7 @@ public class MemberFriendUseCaseService {
 
   public void createFriendCharacter(UUID memberId, FriendRequestDto requestFriend) {
     Member member = memberService.getMemberById(memberId);
-    //2. member가 활성화된 다른 친구를 가지고 있는지 체크해야 한다.
+    //member가 활성화된 다른 친구를 가지고 있는지 체크
     friendService.checkOtherActiveFriend(member);
     friendService.saveFriend(requestFriend.toEntity(member));
   }
