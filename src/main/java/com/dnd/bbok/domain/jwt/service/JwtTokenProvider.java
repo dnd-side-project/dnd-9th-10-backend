@@ -1,6 +1,10 @@
 package com.dnd.bbok.domain.jwt.service;
 
+import static com.dnd.bbok.global.exception.ErrorCode.JWT_EXPIRED_TOKEN;
+import static com.dnd.bbok.global.exception.ErrorCode.JWT_INVALID_TOKEN;
+
 import com.dnd.bbok.domain.jwt.dto.SessionUser;
+import com.dnd.bbok.domain.jwt.exception.JwtException;
 import com.dnd.bbok.domain.member.entity.Member;
 import com.dnd.bbok.domain.member.entity.Role;
 import com.dnd.bbok.domain.member.repository.MemberRepository;
@@ -9,7 +13,6 @@ import com.dnd.bbok.infra.redis.RefreshTokenRepository;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jws;
-import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.MalformedJwtException;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -79,7 +82,7 @@ public class JwtTokenProvider {
     Optional<Member> optionalMember = memberRepository.findById(changeUuid);
 
     if (optionalMember.isEmpty()) {
-      throw new JwtException("유효하지 않은 토큰");
+      throw new JwtException(JWT_INVALID_TOKEN);
     }
     return new SessionUser(optionalMember.get());
   }
@@ -92,7 +95,7 @@ public class JwtTokenProvider {
 
   /**
    * 게스트로 진입할때, 해당 유저를 DB에 저장하고 난 후의 UUID로 accessToken을 생성한다.
-   * 유효시간은 1시간으로 설정해놓았다.
+   * expire - 1일
    */
   public String createAccessToken(UUID uuid, Role role) {
     Date now = new Date();
@@ -138,14 +141,11 @@ public class JwtTokenProvider {
       return Jwts.parserBuilder().setSigningKey(secretKey).build()
           .parseClaimsJws(token);
     } catch (MalformedJwtException | SignatureException | UnsupportedJwtException e) {
-      log.warn("유효하지 않은 토큰입니다.", e);
-      throw new JwtException("JWT_INVALID_TOKEN");
+      throw new JwtException(JWT_INVALID_TOKEN);
     } catch (ExpiredJwtException e) {
-      log.warn("만료된 토큰입니다.", e);
-      throw new JwtException("JWT_EXPIRED_TOKEN");
+      throw new JwtException(JWT_EXPIRED_TOKEN);
     }
   }
-
 
   public boolean isTokenExpirationSafe(String token) {
     Instant expiration = extractAllClaims(token).getExpiration().toInstant();
