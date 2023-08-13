@@ -60,4 +60,8 @@ public class TagService {
     public List<DiaryTag> getDiariesTags(List<Long> diaryIds) {
         return this.diaryTagEntityService.getDiariesTags(diaryIds);
     }
+
+    public List<FriendTag> getFriendTagsByFriendId(Long friendId) {
+        return this.friendTagEntityService.getFriendTags(friendId);
+    }
 }

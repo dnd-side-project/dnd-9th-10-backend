@@ -3,10 +3,7 @@ package com.dnd.bbok.domain.diary.controller;
 import com.dnd.bbok.domain.checklist.entity.DiaryChecklist;
 import com.dnd.bbok.domain.checklist.service.DiaryChecklistService;
 import com.dnd.bbok.domain.diary.dto.request.DiaryRequestDto;
-import com.dnd.bbok.domain.diary.dto.response.DiariesDto;
-import com.dnd.bbok.domain.diary.dto.response.DiaryCreateDto;
-import com.dnd.bbok.domain.diary.dto.response.DiaryDto;
-import com.dnd.bbok.domain.diary.dto.response.DiarySayingDto;
+import com.dnd.bbok.domain.diary.dto.response.*;
 import com.dnd.bbok.domain.diary.entity.Diary;
 import com.dnd.bbok.domain.diary.service.DiaryService;
 import com.dnd.bbok.domain.jwt.dto.SessionUser;
@@ -92,5 +89,16 @@ public class DiaryController {
         diaries.forEach(diary -> diaryDtos.add(new DiaryDto(diary, diaryTags, diaryChecklists)));
         DiariesDto list = new DiariesDto(diaryDtos);
         return new ResponseEntity<>(DataResponse.of(HttpStatus.OK, "일기 목록 조회 성공", list), HttpStatus.OK);
+    }
+
+    @ApiOperation("태그 목록 조회")
+    @PreAuthorize("isAuthenticated()")
+    @GetMapping("{id}/diary/tag")
+    public ResponseEntity<DataResponse<DiaryTagDto>> getTags(
+            @Parameter(name = "id", in = ParameterIn.PATH, description = "친구 id") @PathVariable("id") Long id
+    ) {
+        List<FriendTag> tags = this.tagService.getFriendTagsByFriendId(id);
+        DiaryTagDto diaryTagDto = new DiaryTagDto(tags);
+        return new ResponseEntity<>(DataResponse.of(HttpStatus.OK , "태그 목록 조회 성공", diaryTagDto), HttpStatus.OK);
     }
 }
