@@ -1,6 +1,5 @@
 package com.dnd.bbok.domain.jwt.service;
 
-import static com.dnd.bbok.global.exception.ErrorCode.JWT_EXPIRED_TOKEN;
 import static com.dnd.bbok.global.exception.ErrorCode.JWT_INVALID_TOKEN;
 
 import com.dnd.bbok.domain.jwt.dto.SessionUser;
@@ -12,14 +11,10 @@ import com.dnd.bbok.infra.redis.RefreshToken;
 import com.dnd.bbok.infra.redis.RefreshTokenRepository;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
-import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.MalformedJwtException;
 import io.jsonwebtoken.SignatureAlgorithm;
-import io.jsonwebtoken.UnsupportedJwtException;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
-import io.jsonwebtoken.security.SignatureException;
 import java.security.Key;
 import java.time.Duration;
 import java.time.Instant;
@@ -69,7 +64,7 @@ public class JwtTokenProvider {
 
   //accessToken을 사용하여 Authentication 객체를 생성한다.
   public Authentication getAuthentication(String accessToken) {
-    Claims claims = extractAllClaims(accessToken); //claims 정보를 추출할때 유효성 체크를 시작한다.
+    Claims claims = extractAllClaims(accessToken);
     String role = claims.get("role").toString();
     String uuid = claims.getSubject();
     return new UsernamePasswordAuthenticationToken(getSessionUser(uuid), "",
@@ -133,17 +128,11 @@ public class JwtTokenProvider {
   }
 
   private Claims extractAllClaims(String token) {
-    return checkClaims(token).getBody();
-  }
-
-  private Jws<Claims> checkClaims(String token) {
     try {
       return Jwts.parserBuilder().setSigningKey(secretKey).build()
-          .parseClaimsJws(token);
-    } catch (MalformedJwtException | SignatureException | UnsupportedJwtException e) {
-      throw new JwtException(JWT_INVALID_TOKEN);
+          .parseClaimsJws(token).getBody();
     } catch (ExpiredJwtException e) {
-      throw new JwtException(JWT_EXPIRED_TOKEN);
+      return e.getClaims();
     }
   }
 
