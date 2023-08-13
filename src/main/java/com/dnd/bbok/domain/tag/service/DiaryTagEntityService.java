@@ -25,4 +25,8 @@ public class DiaryTagEntityService {
                     .build())
         );
     }
+
+    public List<DiaryTag> getDiariesTags(List<Long> diaryIds) {
+        return this.diaryTagRepository.findByDiaryIds(diaryIds);
+    }
 }

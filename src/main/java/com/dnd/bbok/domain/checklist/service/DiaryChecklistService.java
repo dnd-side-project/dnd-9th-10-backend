@@ -1,15 +1,17 @@
 package com.dnd.bbok.domain.checklist.service;
 
+import com.dnd.bbok.domain.checklist.entity.DiaryChecklist;
 import com.dnd.bbok.domain.checklist.entity.MemberChecklist;
 import com.dnd.bbok.domain.diary.dto.request.ChecklistDto;
 import com.dnd.bbok.domain.diary.entity.Diary;
 import com.dnd.bbok.global.exception.BusinessException;
-import com.dnd.bbok.global.exception.ErrorCode;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.stream.Collectors;
+
+import static com.dnd.bbok.global.exception.ErrorCode.INVALID_MEMBER_CHECKLIST_ID;
 
 @Service
 @RequiredArgsConstructor
@@ -22,9 +24,13 @@ public class DiaryChecklistService {
         List<MemberChecklist> memberChecklist = memberChecklistEntityService.getMemberChecklistInIds(checklist.stream().map(ChecklistDto::getId).collect(Collectors.toList()));
 
         if (memberChecklist.size() != NEED_CHECKLIST_COUNT) {
-           throw new BusinessException(ErrorCode.INVALID_MEMBER_CHECKLIST_ID);
+           throw new BusinessException(INVALID_MEMBER_CHECKLIST_ID);
         }
 
         diaryChecklistEntityService.createDiaryChecklist(diary, memberChecklist, checklist);
+    }
+
+    public List<DiaryChecklist> getDiaryChecklistByDiaryIds(List<Long> diaryIds) {
+        return this.diaryChecklistEntityService.getDiaryChecklistByDiaryIds(diaryIds);
     }
 }

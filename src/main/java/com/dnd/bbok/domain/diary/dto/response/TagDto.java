@@ -11,8 +11,9 @@ public class TagDto {
     @ApiModelProperty(value = "태그 이름")
     private final String tag;
 
-    public TagDto() {
-        this.id = 1L;
-        this.tag = "가스라이팅";
+
+    public TagDto(long id, String tag) {
+        this.id = id;
+        this.tag = tag;
     }
 }

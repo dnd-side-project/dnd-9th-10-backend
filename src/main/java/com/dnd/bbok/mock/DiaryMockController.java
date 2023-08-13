@@ -1,6 +1,5 @@
 package com.dnd.bbok.mock;
 
-import com.dnd.bbok.domain.diary.dto.request.DiaryRequestDto;
 import com.dnd.bbok.domain.diary.dto.response.*;
 import com.dnd.bbok.global.response.DataResponse;
 import com.dnd.bbok.global.response.MessageResponse;
@@ -12,8 +11,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-
 @RestController
 @RequestMapping("api/v1/friend")
 @Api(tags = "Mock 일기 관련 컨트롤러")
@@ -24,28 +21,6 @@ public class DiaryMockController {
     public ResponseEntity<DataResponse<DiaryDto>> getDiary(@PathVariable("id") Long id) {
         DiaryDto diary = new DiaryDto(id);
         return new ResponseEntity<>(DataResponse.of(HttpStatus.OK, "일기 조회 성공", diary), HttpStatus.OK);
-    }
-
-    @ApiOperation(value = "일기 목록 조회")
-    @GetMapping("{id}/diary")
-    public ResponseEntity<DataResponse<DiariesDto>> getDiaries(
-            @Parameter(name = "id", in = ParameterIn.PATH, description = "친구 id") @PathVariable("id") Long id,
-            @Parameter(name = "offset", in = ParameterIn.QUERY, description = "목록 오프셋") @RequestParam(value = "offset", required = false) Integer offset,
-            @Parameter(name = "order", in = ParameterIn.QUERY, description = "시간 정렬 기준") @RequestParam(value = "order", required = false) String order,
-            @Parameter(name = "q", in = ParameterIn.QUERY, description = "검색어") @RequestParam(value = "q", required = false) String keyword,
-            @Parameter(name = "tag", in = ParameterIn.QUERY, description = "태그") @RequestParam(value = "tag", required = false) String tag
-    ) {
-        DiaryDto diary = new DiaryDto(1L);
-        ArrayList<DiaryDto> diaries = new ArrayList<>();
-        diaries.add(diary);
-        DiariesDto list = new DiariesDto(diaries);
-        return new ResponseEntity<>(DataResponse.of(HttpStatus.OK, "일기 목록 조회 성공", list), HttpStatus.OK);
-    }
-
-    @ApiOperation("태그 목록 조회")
-    @GetMapping("diary/tag")
-    public ResponseEntity<DataResponse<DiaryTagDto>> getTags() {
-        return new ResponseEntity<>(DataResponse.of(HttpStatus.OK , "태그 목록 조회 성공", new DiaryTagDto()), HttpStatus.OK);
     }
 
     @ApiOperation("스티커 목록 조회")

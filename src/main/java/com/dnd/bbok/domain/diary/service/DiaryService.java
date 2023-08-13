@@ -42,4 +42,8 @@ public class DiaryService {
         return friendTempService.updateFriendScore(friend, score).getFriendScore();
     }
 
+    // TODO Paging 기능 구현
+    public List<Diary> getDiariesByFriendId(Long friendId) {
+        return this.diaryEntityService.getDiariesByFriendId(friendId);
+    }
 }

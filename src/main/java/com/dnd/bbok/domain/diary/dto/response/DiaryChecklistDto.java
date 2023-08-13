@@ -2,7 +2,6 @@ package com.dnd.bbok.domain.diary.dto.response;
 
 import lombok.Getter;
 
-import java.util.Random;
 
 @Getter
 public class DiaryChecklistDto {
@@ -10,8 +9,8 @@ public class DiaryChecklistDto {
     private final String criteria;
     private final Boolean isChecked;
 
-    public DiaryChecklistDto(String criteria, boolean isChecked) {
-        this.id = Math.abs(new Random().nextLong() % 21);
+    public DiaryChecklistDto(Long id, String criteria, boolean isChecked) {
+        this.id = id;
         this.criteria = criteria;
         this.isChecked = isChecked;
     }

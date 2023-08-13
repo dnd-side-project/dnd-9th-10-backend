@@ -5,6 +5,7 @@ import static javax.persistence.GenerationType.*;
 
 import com.dnd.bbok.domain.diary.entity.Diary;
 import lombok.Builder;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.Entity;
@@ -17,6 +18,7 @@ import javax.persistence.ManyToOne;
  * 다이어리가 가지고 있는 태그 정보
  */
 @Entity
+@Getter
 @NoArgsConstructor
 public class DiaryTag {
 

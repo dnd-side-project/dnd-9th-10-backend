@@ -5,6 +5,8 @@ import com.dnd.bbok.domain.saying.entity.Saying;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.Random;
 import java.util.UUID;
 
 /**
@@ -17,7 +19,11 @@ public class SayingService {
     private final SayingEntityService sayingEntityService;
 
     public DiarySayingDto getRandomSaying(UUID memberId) {
-        Saying saying = sayingEntityService.getRandomSaying();
+        List<Saying> sayings = sayingEntityService.getAllSaying();
+        Random random = new Random();
+        int index = random.nextInt(sayings.size());
+        Saying saying = sayings.get(index);
+        
         boolean isMarked = bookmarkEntityService.isMarked(memberId, saying.getId());
 
         return DiarySayingDto.builder()
