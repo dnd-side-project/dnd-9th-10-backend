@@ -1,5 +1,6 @@
 package com.dnd.bbok.domain.checklist.service;
 
+import com.dnd.bbok.domain.checklist.entity.DiaryChecklist;
 import com.dnd.bbok.domain.checklist.entity.MemberChecklist;
 import com.dnd.bbok.domain.diary.dto.request.ChecklistDto;
 import com.dnd.bbok.domain.diary.entity.Diary;
@@ -27,5 +28,9 @@ public class DiaryChecklistService {
         }
 
         diaryChecklistEntityService.createDiaryChecklist(diary, memberChecklist, checklist);
+    }
+
+    public List<DiaryChecklist> getDiaryChecklistByDiaryIds(List<Long> diaryIds) {
+        return this.diaryChecklistEntityService.getDiaryChecklistByDiaryIds(diaryIds);
     }
 }

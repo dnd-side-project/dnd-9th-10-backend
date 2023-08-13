@@ -1,6 +1,8 @@
 package com.dnd.bbok.domain.tag.service;
 
+import com.dnd.bbok.domain.diary.entity.Diary;
 import com.dnd.bbok.domain.friend.entity.Friend;
+import com.dnd.bbok.domain.tag.entity.DiaryTag;
 import com.dnd.bbok.domain.tag.entity.FriendTag;
 import com.dnd.bbok.global.exception.BusinessException;
 import lombok.RequiredArgsConstructor;
@@ -23,7 +25,7 @@ import static com.dnd.bbok.global.exception.ErrorCode.EXCEED_MAX_TAG_COUNT;
 public class TagService {
     private static final int MAX_TAG_COUNT = 5;
     private final FriendTagEntityService friendTagEntityService;
-
+    private final DiaryTagEntityService diaryTagEntityService;
 
     /**
      * 이번 일기 작성에 사용된 tag 들의 id 목록 반환
@@ -49,5 +51,13 @@ public class TagService {
             }
         });
         return targetFriendTags;
+    }
+
+    public void createDiaryTag(Diary diary, List<FriendTag> friendTags) {
+        this.diaryTagEntityService.createDiaryTag(diary, friendTags);
+    }
+
+    public List<DiaryTag> getDiariesTags(List<Long> diaryIds) {
+        return this.diaryTagEntityService.getDiariesTags(diaryIds);
     }
 }

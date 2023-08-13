@@ -7,6 +7,8 @@ import com.dnd.bbok.domain.friend.entity.Friend;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 /**
  * Diary Entity 관련한 DB 작업을 수행하는 서비스
  */
@@ -23,5 +25,9 @@ public class DiaryEntityService {
                 .diaryDate(diaryRequestDto.getDate())
                 .build();
         return this.diaryRepository.save(diary);
+    }
+
+    public List<Diary> getDiariesByFriendId(Long friendId) {
+        return this.diaryRepository.findAllByFriendId(friendId);
     }
 }

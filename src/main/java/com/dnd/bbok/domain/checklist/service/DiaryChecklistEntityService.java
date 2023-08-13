@@ -31,4 +31,8 @@ public class DiaryChecklistEntityService {
                     .build()));
         });
     }
+
+    public List<DiaryChecklist> getDiaryChecklistByDiaryIds(List<Long> diaryIds) {
+        return this.diaryChecklistRepository.getDiaryChecklistByDiaryIds(diaryIds);
+    }
 }
