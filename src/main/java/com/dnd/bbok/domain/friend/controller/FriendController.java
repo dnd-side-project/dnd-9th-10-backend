@@ -1,5 +1,7 @@
 package com.dnd.bbok.domain.friend.controller;
 
+import com.dnd.bbok.domain.checklist.dto.response.MyChecklistDto;
+import com.dnd.bbok.domain.checklist.service.MemberChecklistUseCaseService;
 import com.dnd.bbok.domain.friend.dto.request.FriendRequestDto;
 import com.dnd.bbok.domain.friend.dto.response.BbokCharactersDto;
 import com.dnd.bbok.domain.friend.dto.response.FriendsDto;
@@ -67,11 +69,12 @@ public class FriendController {
   @ApiOperation(value = "나만의 기준 조회")
   @GetMapping("/friend/checklist")
   @PreAuthorize("isAuthenticated()")
-  public ResponseEntity<DataResponse<FriendsDto>> getFriends(
+  public ResponseEntity<DataResponse<MyChecklistDto>> getChecklist(
       @AuthenticationPrincipal SessionUser sessionUser
   ) {
-    FriendsDto friends = diaryFriendUseCaseService.getFriends(sessionUser.getUuid());
+    //해당 uuid를 가진 member와 체크리스트를 들고온다.
+    MyChecklistDto myChecklist = memberChecklistUseCaseService.getMemberChecklist(sessionUser.getUuid());
     return new ResponseEntity<>(
-        DataResponse.of(HttpStatus.OK, "친구 목록 조회 성공", friends), HttpStatus.OK);
+        DataResponse.of(HttpStatus.OK, "기준 조회 성공", myChecklist), HttpStatus.OK);
   }
 }
