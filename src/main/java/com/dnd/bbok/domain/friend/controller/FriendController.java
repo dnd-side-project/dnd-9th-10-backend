@@ -31,6 +31,7 @@ public class FriendController {
   private final IconService iconService;
   private final MemberFriendUseCaseService memberFriendUseCaseService;
   private final DiaryFriendUseCaseService diaryFriendUseCaseService;
+  private final MemberChecklistUseCaseService memberChecklistUseCaseService;
 
   @ApiOperation(value = "캐릭터 정보 제공")
   @GetMapping("/character")
@@ -54,6 +55,17 @@ public class FriendController {
 
   @ApiOperation(value = "친구 목록 조회")
   @GetMapping("/friend")
+  @PreAuthorize("isAuthenticated()")
+  public ResponseEntity<DataResponse<FriendsDto>> getFriends(
+      @AuthenticationPrincipal SessionUser sessionUser
+  ) {
+    FriendsDto friends = diaryFriendUseCaseService.getFriends(sessionUser.getUuid());
+    return new ResponseEntity<>(
+        DataResponse.of(HttpStatus.OK, "친구 목록 조회 성공", friends), HttpStatus.OK);
+  }
+
+  @ApiOperation(value = "나만의 기준 조회")
+  @GetMapping("/friend/checklist")
   @PreAuthorize("isAuthenticated()")
   public ResponseEntity<DataResponse<FriendsDto>> getFriends(
       @AuthenticationPrincipal SessionUser sessionUser
