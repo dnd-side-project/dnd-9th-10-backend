@@ -18,7 +18,7 @@ public class FriendTempService {
     }
 
     public Friend updateFriendScore(Friend friend, Long score) {
-        friend.setFriendScore(score);
+        friend.changeFriendScore(score);
         return this.friendRepository.save(friend);
     }
 }

@@ -1,6 +1,8 @@
 package com.dnd.bbok.domain.friend.dto.response;
 
+import com.dnd.bbok.domain.friend.entity.Friend;
 import io.swagger.annotations.ApiModelProperty;
+import java.time.LocalDate;
 import lombok.Getter;
 
 /**
@@ -12,8 +14,8 @@ public class FriendDto {
   @ApiModelProperty(value = "친구 고유 ID")
   private final Long id;
 
-  @ApiModelProperty(value = "친구 생성 날짜 카운팅")
-  private final int countingDay;
+  @ApiModelProperty(value = "친구 생성 날짜")
+  private final LocalDate startedAt;
 
   @ApiModelProperty(value = "친구 캐릭터 아이콘 url")
   private final String characterUrl;
@@ -28,19 +30,16 @@ public class FriendDto {
   private final Long score;
 
   @ApiModelProperty(value = "친구 활성화 상태")
-  private final boolean status;
+  private final boolean isActive;
 
-  /**
-   * mock 제공을 위한 기본생성자
-   */
-  public FriendDto() {
-    this.id = 1L;
-    this.countingDay = 23;
-    this.characterUrl = "https://i.ibb.co/ZgfdtSY/hedgehog.png";
-    this.name = "김도리";
-    this.countingDiary = 6;
-    this.score = 58L;
-    this.status = true;
+  public FriendDto(Friend friend, String iconUrl, int diaryCount) {
+    this.id = friend.getId();
+    this.startedAt = friend.getCreatedAt();
+    this.characterUrl = iconUrl;
+    this.name = friend.getName();
+    this.countingDiary = diaryCount;
+    this.score = friend.getFriendScore();
+    this.isActive = friend.isActive();
   }
 
 }

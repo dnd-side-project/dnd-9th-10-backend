@@ -30,4 +30,8 @@ public class DiaryEntityService {
     public List<Diary> getDiariesByFriendId(Long friendId) {
         return this.diaryRepository.findAllByFriendId(friendId);
     }
+
+    public int countDiariesByFriendId(Long friendId) {
+        return this.diaryRepository.countDiaries(friendId);
+    }
 }
