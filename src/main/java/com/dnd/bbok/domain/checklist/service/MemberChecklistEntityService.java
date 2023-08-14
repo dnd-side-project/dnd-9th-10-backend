@@ -3,6 +3,7 @@ package com.dnd.bbok.domain.checklist.service;
 
 import com.dnd.bbok.domain.checklist.entity.MemberChecklist;
 import com.dnd.bbok.domain.checklist.repository.MemberChecklistRepository;
+import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -19,5 +20,9 @@ public class MemberChecklistEntityService {
 
     public List<MemberChecklist> getMemberChecklistInIds(List<Long> ids) {
         return this.memberChecklistRepository.findByIdIn(ids);
+    }
+
+    public List<MemberChecklist> getMemberChecklistInUsing(UUID memberId) {
+        return memberChecklistRepository.findByChecklistInUsing(memberId);
     }
 }

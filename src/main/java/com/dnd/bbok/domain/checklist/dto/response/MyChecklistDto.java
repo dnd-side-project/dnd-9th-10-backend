@@ -1,7 +1,6 @@
 package com.dnd.bbok.domain.checklist.dto.response;
 
 import io.swagger.annotations.ApiModelProperty;
-import java.util.ArrayList;
 import java.util.List;
 import lombok.Getter;
 
@@ -12,17 +11,14 @@ import lombok.Getter;
 public class MyChecklistDto {
 
   @ApiModelProperty(value = "이상적인 기준")
-  private final List<ChecklistInfoDto> badChecklist = new ArrayList<>();
+  private final List<ChecklistInfoDto> badChecklist;
 
   @ApiModelProperty(value = "기피하는 기준")
-  private final List<ChecklistInfoDto> goodChecklist = new ArrayList<>();
+  private final List<ChecklistInfoDto> goodChecklist;
 
-  /**
-   * mock을 위한 기본 생성
-   */
-  public MyChecklistDto() {
-    badChecklist.add(new ChecklistInfoDto());
-    goodChecklist.add(new ChecklistInfoDto());
+  public MyChecklistDto(List<ChecklistInfoDto> bad, List<ChecklistInfoDto> good) {
+    this.badChecklist = bad;
+    this.goodChecklist = good;
   }
 
 }

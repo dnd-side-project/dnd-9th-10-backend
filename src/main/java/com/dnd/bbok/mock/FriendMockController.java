@@ -1,7 +1,6 @@
 package com.dnd.bbok.mock;
 
 import com.dnd.bbok.domain.checklist.dto.request.ChecklistInfoRequestDto;
-import com.dnd.bbok.domain.checklist.dto.response.MyChecklistDto;
 import com.dnd.bbok.domain.friend.dto.response.FriendsDto;
 import com.dnd.bbok.global.response.DataResponse;
 import com.dnd.bbok.global.response.MessageResponse;
@@ -26,15 +25,6 @@ public class FriendMockController {
     FriendsDto friends = new FriendsDto();
     return new ResponseEntity<>(
         DataResponse.of(HttpStatus.OK, "친구 목록 조회 성공", friends), HttpStatus.OK);
-  }
-
-
-  @ApiOperation(value = "나만의 기준 조회")
-  @GetMapping("/friend/checklist")
-  public ResponseEntity<DataResponse<MyChecklistDto>> getChecklist() {
-    MyChecklistDto myChecklist = new MyChecklistDto();
-    return new ResponseEntity<>(
-        DataResponse.of(HttpStatus.OK, "기준 조회 성공", myChecklist), HttpStatus.OK);
   }
 
   @ApiOperation(value = "나만의 기준 수정")
