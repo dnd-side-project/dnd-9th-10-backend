@@ -1,7 +1,6 @@
 package com.dnd.bbok.infra.swagger;
 
 import java.lang.annotation.Annotation;
-import java.util.Arrays;
 import java.util.List;
 import java.util.function.Predicate;
 import lombok.RequiredArgsConstructor;
@@ -59,7 +58,8 @@ public class SwaggerConfig {
         .securitySchemes(List.of(apiKey()))
         .select()
         .apis(RequestHandlerSelectors.withMethodAnnotation(PreAuthorize.class))
-        .apis(RequestHandlerSelectors.basePackage("com.dnd.bbok.domain"))
+        .apis(RequestHandlerSelectors.basePackage("com.dnd.bbok.domain")
+                .or(RequestHandlerSelectors.basePackage("com.dnd.bbok.basicchecklist")))
         .build()
         .apiInfo(apiInfo());
   }
@@ -79,7 +79,7 @@ public class SwaggerConfig {
     AuthorizationScope authorizationScope = new AuthorizationScope("global", "accessEverything");
     AuthorizationScope[] authorizationScopes = new AuthorizationScope[1];
     authorizationScopes[0] = authorizationScope;
-    return Arrays.asList(new SecurityReference("Authorization", authorizationScopes));
+    return List.of(new SecurityReference("Authorization", authorizationScopes));
   }
 
   // 버튼 클릭 시 입력 값 설정

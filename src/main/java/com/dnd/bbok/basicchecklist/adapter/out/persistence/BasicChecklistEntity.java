@@ -1,4 +1,4 @@
-package com.dnd.bbok.domain.checklist.entity;
+package com.dnd.bbok.basicchecklist.adapter.out.persistence;
 
 import static javax.persistence.GenerationType.IDENTITY;
 
@@ -6,6 +6,8 @@ import com.sun.istack.NotNull;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.Table;
+
 import lombok.Getter;
 
 
@@ -13,8 +15,9 @@ import lombok.Getter;
  * 기본 제공 기준(preSet)
  */
 @Entity
+@Table(name = "basic_checklist")
 @Getter
-public class BasicChecklist {
+public class BasicChecklistEntity {
 
   @Id
   @GeneratedValue(strategy = IDENTITY)
