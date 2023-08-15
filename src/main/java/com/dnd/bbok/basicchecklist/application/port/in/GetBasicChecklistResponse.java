@@ -11,7 +11,7 @@ public class GetBasicChecklistResponse {
   @ApiModelProperty(value = "기본 이상적인 체크리스트")
   private final List<String> goodChecklist;
 
-  @ApiModelProperty(value = "기본 이상적인 체크리스트")
+  @ApiModelProperty(value = "기본 기피하는 체크리스트")
   private final List<String> badChecklist;
 
 
