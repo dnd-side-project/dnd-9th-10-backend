@@ -1,10 +1,7 @@
 package com.dnd.bbok.domain.member.controller;
 
 import com.dnd.bbok.domain.member.dto.response.LoginResponseDto;
-import com.dnd.bbok.domain.member.dto.response.MemberInfoResponseDto;
-import com.dnd.bbok.domain.member.service.MemberInfoService;
 import com.dnd.bbok.domain.member.service.MemberSignUpService;
-import com.dnd.bbok.domain.jwt.dto.SessionUser;
 import com.dnd.bbok.global.response.DataResponse;
 import com.dnd.bbok.infra.feign.dto.response.KakaoUserInfoResponseDto;
 import com.dnd.bbok.infra.feign.service.KakaoFeignService;
@@ -15,8 +12,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -30,7 +25,6 @@ public class MemberController {
 
   private final KakaoFeignService kakaoFeignService;
   private final MemberSignUpService memberSignUpService;
-  private final MemberInfoService memberInfoService;
 
   /**
    * 게스트 로그인 관련 컨트롤러
@@ -43,22 +37,6 @@ public class MemberController {
     LoginResponseDto guestLoginResponse = memberSignUpService.signUpGusetMember();
     return new ResponseEntity<>(DataResponse.of(HttpStatus.CREATED,
         "게스트 회원 가입 성공", guestLoginResponse), HttpStatus.CREATED);
-  }
-
-  /**
-   * 유저가 자기 자신의 정보에 대해 알 수 있다.
-   */
-  @ApiOperation(
-      value = "내 정보 조회",
-      notes = "마이 페이지에서 사용자의 정보를 볼 수 있습니다.")
-  @PreAuthorize("isAuthenticated()")
-  @GetMapping("/api/v1/member")
-  public ResponseEntity<DataResponse<MemberInfoResponseDto>> getMember(
-      @AuthenticationPrincipal SessionUser sessionUser
-  ) {
-    MemberInfoResponseDto memberInfo = memberInfoService.getMember(sessionUser.getUuid());
-    return new ResponseEntity<>(
-        DataResponse.of(HttpStatus.OK, "멤버 정보 조회 성공", memberInfo), HttpStatus.OK);
   }
 
   /**
