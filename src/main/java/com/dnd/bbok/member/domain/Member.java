@@ -1,7 +1,5 @@
 package com.dnd.bbok.member.domain;
 
-import com.dnd.bbok.member.adapter.out.persistence.entity.OAuth2Provider;
-import com.dnd.bbok.member.adapter.out.persistence.entity.Role;
 import java.util.UUID;
 import lombok.Builder;
 import lombok.Getter;

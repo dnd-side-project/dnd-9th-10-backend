@@ -1,4 +1,4 @@
-package com.dnd.bbok.member.adapter.out.persistence.entity;
+package com.dnd.bbok.member.domain;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;

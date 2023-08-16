@@ -1,8 +1,8 @@
 package com.dnd.bbok.member.application.port.in;
 
-import static com.dnd.bbok.member.adapter.out.persistence.entity.OAuth2Provider.*;
+import static com.dnd.bbok.member.domain.OAuth2Provider.*;
 
-import com.dnd.bbok.member.adapter.out.persistence.entity.OAuth2Provider;
+import com.dnd.bbok.member.domain.OAuth2Provider;
 import com.dnd.bbok.member.domain.Member;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
