@@ -59,7 +59,8 @@ public class SwaggerConfig {
         .select()
         .apis(RequestHandlerSelectors.withMethodAnnotation(PreAuthorize.class))
         .apis(RequestHandlerSelectors.basePackage("com.dnd.bbok.domain")
-                .or(RequestHandlerSelectors.basePackage("com.dnd.bbok.basicchecklist")))
+                .or(RequestHandlerSelectors.basePackage("com.dnd.bbok.basicchecklist"))
+                .or(RequestHandlerSelectors.basePackage("com.dnd.bbok.member")))
         .build()
         .apiInfo(apiInfo());
   }
