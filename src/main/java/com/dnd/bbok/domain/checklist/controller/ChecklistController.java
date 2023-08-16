@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.*;
 @Slf4j
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/v1/checklist0")
+@RequestMapping("/api/v1/checklist")
 @Api(tags = "체크리스트 관련 컨트롤러(Old)")
 public class ChecklistController {
     private final MemberChecklistUseCaseService memberChecklistUseCaseService;
