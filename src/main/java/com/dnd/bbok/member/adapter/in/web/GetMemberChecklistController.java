@@ -1,7 +1,7 @@
 package com.dnd.bbok.member.adapter.in.web;
 
-import com.dnd.bbok.domain.jwt.dto.SessionUser;
 import com.dnd.bbok.global.response.DataResponse;
+import com.dnd.bbok.member.application.port.in.response.SessionUser;
 import com.dnd.bbok.member.application.port.in.usecase.GetMemberChecklistQuery;
 import com.dnd.bbok.member.application.port.in.response.GetMemberChecklistResponse;
 import io.swagger.annotations.Api;

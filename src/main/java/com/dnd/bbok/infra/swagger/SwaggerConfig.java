@@ -43,7 +43,7 @@ public class SwaggerConfig {
         .groupName("Non-Security API")
         .select()
         .apis(withoutMethodAnnotation(PreAuthorize.class))
-        .apis(RequestHandlerSelectors.basePackage("com.dnd.bbok.domain"))
+        .apis(RequestHandlerSelectors.basePackage("com.dnd.bbok.member"))
         .build()
         .apiInfo(apiInfo());
   }

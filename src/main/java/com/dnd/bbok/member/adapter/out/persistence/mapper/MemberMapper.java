@@ -21,4 +21,13 @@ public class MemberMapper {
         .build();
   }
 
+  public MemberEntity toEntity(Member member) {
+    return MemberEntity.builder()
+        .userNumber(member.getUserNumber())
+        .role(member.getRole())
+        .oAuth2Provider(member.getOAuth2Provider())
+        .profileUrl(member.getProfileUrl())
+        .username(member.getUsername())
+        .build();
+  }
 }

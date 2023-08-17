@@ -1,8 +1,8 @@
-package com.dnd.bbok.domain.jwt.filter;
+package com.dnd.bbok.member.adapter.in.filter;
 
 import static org.springframework.http.HttpHeaders.AUTHORIZATION;
 
-import com.dnd.bbok.domain.jwt.service.JwtTokenProvider;
+import com.dnd.bbok.member.application.port.in.usecase.GetAuthQuery;
 import java.io.IOException;
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
@@ -20,7 +20,8 @@ import org.springframework.web.filter.OncePerRequestFilter;
 @RequiredArgsConstructor
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
-  private final JwtTokenProvider jwtTokenProvider;
+  private final GetAuthQuery getAuthQuery;
+
   /**
    * 1. request header 에서 Authorization 값을 가져온다.
    *
@@ -40,14 +41,10 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     if(validateHeader(header)) {
       // 헤더에서 JWT를 받아온다.
       String accessToken = header.substring(7);
-
-      log.info("accessToken: {} 으로 Authentication 객체를 찾습니다.", accessToken);
-      Authentication authentication = jwtTokenProvider.getAuthentication(accessToken);
+      Authentication authentication = getAuthQuery.getAuthentication(accessToken);
 
       //SecurityContext에 Authentication 객체를 저장한다.
       SecurityContextHolder.getContext().setAuthentication(authentication);
-      log.info("SecurityContextHolder 에 Authentication 객체를 저장했습니다. 인증 완료 {}",
-          authentication.getName());
     }
 
     filterChain.doFilter(request, response);
