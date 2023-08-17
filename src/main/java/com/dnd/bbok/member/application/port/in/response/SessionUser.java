@@ -1,6 +1,6 @@
-package com.dnd.bbok.domain.jwt.dto;
+package com.dnd.bbok.member.application.port.in.response;
 
-import com.dnd.bbok.domain.member.entity.Member;
+import com.dnd.bbok.member.domain.Member;
 import java.io.Serializable;
 import java.util.UUID;
 import lombok.Getter;
@@ -19,3 +19,4 @@ public class SessionUser implements Serializable {
   }
 
 }
+

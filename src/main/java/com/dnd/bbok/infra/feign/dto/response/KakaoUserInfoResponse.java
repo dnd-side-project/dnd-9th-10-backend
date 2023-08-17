@@ -9,7 +9,7 @@ import lombok.Getter;
  * 카카오 서버에서 어떤 정보를 가져올지
  */
 @Getter
-public class KakaoUserInfoResponseDto {
+public class KakaoUserInfoResponse {
 
   /**
    * 회원 번호

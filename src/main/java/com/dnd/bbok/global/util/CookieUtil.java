@@ -1,6 +1,7 @@
 package com.dnd.bbok.global.util;
 
-import static com.dnd.bbok.domain.jwt.service.JwtTokenProvider.REFRESH_TOKEN_EXPIRE_LENGTH_MS;
+
+import static com.dnd.bbok.member.adapter.out.persistence.JwtTokenInitializer.REFRESH_TOKEN_EXPIRE_LENGTH_MS;
 
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseCookie;

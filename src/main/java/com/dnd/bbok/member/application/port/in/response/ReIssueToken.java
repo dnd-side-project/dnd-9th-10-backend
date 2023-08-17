@@ -1,16 +1,17 @@
-package com.dnd.bbok.domain.jwt.dto;
+package com.dnd.bbok.member.application.port.in.response;
 
 import lombok.Getter;
 
 @Getter
-public class ReIssueTokenDto {
+public class ReIssueToken {
 
   private final String refreshToken;
 
   private final String accessToken;
 
-  public ReIssueTokenDto(String accessToken, String refreshToken) {
+  public ReIssueToken(String accessToken, String refreshToken) {
     this.accessToken = accessToken;
     this.refreshToken = refreshToken;
   }
+
 }

@@ -1,8 +1,8 @@
 package com.dnd.bbok.global.security;
 
-import com.dnd.bbok.domain.jwt.filter.JwtAuthenticationFilter;
-import com.dnd.bbok.domain.jwt.filter.JwtExceptionFilter;
-import com.dnd.bbok.domain.jwt.filter.JwtAuthenticationEntryPointHandler;
+import com.dnd.bbok.member.adapter.in.filter.JwtAuthenticationEntryPointHandler;
+import com.dnd.bbok.member.adapter.in.filter.JwtAuthenticationFilter;
+import com.dnd.bbok.member.adapter.in.filter.JwtExceptionFilter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpMethod;

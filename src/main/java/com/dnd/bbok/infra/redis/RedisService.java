@@ -2,7 +2,7 @@ package com.dnd.bbok.infra.redis;
 
 import static com.dnd.bbok.global.exception.ErrorCode.REFRESH_JWT_EXPIRED;
 
-import com.dnd.bbok.domain.jwt.exception.JwtException;
+import com.dnd.bbok.member.application.exception.JwtException;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

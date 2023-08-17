@@ -1,4 +1,4 @@
-package com.dnd.bbok.domain.jwt.exception;
+package com.dnd.bbok.member.application.exception;
 
 import com.dnd.bbok.global.exception.ErrorCode;
 

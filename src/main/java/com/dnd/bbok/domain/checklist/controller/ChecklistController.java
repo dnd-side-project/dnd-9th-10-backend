@@ -2,8 +2,8 @@ package com.dnd.bbok.domain.checklist.controller;
 
 import com.dnd.bbok.domain.checklist.dto.request.MemberChecklistRequestDto;
 import com.dnd.bbok.domain.checklist.service.MemberChecklistUseCaseService;
-import com.dnd.bbok.domain.jwt.dto.SessionUser;
 import com.dnd.bbok.global.response.MessageResponse;
+import com.dnd.bbok.member.application.port.in.response.SessionUser;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
