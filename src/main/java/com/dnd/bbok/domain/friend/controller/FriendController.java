@@ -1,7 +1,6 @@
 package com.dnd.bbok.domain.friend.controller;
 
 import com.dnd.bbok.domain.friend.dto.request.FriendRequestDto;
-import com.dnd.bbok.domain.friend.dto.response.BbokCharactersDto;
 import com.dnd.bbok.domain.friend.dto.response.FriendsDto;
 import com.dnd.bbok.domain.friend.service.DiaryFriendUseCaseService;
 import com.dnd.bbok.domain.friend.service.MemberFriendUseCaseService;
@@ -32,14 +31,14 @@ public class FriendController {
   private final MemberFriendUseCaseService memberFriendUseCaseService;
   private final DiaryFriendUseCaseService diaryFriendUseCaseService;
 
-  @ApiOperation(value = "캐릭터 정보 제공")
-  @GetMapping("/character")
-  @PreAuthorize("isAuthenticated()")
-  public ResponseEntity<DataResponse<BbokCharactersDto>> getBbokCharacter() {
-    BbokCharactersDto characters = iconService.getCharacterIcon();
-    return new ResponseEntity<>(
-        DataResponse.of(HttpStatus.OK, "캐릭터 목록 제공 성공", characters), HttpStatus.OK);
-  }
+//  @ApiOperation(value = "캐릭터 정보 제공")
+//  @GetMapping("/character")
+//  @PreAuthorize("isAuthenticated()")
+//  public ResponseEntity<DataResponse<BbokCharactersDto>> getBbokCharacter() {
+//    BbokCharactersDto characters = iconService.getCharacterIcon();
+//    return new ResponseEntity<>(
+//        DataResponse.of(HttpStatus.OK, "캐릭터 목록 제공 성공", characters), HttpStatus.OK);
+//  }
 
   @ApiOperation(value = "친구 등록")
   @PostMapping("/friend")
