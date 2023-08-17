@@ -13,13 +13,16 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.PrePersist;
 import javax.persistence.Table;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.annotations.GenericGenerator;
 
 @Entity
 @Getter
 @NoArgsConstructor
+@DynamicUpdate
 @Table(name = "member")
 public class MemberEntity extends BaseTimeEntity {
   @Id
@@ -60,5 +63,21 @@ public class MemberEntity extends BaseTimeEntity {
   @PrePersist
   public void createId() {
     this.id = UuidCreator.getTimeOrdered();
+  }
+
+  @Builder
+  public MemberEntity(UUID id, Role role, String userNumber, String username,
+      String profileUrl, OAuth2Provider oAuth2Provider) {
+    this.id = id;
+    this.role = role;
+    this.userNumber = userNumber;
+    this.username = username;
+    this.profileUrl = profileUrl;
+    this.oauth2Provider = oAuth2Provider;
+  }
+
+  public void changeLatestInfo(String profileImg, String username) {
+    this.profileUrl = profileImg;
+    this.username = username;
   }
 }

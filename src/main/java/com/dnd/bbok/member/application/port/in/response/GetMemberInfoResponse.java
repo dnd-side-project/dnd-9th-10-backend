@@ -1,4 +1,4 @@
-package com.dnd.bbok.member.application.port.in;
+package com.dnd.bbok.member.application.port.in.response;
 
 import static com.dnd.bbok.member.domain.OAuth2Provider.*;
 

@@ -7,4 +7,6 @@ public interface LoadMemberPort {
 
   Member loadById(UUID memberId);
 
+  Member loadByUserNumber(String userNumber);
+
 }

@@ -3,10 +3,13 @@ package com.dnd.bbok.member.adapter.out.persistence;
 import static com.dnd.bbok.global.exception.ErrorCode.*;
 
 import com.dnd.bbok.global.exception.BusinessException;
+import com.dnd.bbok.infra.feign.dto.response.KakaoUserInfoResponse;
 import com.dnd.bbok.member.adapter.out.persistence.entity.MemberEntity;
 import com.dnd.bbok.member.adapter.out.persistence.mapper.MemberMapper;
 import com.dnd.bbok.member.adapter.out.persistence.repository.MemberTestRepository;
 import com.dnd.bbok.member.application.port.out.LoadMemberPort;
+import com.dnd.bbok.member.application.port.out.SaveMemberPort;
+import com.dnd.bbok.member.application.port.out.UpdateMemberPort;
 import com.dnd.bbok.member.domain.Member;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
@@ -20,10 +23,10 @@ import org.springframework.stereotype.Repository;
  * 4. DB 출력을 애플리케이션 포맷에 맞게 매핑한다.
  * 5. 출력을 반환한다.
  */
-
 @Repository
 @RequiredArgsConstructor
-public class MemberPersistenceAdapter implements LoadMemberPort {
+public class MemberPersistenceAdapter
+    implements LoadMemberPort, SaveMemberPort, UpdateMemberPort {
 
   private final MemberTestRepository memberTestRepository;
   private final MemberMapper memberMapper;
@@ -33,5 +36,26 @@ public class MemberPersistenceAdapter implements LoadMemberPort {
     MemberEntity member = memberTestRepository.findById(memberId)
         .orElseThrow(() -> new BusinessException(MEMBER_NOT_FOUND));
     return memberMapper.toDomain(member);
+  }
+
+  @Override
+  public Member loadByUserNumber(String userNumber) {
+    MemberEntity member = memberTestRepository.findByUserNumber(userNumber)
+        .orElseThrow(() -> new BusinessException(MEMBER_NOT_FOUND));
+    return memberMapper.toDomain(member);
+  }
+
+  @Override
+  public Member saveMember(Member member) {
+    MemberEntity memberEntity = memberMapper.toEntity(member);
+    MemberEntity savedMember = memberTestRepository.save(memberEntity);
+    return memberMapper.toDomain(savedMember);
+  }
+
+  @Override
+  public void updateInfo(KakaoUserInfoResponse kakaoInfo, Member member) {
+    MemberEntity memberEntity = memberTestRepository.findById(member.getId())
+        .orElseThrow(() -> new BusinessException(MEMBER_NOT_FOUND));
+    memberEntity.changeLatestInfo(kakaoInfo.getProfileImg(), kakaoInfo.getUsername());
   }
 }
