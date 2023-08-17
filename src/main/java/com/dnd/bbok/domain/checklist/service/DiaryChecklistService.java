@@ -1,7 +1,7 @@
 package com.dnd.bbok.domain.checklist.service;
 
 import com.dnd.bbok.domain.checklist.entity.DiaryChecklist;
-import com.dnd.bbok.domain.checklist.entity.MemberChecklist;
+import com.dnd.bbok.member.adapter.out.persistence.entity.MemberChecklistEntity;
 import com.dnd.bbok.domain.diary.dto.request.ChecklistDto;
 import com.dnd.bbok.domain.diary.entity.Diary;
 import com.dnd.bbok.global.exception.BusinessException;
@@ -21,13 +21,13 @@ public class DiaryChecklistService {
     private final DiaryChecklistEntityService diaryChecklistEntityService;
 
     public void createDiaryChecklist(Diary diary, List<ChecklistDto> checklist) {
-        List<MemberChecklist> memberChecklist = memberChecklistEntityService.getMemberChecklistInIds(checklist.stream().map(ChecklistDto::getId).collect(Collectors.toList()));
+        List<MemberChecklistEntity> memberChecklistEntity = memberChecklistEntityService.getMemberChecklistInIds(checklist.stream().map(ChecklistDto::getId).collect(Collectors.toList()));
 
-        if (memberChecklist.size() != NEED_CHECKLIST_COUNT) {
+        if (memberChecklistEntity.size() != NEED_CHECKLIST_COUNT) {
            throw new BusinessException(INVALID_MEMBER_CHECKLIST_ID);
         }
 
-        diaryChecklistEntityService.createDiaryChecklist(diary, memberChecklist, checklist);
+        diaryChecklistEntityService.createDiaryChecklist(diary, memberChecklistEntity, checklist);
     }
 
     public List<DiaryChecklist> getDiaryChecklistByDiaryIds(List<Long> diaryIds) {

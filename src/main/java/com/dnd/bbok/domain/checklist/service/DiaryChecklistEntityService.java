@@ -1,7 +1,7 @@
 package com.dnd.bbok.domain.checklist.service;
 
 import com.dnd.bbok.domain.checklist.entity.DiaryChecklist;
-import com.dnd.bbok.domain.checklist.entity.MemberChecklist;
+import com.dnd.bbok.member.adapter.out.persistence.entity.MemberChecklistEntity;
 import com.dnd.bbok.domain.diary.dto.request.ChecklistDto;
 import com.dnd.bbok.domain.diary.entity.Diary;
 import com.dnd.bbok.domain.checklist.repository.DiaryChecklistRepository;
@@ -20,14 +20,14 @@ import java.util.Optional;
 public class DiaryChecklistEntityService {
     private final DiaryChecklistRepository diaryChecklistRepository;
 
-    public void createDiaryChecklist(Diary diary, List<MemberChecklist> memberChecklist, List<ChecklistDto> checklistDtos) {
+    public void createDiaryChecklist(Diary diary, List<MemberChecklistEntity> memberChecklistEntity, List<ChecklistDto> checklistDtos) {
 
-        memberChecklist.forEach(checklist -> {
+        memberChecklistEntity.forEach(checklist -> {
             Optional<ChecklistDto> target = checklistDtos.stream().filter(ele -> Objects.equals(ele.getId(), checklist.getId())).findFirst();
             target.ifPresent(checklistDto -> this.diaryChecklistRepository.save(DiaryChecklist.builder()
                     .diary(diary)
                     .isChecked(checklistDto.getIsChecked())
-                    .memberChecklist(checklist)
+                    .memberChecklistEntity(checklist)
                     .build()));
         });
     }

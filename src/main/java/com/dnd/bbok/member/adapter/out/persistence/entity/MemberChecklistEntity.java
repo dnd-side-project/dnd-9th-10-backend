@@ -1,16 +1,12 @@
-package com.dnd.bbok.domain.checklist.entity;
+package com.dnd.bbok.member.adapter.out.persistence.entity;
 
 import static javax.persistence.FetchType.*;
 import static javax.persistence.GenerationType.IDENTITY;
 
 import com.dnd.bbok.domain.common.BaseTimeEntity;
-import com.dnd.bbok.domain.member.entity.Member;
 import com.sun.istack.NotNull;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+
+import javax.persistence.*;
 
 import lombok.Builder;
 import lombok.Getter;
@@ -22,7 +18,8 @@ import lombok.NoArgsConstructor;
 @Entity
 @Getter
 @NoArgsConstructor
-public class MemberChecklist extends BaseTimeEntity {
+@Table(name = "member_checklist")
+public class MemberChecklistEntity extends BaseTimeEntity {
 
   @Id
   @GeneratedValue(strategy = IDENTITY)
@@ -41,10 +38,10 @@ public class MemberChecklist extends BaseTimeEntity {
 
   @ManyToOne(fetch = LAZY)
   @JoinColumn(name = "member_id")
-  private Member member;
+  private MemberEntity member;
 
   @Builder
-  public MemberChecklist(Long id, String criteria, boolean isGood, boolean isUsed, Member member) {
+  public MemberChecklistEntity(Long id, String criteria, boolean isGood, boolean isUsed, MemberEntity member) {
     this.id = id;
     this.criteria = criteria;
     this.isGood = isGood;

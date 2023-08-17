@@ -1,4 +1,4 @@
-package com.dnd.bbok.basicchecklist.application.port.in;
+package com.dnd.bbok.basicchecklist.application.port.in.response;
 
 import io.swagger.annotations.ApiModelProperty;
 

@@ -3,12 +3,21 @@ package com.dnd.bbok.member.adapter.out.persistence;
 import static com.dnd.bbok.global.exception.ErrorCode.*;
 
 import com.dnd.bbok.global.exception.BusinessException;
+import com.dnd.bbok.member.adapter.out.persistence.entity.MemberChecklistEntity;
 import com.dnd.bbok.member.adapter.out.persistence.entity.MemberEntity;
+import com.dnd.bbok.member.adapter.out.persistence.mapper.MemberChecklistMapper;
 import com.dnd.bbok.member.adapter.out.persistence.mapper.MemberMapper;
+import com.dnd.bbok.member.adapter.out.persistence.repository.MemberChecklistRepository;
 import com.dnd.bbok.member.adapter.out.persistence.repository.MemberTestRepository;
+import com.dnd.bbok.member.application.port.out.LoadMemberChecklistPort;
 import com.dnd.bbok.member.application.port.out.LoadMemberPort;
+import com.dnd.bbok.member.application.port.out.SaveMemberChecklistPort;
 import com.dnd.bbok.member.domain.Member;
+
+import java.util.List;
 import java.util.UUID;
+
+import com.dnd.bbok.member.domain.MemberChecklist;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
@@ -23,15 +32,30 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 @RequiredArgsConstructor
-public class MemberPersistenceAdapter implements LoadMemberPort {
+public class MemberPersistenceAdapter implements LoadMemberPort, LoadMemberChecklistPort, SaveMemberChecklistPort {
 
   private final MemberTestRepository memberTestRepository;
+  private final MemberChecklistRepository memberChecklistRepository;
   private final MemberMapper memberMapper;
+  private final MemberChecklistMapper memberChecklistMapper;
 
   @Override
   public Member loadById(UUID memberId) {
     MemberEntity member = memberTestRepository.findById(memberId)
         .orElseThrow(() -> new BusinessException(MEMBER_NOT_FOUND));
     return memberMapper.toDomain(member);
+  }
+
+  @Override
+  public MemberChecklist loadMemberChecklist(UUID memberId) {
+    return memberChecklistMapper.toDomain(memberChecklistRepository.findByChecklistInUsing(memberId));
+  }
+
+  @Override
+  public void saveMemberChecklist(UUID memberId, MemberChecklist memberChecklist) {
+    MemberEntity memberEntity = memberTestRepository.findById(memberId)
+            .orElseThrow(() -> new BusinessException(MEMBER_NOT_FOUND));
+    List<MemberChecklistEntity> memberChecklistEntities = memberChecklistMapper.toEntity(memberChecklist, memberEntity);
+    memberChecklistRepository.saveAll(memberChecklistEntities);
   }
 }
