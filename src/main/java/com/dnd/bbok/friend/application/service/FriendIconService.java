@@ -12,8 +12,6 @@ import org.springframework.stereotype.Service;
 @Slf4j
 public class FriendIconService implements GetIconQuery {
 
-  private final LoadIconPort loadIconPort;
-
   @Override
   public BbokCharactersDto getCharacterIcon() {
     return null;
