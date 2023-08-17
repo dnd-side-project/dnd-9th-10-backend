@@ -47,12 +47,12 @@ public class MemberPersistenceAdapter implements LoadMemberPort, LoadMemberCheck
   }
 
   @Override
-  public MemberChecklist load(UUID memberId) {
+  public MemberChecklist loadMemberChecklist(UUID memberId) {
     return memberChecklistMapper.toDomain(memberChecklistRepository.findByChecklistInUsing(memberId));
   }
 
   @Override
-  public void save(UUID memberId, MemberChecklist memberChecklist) {
+  public void saveMemberChecklist(UUID memberId, MemberChecklist memberChecklist) {
     MemberEntity memberEntity = memberTestRepository.findById(memberId)
             .orElseThrow(() -> new BusinessException(MEMBER_NOT_FOUND));
     List<MemberChecklistEntity> memberChecklistEntities = memberChecklistMapper.toEntity(memberChecklist, memberEntity);

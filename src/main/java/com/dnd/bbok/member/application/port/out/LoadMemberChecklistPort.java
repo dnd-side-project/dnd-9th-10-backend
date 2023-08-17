@@ -5,5 +5,5 @@ import com.dnd.bbok.member.domain.MemberChecklist;
 import java.util.UUID;
 
 public interface LoadMemberChecklistPort {
-    MemberChecklist load(UUID memberId);
+    MemberChecklist loadMemberChecklist(UUID memberId);
 }

@@ -50,12 +50,12 @@ public class MemberTestService implements GetMemberQuery, CreateMemberChecklistU
 
 
     MemberChecklist memberChecklist = new MemberChecklist(goodChecklist, badChecklist);
-    saveMemberChecklistPort.save(memberId, memberChecklist);
+    saveMemberChecklistPort.saveMemberChecklist(memberId, memberChecklist);
   }
 
   @Override
   public GetMemberChecklistResponse getMemberChecklistQuery(UUID memberId) {
-    MemberChecklist memberChecklist = loadMemberChecklistPort.load(memberId);
+    MemberChecklist memberChecklist = loadMemberChecklistPort.loadMemberChecklist(memberId);
     // log.info(memberChecklist.getGoodChecklist().get(0).getCriteria());
     // log.info(memberChecklist.getBadChecklist().get(0).getCriteria());
     return new GetMemberChecklistResponse(memberChecklist.getGoodChecklist(), memberChecklist.getBadChecklist()) ;
