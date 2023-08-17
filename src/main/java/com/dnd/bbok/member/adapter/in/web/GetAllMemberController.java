@@ -2,8 +2,8 @@ package com.dnd.bbok.member.adapter.in.web;
 
 import com.dnd.bbok.domain.jwt.dto.SessionUser;
 import com.dnd.bbok.global.response.DataResponse;
-import com.dnd.bbok.member.application.port.in.GetMemberInfoResponse;
-import com.dnd.bbok.member.application.port.in.GetMemberQuery;
+import com.dnd.bbok.member.application.port.in.response.GetMemberInfoResponse;
+import com.dnd.bbok.member.application.port.in.usecase.GetMemberQuery;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;

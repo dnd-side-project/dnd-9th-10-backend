@@ -1,4 +1,4 @@
-package com.dnd.bbok.member.application.port.in;
+package com.dnd.bbok.member.application.port.in.request;
 
 import io.swagger.annotations.ApiModelProperty;
 import java.util.List;

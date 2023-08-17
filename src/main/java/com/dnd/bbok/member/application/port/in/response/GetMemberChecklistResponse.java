@@ -1,4 +1,4 @@
-package com.dnd.bbok.member.application.port.in;
+package com.dnd.bbok.member.application.port.in.response;
 
 import com.dnd.bbok.member.domain.ChecklistInfo;
 import io.swagger.annotations.ApiModelProperty;

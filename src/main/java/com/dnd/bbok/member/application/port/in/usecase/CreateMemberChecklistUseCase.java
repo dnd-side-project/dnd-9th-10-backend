@@ -1,4 +1,6 @@
-package com.dnd.bbok.member.application.port.in;
+package com.dnd.bbok.member.application.port.in.usecase;
+
+import com.dnd.bbok.member.application.port.in.request.CreateMemberChecklistRequest;
 
 import java.util.UUID;
 
