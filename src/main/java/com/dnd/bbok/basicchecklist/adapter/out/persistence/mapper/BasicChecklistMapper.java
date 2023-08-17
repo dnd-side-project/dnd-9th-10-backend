@@ -1,5 +1,6 @@
-package com.dnd.bbok.basicchecklist.adapter.out.persistence;
+package com.dnd.bbok.basicchecklist.adapter.out.persistence.mapper;
 
+import com.dnd.bbok.basicchecklist.adapter.out.persistence.entity.BasicChecklistEntity;
 import com.dnd.bbok.basicchecklist.domain.BasicChecklist;
 import org.springframework.stereotype.Component;
 

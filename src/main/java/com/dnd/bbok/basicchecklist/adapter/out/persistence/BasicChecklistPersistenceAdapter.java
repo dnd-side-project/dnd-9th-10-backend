@@ -1,5 +1,7 @@
 package com.dnd.bbok.basicchecklist.adapter.out.persistence;
 
+import com.dnd.bbok.basicchecklist.adapter.out.persistence.mapper.BasicChecklistMapper;
+import com.dnd.bbok.basicchecklist.adapter.out.persistence.repository.BasicChecklistRepository;
 import com.dnd.bbok.basicchecklist.application.port.out.LoadBasicChecklistPort;
 import com.dnd.bbok.basicchecklist.domain.BasicChecklist;
 import lombok.RequiredArgsConstructor;

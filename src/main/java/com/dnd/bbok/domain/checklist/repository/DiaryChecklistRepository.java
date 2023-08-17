@@ -7,6 +7,6 @@ import org.springframework.data.jpa.repository.Query;
 import java.util.List;
 
 public interface DiaryChecklistRepository extends JpaRepository<DiaryChecklist, Long> {
-    @Query("SELECT dc FROM DiaryChecklist dc JOIN FETCH dc.diary JOIN FETCH dc.memberChecklist WHERE dc.diary.id IN :diaryIds")
+    @Query("SELECT dc FROM DiaryChecklist dc JOIN FETCH dc.diary JOIN FETCH dc.memberChecklistEntity WHERE dc.diary.id IN :diaryIds")
     List<DiaryChecklist> getDiaryChecklistByDiaryIds(List<Long> diaryIds);
 }

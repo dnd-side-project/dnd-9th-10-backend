@@ -81,8 +81,8 @@ public class DiaryDto {
         this.badChecklist = new ArrayList<>();
         // Diary Checklist 중에서 현재 Diary 의 id를 가지는 체크리스트들을 찾고, 그 태그들로 각 checklist 생성
         List<DiaryChecklist> targetChecklist = checklist.stream().filter(ele -> Objects.equals(ele.getDiary().getId(), diary.getId())).collect(Collectors.toList());
-        targetChecklist.stream().filter(ele -> ele.getMemberChecklist().isGood()).forEach(ele -> this.goodChecklist.add(new DiaryChecklistDto(ele.getId(), ele.getMemberChecklist().getCriteria(), ele.isChecked())));
-        targetChecklist.stream().filter(ele -> !ele.getMemberChecklist().isGood()).forEach(ele -> this.badChecklist.add(new DiaryChecklistDto(ele.getId(), ele.getMemberChecklist().getCriteria(), ele.isChecked())));
+        targetChecklist.stream().filter(ele -> ele.getMemberChecklistEntity().isGood()).forEach(ele -> this.goodChecklist.add(new DiaryChecklistDto(ele.getId(), ele.getMemberChecklistEntity().getCriteria(), ele.isChecked())));
+        targetChecklist.stream().filter(ele -> !ele.getMemberChecklistEntity().isGood()).forEach(ele -> this.badChecklist.add(new DiaryChecklistDto(ele.getId(), ele.getMemberChecklistEntity().getCriteria(), ele.isChecked())));
 
         // TODO 수정필요
         this.sticker = "[{sticker: KK, url: \"https://i.ibb.co/zbHrDVm/angry.png\"}]";

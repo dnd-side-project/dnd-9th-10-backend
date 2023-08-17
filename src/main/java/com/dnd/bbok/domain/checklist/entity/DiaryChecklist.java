@@ -10,6 +10,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
+import com.dnd.bbok.member.adapter.out.persistence.entity.MemberChecklistEntity;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -35,12 +36,12 @@ public class DiaryChecklist {
 
   @ManyToOne(fetch = LAZY)
   @JoinColumn(name = "member_checklist_id")
-  private MemberChecklist memberChecklist;
+  private MemberChecklistEntity memberChecklistEntity;
 
   @Builder
-  public DiaryChecklist(boolean isChecked, Diary diary, MemberChecklist memberChecklist) {
+  public DiaryChecklist(boolean isChecked, Diary diary, MemberChecklistEntity memberChecklistEntity) {
     this.isChecked = isChecked;
     this.diary = diary;
-    this.memberChecklist = memberChecklist;
+    this.memberChecklistEntity = memberChecklistEntity;
   }
 }
