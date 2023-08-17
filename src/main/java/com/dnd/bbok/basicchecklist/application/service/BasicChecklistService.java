@@ -1,7 +1,7 @@
 package com.dnd.bbok.basicchecklist.application.service;
 
-import com.dnd.bbok.basicchecklist.application.port.in.GetBasicChecklistQuery;
-import com.dnd.bbok.basicchecklist.application.port.in.GetBasicChecklistResponse;
+import com.dnd.bbok.basicchecklist.application.port.in.usecase.GetBasicChecklistQuery;
+import com.dnd.bbok.basicchecklist.application.port.in.response.GetBasicChecklistResponse;
 import com.dnd.bbok.basicchecklist.application.port.out.LoadBasicChecklistPort;
 import com.dnd.bbok.basicchecklist.domain.BasicChecklist;
 import lombok.RequiredArgsConstructor;

@@ -1,7 +1,7 @@
 package com.dnd.bbok.basicchecklist.adapter.in.web;
 
-import com.dnd.bbok.basicchecklist.application.port.in.GetBasicChecklistQuery;
-import com.dnd.bbok.basicchecklist.application.port.in.GetBasicChecklistResponse;
+import com.dnd.bbok.basicchecklist.application.port.in.usecase.GetBasicChecklistQuery;
+import com.dnd.bbok.basicchecklist.application.port.in.response.GetBasicChecklistResponse;
 import com.dnd.bbok.global.response.DataResponse;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;

@@ -1,4 +1,4 @@
-package com.dnd.bbok.domain.checklist.dto.request;
+package com.dnd.bbok.member.application.port.in.request;
 
 import io.swagger.annotations.ApiModelProperty;
 import java.util.List;
@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 
 @Getter
 @NoArgsConstructor
-public class MemberChecklistRequestDto {
+public class CreateMemberChecklistRequest {
 
   @ApiModelProperty(value = "사용자 정의 이상적인 기준 리스트")
   private List<String> goodChecklist;

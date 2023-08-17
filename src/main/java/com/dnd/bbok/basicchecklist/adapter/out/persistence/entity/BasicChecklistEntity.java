@@ -1,4 +1,4 @@
-package com.dnd.bbok.basicchecklist.adapter.out.persistence;
+package com.dnd.bbok.basicchecklist.adapter.out.persistence.entity;
 
 import static javax.persistence.GenerationType.IDENTITY;
 
