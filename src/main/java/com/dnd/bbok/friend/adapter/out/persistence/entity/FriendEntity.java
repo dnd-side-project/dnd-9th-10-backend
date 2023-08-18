@@ -3,8 +3,9 @@ package com.dnd.bbok.friend.adapter.out.persistence.entity;
 import static javax.persistence.FetchType.LAZY;
 import static javax.persistence.GenerationType.IDENTITY;
 
-import com.dnd.bbok.domain.friend.entity.BbokCharacter;
-import com.dnd.bbok.domain.member.entity.Member;
+import com.dnd.bbok.domain.common.BaseTimeEntity;
+import com.dnd.bbok.friend.domain.BbokCharacter;
+import com.dnd.bbok.member.adapter.out.persistence.entity.MemberEntity;
 import com.sun.istack.NotNull;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -13,6 +14,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -20,7 +22,8 @@ import lombok.NoArgsConstructor;
 @Entity
 @Getter
 @NoArgsConstructor
-public class FriendEntity {
+@Table(name = "friend")
+public class FriendEntity extends BaseTimeEntity {
   @Id
   @GeneratedValue(strategy = IDENTITY)
   private Long id;
@@ -41,14 +44,14 @@ public class FriendEntity {
    */
   @ManyToOne(fetch = LAZY)
   @JoinColumn(name = "member_id")
-  private Member member;
+  private MemberEntity member;
 
   public void changeFriendScore(Long friendScore) {
     this.friendScore = friendScore;
   }
 
   @Builder
-  public FriendEntity(BbokCharacter bbok, String name, boolean active, Long friendScore, Member member) {
+  public FriendEntity(BbokCharacter bbok, String name, boolean active, Long friendScore, MemberEntity member) {
     this.bbok = bbok;
     this.name = name;
     this.active = active;
