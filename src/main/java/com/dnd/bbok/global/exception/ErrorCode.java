@@ -25,6 +25,7 @@ public enum ErrorCode {
   CHARACTER_NOT_FOUND(HttpStatus.NOT_FOUND, "F001", "해당 이름을 가진 캐릭터를 찾을 수 없습니다."),
   OTHER_FRIEND_ALREADY_ACTIVE(HttpStatus.BAD_REQUEST, "F002", "동시에 2명 이상의 친구를 생성할 수 없습니다."),
   FRIEND_NOT_FOUND(HttpStatus.BAD_REQUEST, "F003", "해당 아이디를 가진 친구를 찾을 수 없습니다."),
+  INVALID_FRIEND_NAME(HttpStatus.BAD_REQUEST, "F004", "친구의 이름은 한글 또는 영문, 숫자의 조합으로 12자 이내로 설정할 수 있습니다."),
 
   // Diary
   INVALID_MEMBER_CHECKLIST_ID(HttpStatus.BAD_REQUEST, "D001","Member Checklist Id가 올바르지 않습니다."),

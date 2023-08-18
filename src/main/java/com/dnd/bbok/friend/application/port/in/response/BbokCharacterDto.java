@@ -1,4 +1,4 @@
-package com.dnd.bbok.domain.friend.dto.response;
+package com.dnd.bbok.friend.application.port.in.response;
 
 import com.dnd.bbok.friend.domain.BbokCharacter;
 import io.swagger.annotations.ApiModelProperty;
@@ -24,3 +24,4 @@ public class BbokCharacterDto {
   }
 
 }
+
