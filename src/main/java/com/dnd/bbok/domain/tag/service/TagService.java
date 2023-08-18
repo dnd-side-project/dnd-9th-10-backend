@@ -1,9 +1,9 @@
 package com.dnd.bbok.domain.tag.service;
 
-import com.dnd.bbok.domain.diary.entity.Diary;
+import com.dnd.bbok.diary.adapter.out.persistence.entity.DiaryEntity;
 import com.dnd.bbok.domain.friend.entity.Friend;
-import com.dnd.bbok.domain.tag.entity.DiaryTag;
-import com.dnd.bbok.domain.tag.entity.FriendTag;
+import com.dnd.bbok.diary.adapter.out.persistence.entity.DiaryTagEntity;
+import com.dnd.bbok.friend.adapter.out.persistence.entity.FriendTagEntity;
 import com.dnd.bbok.global.exception.BusinessException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -33,35 +33,35 @@ public class TagService {
      * @param tags 이번 일기에 사용한 태그 목록
      */
     @Transactional(rollbackOn = BusinessException.class)
-    public List<FriendTag> getFriendTags(Friend friend, List<String> tags) {
-        List<FriendTag> targetFriendTags = new ArrayList<>();
-        List<FriendTag> friendTags = friendTagEntityService.getFriendTags(friend.getId());
-        AtomicInteger tagCount = new AtomicInteger(friendTags.size());
+    public List<FriendTagEntity> getFriendTags(Friend friend, List<String> tags) {
+        List<FriendTagEntity> targetFriendTagEntities = new ArrayList<>();
+        List<FriendTagEntity> friendTagEntities = friendTagEntityService.getFriendTags(friend.getId());
+        AtomicInteger tagCount = new AtomicInteger(friendTagEntities.size());
         tags.forEach(tag -> {
-            Optional<FriendTag> targetTag = friendTags.stream().filter(ele -> Objects.equals(ele.getFriend().getId(), friend.getId())).findFirst();
+            Optional<FriendTagEntity> targetTag = friendTagEntities.stream().filter(ele -> Objects.equals(ele.getFriend().getId(), friend.getId())).findFirst();
             if (targetTag.isPresent()) {
-                targetFriendTags.add(targetTag.get());
+                targetFriendTagEntities.add(targetTag.get());
             } else {
                 if (tagCount.get() == MAX_TAG_COUNT) {
                     // 이번에 추가해서 태그 갯수가 5개 이상 된다면 에러
                     throw new BusinessException(EXCEED_MAX_TAG_COUNT);
                 }
                 tagCount.addAndGet(1);
-                targetFriendTags.add(friendTagEntityService.createTag(tag, friend));
+                // targetFriendTagEntities.add(friendTagEntityService.createTag(tag, friend));
             }
         });
-        return targetFriendTags;
+        return targetFriendTagEntities;
     }
 
-    public void createDiaryTag(Diary diary, List<FriendTag> friendTags) {
-        this.diaryTagEntityService.createDiaryTag(diary, friendTags);
+    public void createDiaryTag(DiaryEntity diaryEntity, List<FriendTagEntity> friendTagEntities) {
+        this.diaryTagEntityService.createDiaryTag(diaryEntity, friendTagEntities);
     }
 
-    public List<DiaryTag> getDiariesTags(List<Long> diaryIds) {
+    public List<DiaryTagEntity> getDiariesTags(List<Long> diaryIds) {
         return this.diaryTagEntityService.getDiariesTags(diaryIds);
     }
 
-    public List<FriendTag> getFriendTagsByFriendId(Long friendId) {
+    public List<FriendTagEntity> getFriendTagsByFriendId(Long friendId) {
         return this.friendTagEntityService.getFriendTags(friendId);
     }
 }

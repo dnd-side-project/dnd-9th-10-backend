@@ -1,5 +1,7 @@
 package com.dnd.bbok.mock;
 
+import com.dnd.bbok.diary.application.port.in.response.CreateDiaryResponse;
+import com.dnd.bbok.diary.application.port.in.response.GetDiaryResponse;
 import com.dnd.bbok.domain.diary.dto.response.*;
 import com.dnd.bbok.global.response.DataResponse;
 import com.dnd.bbok.global.response.MessageResponse;
@@ -18,8 +20,8 @@ public class DiaryMockController {
 
     @ApiOperation(value = "일기 상세 조회")
     @GetMapping("/diary/detail/{id}")
-    public ResponseEntity<DataResponse<DiaryDto>> getDiary(@PathVariable("id") Long id) {
-        DiaryDto diary = new DiaryDto(id);
+    public ResponseEntity<DataResponse<GetDiaryResponse>> getDiary(@PathVariable("id") Long id) {
+        GetDiaryResponse diary = new GetDiaryResponse(id);
         return new ResponseEntity<>(DataResponse.of(HttpStatus.OK, "일기 조회 성공", diary), HttpStatus.OK);
     }
 
@@ -33,7 +35,7 @@ public class DiaryMockController {
     @PatchMapping("diary/{id}")
     public ResponseEntity<MessageResponse> updateDiary(
             @Parameter(name = "id", in = ParameterIn.PATH, description = "일기 id") @PathVariable("id") Long id,
-            @RequestBody DiaryCreateDto diaryCreateDto
+            @RequestBody CreateDiaryResponse diaryCreateDto
     ) {
         return new ResponseEntity<>(MessageResponse.of(HttpStatus.OK, "일기 수정 성공"), HttpStatus.OK);
     }

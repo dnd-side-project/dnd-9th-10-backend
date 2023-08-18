@@ -1,7 +1,7 @@
 package com.dnd.bbok.domain.saying.service;
 
-import com.dnd.bbok.domain.saying.entity.Saying;
-import com.dnd.bbok.domain.saying.repository.SayingRepository;
+import com.dnd.bbok.saying.adapter.out.persistence.entity.SayingEntity;
+import com.dnd.bbok.saying.adapter.out.persistence.repository.SayingRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -14,7 +14,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class SayingEntityService {
     private final SayingRepository sayingRepository;
-    public List<Saying> getAllSaying() {
+    public List<SayingEntity> getAllSaying() {
         return this.sayingRepository.findAll();
     }
 
