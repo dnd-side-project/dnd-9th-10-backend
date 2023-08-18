@@ -1,6 +1,6 @@
 package com.dnd.bbok.domain.diary.dto.response;
 
-import com.dnd.bbok.domain.diary.entity.Sticker;
+import com.dnd.bbok.diary.domain.Sticker;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 

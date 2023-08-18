@@ -1,9 +1,9 @@
 package com.dnd.bbok.domain.diary.service;
 
-import com.dnd.bbok.domain.diary.dto.request.DiaryRequestDto;
-import com.dnd.bbok.domain.diary.entity.Diary;
-import com.dnd.bbok.domain.diary.repository.DiaryRepository;
-import com.dnd.bbok.domain.friend.entity.Friend;
+import com.dnd.bbok.diary.application.port.in.request.CreateDiaryRequest;
+import com.dnd.bbok.diary.adapter.out.persistence.entity.DiaryEntity;
+import com.dnd.bbok.diary.adapter.out.persistence.repository.DiaryRepository;
+import com.dnd.bbok.friend.adapter.out.persistence.entity.FriendEntity;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -17,17 +17,17 @@ import java.util.List;
 public class DiaryEntityService {
     private final DiaryRepository diaryRepository;
 
-    public Diary createDiary(Friend friend, DiaryRequestDto diaryRequestDto) {
-        Diary diary = Diary.builder()
+    public DiaryEntity createDiary(FriendEntity friend, CreateDiaryRequest createDiaryRequest) {
+        DiaryEntity diaryEntity = DiaryEntity.builder()
                 .friend(friend)
-                .contents(diaryRequestDto.getContent())
-                .emoji(diaryRequestDto.getEmoji())
-                .diaryDate(diaryRequestDto.getDate())
+                .contents(createDiaryRequest.getContent())
+                .emoji(createDiaryRequest.getEmoji())
+                .diaryDate(createDiaryRequest.getDate())
                 .build();
-        return this.diaryRepository.save(diary);
+        return this.diaryRepository.save(diaryEntity);
     }
 
-    public List<Diary> getDiariesByFriendId(Long friendId) {
+    public List<DiaryEntity> getDiariesByFriendId(Long friendId) {
         return this.diaryRepository.findAllByFriendId(friendId);
     }
 

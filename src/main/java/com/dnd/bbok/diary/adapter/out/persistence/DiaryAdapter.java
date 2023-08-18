@@ -1,0 +1,93 @@
+package com.dnd.bbok.diary.adapter.out.persistence;
+
+import com.dnd.bbok.diary.adapter.out.persistence.entity.DiaryChecklistEntity;
+import com.dnd.bbok.diary.adapter.out.persistence.entity.DiaryEntity;
+import com.dnd.bbok.diary.adapter.out.persistence.entity.DiaryTagEntity;
+import com.dnd.bbok.diary.adapter.out.persistence.repository.DiaryRepository;
+import com.dnd.bbok.diary.adapter.out.persistence.repository.DiaryTagRepository;
+import com.dnd.bbok.diary.application.port.out.SaveDiaryPort;
+import com.dnd.bbok.diary.domain.Diary;
+import com.dnd.bbok.diary.domain.DiaryChecklist;
+import com.dnd.bbok.diary.adapter.out.persistence.repository.DiaryChecklistRepository;
+import com.dnd.bbok.friend.adapter.out.persistence.entity.FriendEntity;
+import com.dnd.bbok.friend.adapter.out.persistence.entity.FriendTagEntity;
+import com.dnd.bbok.friend.adapter.out.persistence.repository.FriendTagRepository;
+import com.dnd.bbok.friend.adapter.out.persistence.repository.FriendTestRepository;
+import com.dnd.bbok.global.exception.BusinessException;
+import com.dnd.bbok.member.adapter.out.persistence.entity.MemberChecklistEntity;
+import com.dnd.bbok.member.adapter.out.persistence.repository.MemberChecklistRepository;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Component;
+
+import javax.transaction.Transactional;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
+import java.util.stream.Collectors;
+
+import static com.dnd.bbok.global.exception.ErrorCode.FRIEND_NOT_FOUND;
+
+@Component
+@RequiredArgsConstructor
+@Slf4j
+public class DiaryAdapter implements SaveDiaryPort {
+    private final FriendTagRepository friendTagRepository;
+    private final FriendTestRepository friendTestRepository;
+    private final DiaryRepository diaryRepository;
+    private final DiaryTagRepository diaryTagRepository;
+    private final DiaryChecklistRepository diaryChecklistRepository;
+    private final MemberChecklistRepository memberChecklistRepository;
+
+    @Override
+    @Transactional
+    public void saveDiary(Long friendId, Diary diary) {
+        FriendEntity friend = friendTestRepository.findById(friendId).orElseThrow(() -> new BusinessException(FRIEND_NOT_FOUND));
+
+        // 1. 태그들 중 id 가 없는 태그가 있다면 Friend Tag Entity 생성
+        diary.getTags().forEach(tag -> {
+            if (tag.getId() == null) {
+                FriendTagEntity friendTagEntity = friendTagRepository.save(FriendTagEntity.builder()
+                        .friend(friend)
+                        .name(tag.getTag())
+                        .build());
+                tag.setId(friendTagEntity.getId());
+            }
+        });
+
+
+        // 2. 다이어리 생성
+        DiaryEntity diaryEntity = diaryRepository.save(DiaryEntity.builder()
+                .friend(friend)
+                .contents(diary.getContents())
+                .diaryDate(diary.getDiaryDate())
+                .emoji(diary.getEmoji())
+                .sticker(diary.getSticker())
+                .build());
+
+        // 3. 다이어리 태그 생성
+        List<FriendTagEntity> friendTagEntities = friendTagRepository.findAllByFriendId(friendId);
+        List<DiaryTagEntity> diaryTagEntities = new ArrayList<>();
+        diary.getTags().forEach(tag -> {
+            FriendTagEntity friendTagEntity = friendTagEntities.stream().filter(ele -> Objects.equals(ele.getName(), tag.getTag())).findFirst().orElseThrow();
+            diaryTagEntities.add(DiaryTagEntity.builder()
+                    .diaryEntity(diaryEntity)
+                    .friendTagEntity(friendTagEntity)
+                    .build());
+        });
+        diaryTagRepository.saveAll(diaryTagEntities);
+
+        // 4. 다이어리 체크리스트 생성
+        List<MemberChecklistEntity> memberChecklistEntities = memberChecklistRepository.findByIdIn(diary.getDiaryChecklist().stream().map(DiaryChecklist::getMemberChecklistId).collect(Collectors.toList()));
+        List<DiaryChecklistEntity> diaryChecklistEntities = new ArrayList<>();
+        diary.getDiaryChecklist().forEach(diaryChecklist -> {
+            log.info(String.valueOf(diaryChecklist.getMemberChecklistId()));
+            MemberChecklistEntity memberChecklistEntity = memberChecklistEntities.stream().filter(ele -> Objects.equals(ele.getId(), diaryChecklist.getMemberChecklistId())).findFirst().orElseThrow();
+            diaryChecklistEntities.add(DiaryChecklistEntity.builder()
+                    .diaryEntity(diaryEntity)
+                    .memberChecklistEntity(memberChecklistEntity)
+                    .build());
+        });
+        diaryChecklistRepository.saveAll(diaryChecklistEntities);
+    }
+}

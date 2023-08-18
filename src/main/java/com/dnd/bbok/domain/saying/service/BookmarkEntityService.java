@@ -1,7 +1,7 @@
 package com.dnd.bbok.domain.saying.service;
 
-import com.dnd.bbok.domain.saying.entity.Bookmark;
-import com.dnd.bbok.domain.saying.repository.BookmarkRepository;
+import com.dnd.bbok.saying.adapter.out.persistence.entity.BookmarkEntity;
+import com.dnd.bbok.saying.adapter.out.persistence.repository.BookmarkRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -17,7 +17,7 @@ public class BookmarkEntityService {
     private final BookmarkRepository bookmarkRepository;
 
     public boolean isMarked(UUID memberId, Long sayingId) {
-        Optional<Bookmark> bookmark = this.bookmarkRepository.findByMemberIdAndSayingId(memberId, sayingId);
+        Optional<BookmarkEntity> bookmark = this.bookmarkRepository.findByMemberIdAndSayingEntityId(memberId, sayingId);
         return bookmark.isPresent();
     }
 }
