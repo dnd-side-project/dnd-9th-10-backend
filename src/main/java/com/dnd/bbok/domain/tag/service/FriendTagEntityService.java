@@ -1,8 +1,7 @@
 package com.dnd.bbok.domain.tag.service;
 
-import com.dnd.bbok.domain.tag.repository.FriendTagRepository;
-import com.dnd.bbok.domain.friend.entity.Friend;
-import com.dnd.bbok.domain.tag.entity.FriendTag;
+import com.dnd.bbok.friend.adapter.out.persistence.repository.FriendTagRepository;
+import com.dnd.bbok.friend.adapter.out.persistence.entity.FriendTagEntity;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -16,14 +15,7 @@ import java.util.List;
 public class FriendTagEntityService {
     private final FriendTagRepository friendTagRepository;
 
-    public List<FriendTag> getFriendTags(long friendId) {
+    public List<FriendTagEntity> getFriendTags(long friendId) {
         return this.friendTagRepository.findAllByFriendId(friendId);
-    }
-
-    public FriendTag createTag(String name, Friend friend) {
-        return this.friendTagRepository.save(FriendTag.builder()
-                .name(name)
-                .friend(friend)
-                .build());
     }
 }

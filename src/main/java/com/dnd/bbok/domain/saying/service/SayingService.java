@@ -1,7 +1,7 @@
 package com.dnd.bbok.domain.saying.service;
 
-import com.dnd.bbok.domain.diary.dto.response.DiarySayingDto;
-import com.dnd.bbok.domain.saying.entity.Saying;
+import com.dnd.bbok.diary.application.port.in.response.DiarySaying;
+import com.dnd.bbok.saying.adapter.out.persistence.entity.SayingEntity;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -18,18 +18,18 @@ public class SayingService {
     private final BookmarkEntityService bookmarkEntityService;
     private final SayingEntityService sayingEntityService;
 
-    public DiarySayingDto getRandomSaying(UUID memberId) {
-        List<Saying> sayings = sayingEntityService.getAllSaying();
+    public DiarySaying getRandomSaying(UUID memberId) {
+        List<SayingEntity> sayingEntities = sayingEntityService.getAllSaying();
         Random random = new Random();
-        int index = random.nextInt(sayings.size());
-        Saying saying = sayings.get(index);
+        int index = random.nextInt(sayingEntities.size());
+        SayingEntity sayingEntity = sayingEntities.get(index);
         
-        boolean isMarked = bookmarkEntityService.isMarked(memberId, saying.getId());
+        boolean isMarked = bookmarkEntityService.isMarked(memberId, sayingEntity.getId());
 
-        return DiarySayingDto.builder()
-                .id(saying.getId())
-                .contents(saying.getContents())
-                .reference(saying.getReference())
+        return DiarySaying.builder()
+                .id(sayingEntity.getId())
+                .contents(sayingEntity.getContents())
+                .reference(sayingEntity.getReference())
                 .isMarked(isMarked)
                 .build();
     }

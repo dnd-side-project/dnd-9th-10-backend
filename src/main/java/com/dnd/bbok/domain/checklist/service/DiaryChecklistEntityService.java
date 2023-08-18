@@ -1,10 +1,10 @@
 package com.dnd.bbok.domain.checklist.service;
 
-import com.dnd.bbok.domain.checklist.entity.DiaryChecklist;
+import com.dnd.bbok.diary.adapter.out.persistence.entity.DiaryChecklistEntity;
+import com.dnd.bbok.diary.application.port.in.request.CreateDiaryRequest;
 import com.dnd.bbok.member.adapter.out.persistence.entity.MemberChecklistEntity;
-import com.dnd.bbok.domain.diary.dto.request.ChecklistDto;
-import com.dnd.bbok.domain.diary.entity.Diary;
-import com.dnd.bbok.domain.checklist.repository.DiaryChecklistRepository;
+import com.dnd.bbok.diary.adapter.out.persistence.entity.DiaryEntity;
+import com.dnd.bbok.diary.adapter.out.persistence.repository.DiaryChecklistRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -20,19 +20,19 @@ import java.util.Optional;
 public class DiaryChecklistEntityService {
     private final DiaryChecklistRepository diaryChecklistRepository;
 
-    public void createDiaryChecklist(Diary diary, List<MemberChecklistEntity> memberChecklistEntity, List<ChecklistDto> checklistDtos) {
+    public void createDiaryChecklist(DiaryEntity diaryEntity, List<MemberChecklistEntity> memberChecklistEntity, List<CreateDiaryRequest.Checklist> checklistDtos) {
 
         memberChecklistEntity.forEach(checklist -> {
-            Optional<ChecklistDto> target = checklistDtos.stream().filter(ele -> Objects.equals(ele.getId(), checklist.getId())).findFirst();
-            target.ifPresent(checklistDto -> this.diaryChecklistRepository.save(DiaryChecklist.builder()
-                    .diary(diary)
+            Optional<CreateDiaryRequest.Checklist> target = checklistDtos.stream().filter(ele -> Objects.equals(ele.getId(), checklist.getId())).findFirst();
+            target.ifPresent(checklistDto -> this.diaryChecklistRepository.save(DiaryChecklistEntity.builder()
+                    .diaryEntity(diaryEntity)
                     .isChecked(checklistDto.getIsChecked())
                     .memberChecklistEntity(checklist)
                     .build()));
         });
     }
 
-    public List<DiaryChecklist> getDiaryChecklistByDiaryIds(List<Long> diaryIds) {
+    public List<DiaryChecklistEntity> getDiaryChecklistByDiaryIds(List<Long> diaryIds) {
         return this.diaryChecklistRepository.getDiaryChecklistByDiaryIds(diaryIds);
     }
 }
