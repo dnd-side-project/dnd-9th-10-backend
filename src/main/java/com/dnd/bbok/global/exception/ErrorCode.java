@@ -34,7 +34,8 @@ public enum ErrorCode {
   // JWT
   REFRESH_JWT_EXPIRED(HttpStatus.UNAUTHORIZED, "J001", "만료된 리프레시 토큰입니다."),
   JWT_INVALID_TOKEN(HttpStatus.UNAUTHORIZED, "J002", "유효하지 않은 토큰입니다."),
-  JWT_EXPIRED_TOKEN(HttpStatus.UNAUTHORIZED, "J003", "만료된 토큰입니다.");
+  JWT_EXPIRED_TOKEN(HttpStatus.UNAUTHORIZED, "J003", "만료된 토큰입니다."),
+  JWT_SIGNATURE_INVALID_TOKEN(HttpStatus.UNAUTHORIZED, "J004", "서명이 유효하지 않습니다.");
 
 
 

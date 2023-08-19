@@ -2,6 +2,7 @@ package com.dnd.bbok.member.adapter.out.persistence;
 
 import static com.dnd.bbok.global.exception.ErrorCode.JWT_EXPIRED_TOKEN;
 import static com.dnd.bbok.global.exception.ErrorCode.JWT_INVALID_TOKEN;
+import static com.dnd.bbok.global.exception.ErrorCode.JWT_SIGNATURE_INVALID_TOKEN;
 
 import com.dnd.bbok.infra.redis.RefreshToken;
 import com.dnd.bbok.infra.redis.RefreshTokenRepository;
@@ -21,6 +22,7 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.MalformedJwtException;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.UnsupportedJwtException;
+import io.jsonwebtoken.security.SignatureException;
 import java.time.Duration;
 import java.time.Instant;
 import java.util.ArrayList;
@@ -103,6 +105,8 @@ public class JwtTokenAdapter implements JwtTokenPort {
       Jwts.parserBuilder().setSigningKey(jwtTokenInitializer.getKey()).build().parseClaimsJws(token);
     } catch (MalformedJwtException | UnsupportedJwtException | IllegalArgumentException e) {
       throw new JwtException(JWT_INVALID_TOKEN);
+    } catch (SignatureException e) {
+      throw new JwtException(JWT_SIGNATURE_INVALID_TOKEN);
     } catch (ExpiredJwtException e) {
       throw new JwtException(JWT_EXPIRED_TOKEN);
     }
