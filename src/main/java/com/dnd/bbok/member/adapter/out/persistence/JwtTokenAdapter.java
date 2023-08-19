@@ -1,5 +1,6 @@
 package com.dnd.bbok.member.adapter.out.persistence;
 
+import static com.dnd.bbok.global.exception.ErrorCode.JWT_EXPIRED_TOKEN;
 import static com.dnd.bbok.global.exception.ErrorCode.JWT_INVALID_TOKEN;
 
 import com.dnd.bbok.infra.redis.RefreshToken;
@@ -17,7 +18,9 @@ import com.dnd.bbok.member.application.port.in.response.SessionUser;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.MalformedJwtException;
 import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.UnsupportedJwtException;
 import java.time.Duration;
 import java.time.Instant;
 import java.util.ArrayList;
@@ -92,6 +95,17 @@ public class JwtTokenAdapter implements JwtTokenPort {
   @Override
   public void saveRefreshTokenInRedis(Member member, String refreshToken) {
     refreshTokenRepository.save(new RefreshToken(member.getId(), refreshToken));
+  }
+
+  @Override
+  public void validateToken(String token) {
+    try {
+      Jwts.parserBuilder().setSigningKey(jwtTokenInitializer.getKey()).build().parseClaimsJws(token);
+    } catch (MalformedJwtException | UnsupportedJwtException | IllegalArgumentException e) {
+      throw new JwtException(JWT_INVALID_TOKEN);
+    } catch (ExpiredJwtException e) {
+      throw new JwtException(JWT_EXPIRED_TOKEN);
+    }
   }
 
   private Claims extractAllClaims(String token) {

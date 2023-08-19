@@ -15,4 +15,6 @@ public interface JwtTokenPort {
 
   void saveRefreshTokenInRedis(Member member, String refreshToken);
 
+  void validateToken(String token);
+
 }

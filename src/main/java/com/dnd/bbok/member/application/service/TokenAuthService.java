@@ -1,6 +1,7 @@
 package com.dnd.bbok.member.application.service;
 
 import com.dnd.bbok.member.application.port.in.usecase.GetAuthQuery;
+import com.dnd.bbok.member.application.port.in.usecase.TokenValidateUseCase;
 import com.dnd.bbok.member.application.port.out.JwtTokenPort;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -13,12 +14,17 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor
 @Slf4j
-public class TokenAuthService implements GetAuthQuery {
+public class TokenAuthService implements GetAuthQuery, TokenValidateUseCase {
 
   private final JwtTokenPort jwtTokenPort;
 
   @Override
   public Authentication getAuthentication(String accessToken) {
     return jwtTokenPort.getAuthentication(accessToken);
+  }
+
+  @Override
+  public void validateToken(String accessToekn) {
+    jwtTokenPort.validateToken(accessToekn);
   }
 }
