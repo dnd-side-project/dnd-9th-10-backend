@@ -7,7 +7,7 @@ import static com.dnd.bbok.global.exception.ErrorCode.OTHER_FRIEND_ALREADY_ACTIV
 import com.dnd.bbok.friend.adapter.out.persistence.entity.FriendEntity;
 import com.dnd.bbok.friend.adapter.out.persistence.mapper.FriendMapper;
 import com.dnd.bbok.friend.adapter.out.persistence.repository.FriendTestRepository;
-import com.dnd.bbok.friend.application.port.in.request.FriendRequestDto;
+import com.dnd.bbok.friend.application.port.in.request.FriendRequestInfo;
 import com.dnd.bbok.friend.application.port.out.FriendValidatorPort;
 import com.dnd.bbok.friend.application.port.out.LoadFriendPort;
 import com.dnd.bbok.friend.application.port.out.SaveFriendPort;
@@ -55,7 +55,7 @@ public class FriendPersistenceAdapter
   }
 
   @Override
-  public void saveFriend(UUID memberId, FriendRequestDto friendRequest) {
+  public void saveFriend(UUID memberId, FriendRequestInfo friendRequest) {
     MemberEntity member = memberRepository.findById(memberId)
         .orElseThrow(() -> new BusinessException(MEMBER_NOT_FOUND));
     FriendEntity friendEntity = friendMapper.convertDtoToEntity(member, friendRequest);

@@ -2,7 +2,7 @@ package com.dnd.bbok.friend.application.service;
 
 import com.dnd.bbok.domain.diary.service.DiaryEntityService;
 
-import com.dnd.bbok.friend.application.port.in.request.FriendRequestDto;
+import com.dnd.bbok.friend.application.port.in.request.FriendRequestInfo;
 import com.dnd.bbok.friend.application.port.in.response.FriendInfo;
 import com.dnd.bbok.friend.application.port.in.response.FriendGroupInfo;
 import com.dnd.bbok.friend.application.port.in.usecase.GetFriendsQuery;
@@ -52,7 +52,7 @@ public class FriendTestService implements GetFriendsQuery, RegisterFriendUseCase
   }
 
   @Override
-  public void createFriendCharacter(UUID memberId, FriendRequestDto friend) {
+  public void createFriendCharacter(UUID memberId, FriendRequestInfo friend) {
     //1. member가 있는지 확인한다.
     Member member = loadMemberPort.loadById(memberId);
 

@@ -6,7 +6,7 @@ import lombok.NoArgsConstructor;
 
 @Getter
 @NoArgsConstructor
-public class FriendRequestDto {
+public class FriendRequestInfo {
 
   @ApiModelProperty(value = "친구 이름")
   private String name;

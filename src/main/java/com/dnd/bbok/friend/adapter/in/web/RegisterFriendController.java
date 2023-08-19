@@ -1,6 +1,6 @@
 package com.dnd.bbok.friend.adapter.in.web;
 
-import com.dnd.bbok.friend.application.port.in.request.FriendRequestDto;
+import com.dnd.bbok.friend.application.port.in.request.FriendRequestInfo;
 import com.dnd.bbok.friend.application.port.in.usecase.RegisterFriendUseCase;
 import com.dnd.bbok.global.response.MessageResponse;
 import com.dnd.bbok.member.application.port.in.response.SessionUser;
@@ -29,7 +29,7 @@ public class RegisterFriendController {
   @PreAuthorize("isAuthenticated()")
   public ResponseEntity<MessageResponse> createFriend(
       @AuthenticationPrincipal SessionUser sessionUser,
-      @RequestBody FriendRequestDto requestFriend) {
+      @RequestBody FriendRequestInfo requestFriend) {
     registerFriendUseCase.createFriendCharacter(sessionUser.getUuid(), requestFriend);
     return new ResponseEntity<>(
         MessageResponse.of(HttpStatus.CREATED, "친구 등록 성공"), HttpStatus.CREATED);

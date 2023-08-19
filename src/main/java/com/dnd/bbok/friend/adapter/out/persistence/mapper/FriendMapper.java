@@ -3,7 +3,7 @@ package com.dnd.bbok.friend.adapter.out.persistence.mapper;
 import static com.dnd.bbok.friend.domain.BbokCharacter.*;
 
 import com.dnd.bbok.friend.adapter.out.persistence.entity.FriendEntity;
-import com.dnd.bbok.friend.application.port.in.request.FriendRequestDto;
+import com.dnd.bbok.friend.application.port.in.request.FriendRequestInfo;
 import com.dnd.bbok.friend.domain.BbokCharacter;
 import com.dnd.bbok.friend.domain.Friend;
 import com.dnd.bbok.member.adapter.out.persistence.entity.MemberEntity;
@@ -26,7 +26,7 @@ public class FriendMapper {
                   .collect(Collectors.toList());
   }
 
-  public FriendEntity convertDtoToEntity(MemberEntity member, FriendRequestDto friendRequest) {
+  public FriendEntity convertDtoToEntity(MemberEntity member, FriendRequestInfo friendRequest) {
     BbokCharacter friendCharacter =
         (friendRequest.getCharacter().equals("CACTUS")) ? SIDE_CACTUS : SIDE_HEDGEHOG;
 
