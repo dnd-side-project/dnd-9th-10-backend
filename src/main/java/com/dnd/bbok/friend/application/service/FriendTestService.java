@@ -3,8 +3,8 @@ package com.dnd.bbok.friend.application.service;
 import com.dnd.bbok.domain.diary.service.DiaryEntityService;
 
 import com.dnd.bbok.friend.application.port.in.request.FriendRequestDto;
-import com.dnd.bbok.friend.application.port.in.response.FriendDto;
-import com.dnd.bbok.friend.application.port.in.response.FriendsDto;
+import com.dnd.bbok.friend.application.port.in.response.FriendInfo;
+import com.dnd.bbok.friend.application.port.in.response.FriendGroupInfo;
 import com.dnd.bbok.friend.application.port.in.usecase.GetFriendsQuery;
 import com.dnd.bbok.friend.application.port.in.usecase.RegisterFriendUseCase;
 
@@ -39,16 +39,16 @@ public class FriendTestService implements GetFriendsQuery, RegisterFriendUseCase
   private final DiaryEntityService diaryEntityService;
 
   @Override
-  public FriendsDto getFriends(UUID memberID) {
+  public FriendGroupInfo getFriends(UUID memberID) {
     List<Friend> friends = loadFriendPort.getByMemberId(memberID);
-    List<FriendDto> friendsInfo = friends.stream()
+    List<FriendInfo> friendsInfo = friends.stream()
         .map(friend -> {
           String iconUrl = s3Downloader.getIconUrl(friend.getBbok().getIconFile());
           int countDiary = diaryEntityService.countDiariesByFriendId(friend.getId());
-          return new FriendDto(friend, iconUrl, countDiary);
+          return new FriendInfo(friend, iconUrl, countDiary);
         })
         .collect(Collectors.toList());
-    return new FriendsDto(friendsInfo);
+    return new FriendGroupInfo(friendsInfo);
   }
 
   @Override

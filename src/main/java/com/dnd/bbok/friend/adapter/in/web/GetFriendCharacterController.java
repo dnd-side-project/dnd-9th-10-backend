@@ -1,6 +1,6 @@
 package com.dnd.bbok.friend.adapter.in.web;
 
-import com.dnd.bbok.friend.application.port.in.response.BbokCharactersDto;
+import com.dnd.bbok.friend.application.port.in.response.BbokCharacterGroupInfo;
 import com.dnd.bbok.friend.application.port.in.usecase.GetIconQuery;
 
 import com.dnd.bbok.global.response.DataResponse;
@@ -25,8 +25,8 @@ public class GetFriendCharacterController {
   @ApiOperation(value = "캐릭터 정보 제공")
   @GetMapping("/character")
   @PreAuthorize("isAuthenticated()")
-  public ResponseEntity<DataResponse<BbokCharactersDto>> getBbokCharacter() {
-    BbokCharactersDto characters = getIconQuery.getCharacterIconUrl();
+  public ResponseEntity<DataResponse<BbokCharacterGroupInfo>> getBbokCharacter() {
+    BbokCharacterGroupInfo characters = getIconQuery.getCharacterIconUrl();
     return new ResponseEntity<>(
         DataResponse.of(HttpStatus.OK, "캐릭터 목록 제공 성공", characters), HttpStatus.OK);
   }
