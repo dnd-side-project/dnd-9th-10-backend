@@ -35,6 +35,6 @@ public class GetDiariesResponse {
         this.pageNumber = 0;
         this.totalElements = 1;
         this.totalPages = 1;
-        this.numberOfElements = 1;
+        this.numberOfElements = diaries.size();
     }
 }
