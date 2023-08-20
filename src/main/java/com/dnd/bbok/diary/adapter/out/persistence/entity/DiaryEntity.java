@@ -3,7 +3,7 @@ package com.dnd.bbok.diary.adapter.out.persistence.entity;
 import static javax.persistence.FetchType.*;
 import static javax.persistence.GenerationType.IDENTITY;
 
-import com.dnd.bbok.domain.common.BaseTimeEntity;
+import com.dnd.bbok.common.BaseTimeEntity;
 import com.dnd.bbok.diary.domain.Emoji;
 import com.dnd.bbok.friend.adapter.out.persistence.entity.FriendEntity;
 import com.sun.istack.NotNull;

@@ -1,5 +1,6 @@
 package com.dnd.bbok.friend.domain;
 
+import com.dnd.bbok.member.domain.Member;
 import java.time.LocalDate;
 import lombok.Builder;
 import lombok.Getter;
@@ -19,15 +20,18 @@ public class Friend {
 
   private LocalDate createdAt;
 
+  private Member member;
+
   @Builder
   public Friend(Long id, BbokCharacter bbok, String name,
-      boolean active, Long friendScore, LocalDate createdAt) {
+      boolean active, Long friendScore, LocalDate createdAt, Member member) {
     this.id = id;
     this.bbok = bbok;
     this.name = name;
     this.active = active;
     this.friendScore = friendScore;
     this.createdAt = createdAt;
+    this.member = member;
   }
 
 }

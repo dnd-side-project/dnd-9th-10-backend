@@ -3,10 +3,11 @@ package com.dnd.bbok.friend.adapter.out.persistence.entity;
 import static javax.persistence.FetchType.LAZY;
 import static javax.persistence.GenerationType.IDENTITY;
 
-import com.dnd.bbok.domain.common.BaseTimeEntity;
+import com.dnd.bbok.common.BaseTimeEntity;
 import com.dnd.bbok.friend.domain.BbokCharacter;
 import com.dnd.bbok.member.adapter.out.persistence.entity.MemberEntity;
 import com.sun.istack.NotNull;
+import java.time.LocalDate;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -50,13 +51,23 @@ public class FriendEntity extends BaseTimeEntity {
     this.friendScore = friendScore;
   }
 
+  public void changeFriendName(String friendName) {
+    this.name = friendName;
+  }
+
+  public void deactivateFriend() {
+    this.active = false;
+  }
+
   @Builder
-  public FriendEntity(BbokCharacter bbok, String name, boolean active, Long friendScore, MemberEntity member) {
+  public FriendEntity(Long id, BbokCharacter bbok, String name, boolean active,
+      Long friendScore, MemberEntity member, LocalDate createdAt) {
+    this.id = id;
     this.bbok = bbok;
     this.name = name;
     this.active = active;
     this.friendScore = friendScore;
     this.member = member;
+    this.setCreatedAt(createdAt);
   }
-
 }

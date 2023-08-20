@@ -3,7 +3,7 @@ package com.dnd.bbok.member.adapter.out.persistence.entity;
 import static javax.persistence.FetchType.*;
 import static javax.persistence.GenerationType.IDENTITY;
 
-import com.dnd.bbok.domain.common.BaseTimeEntity;
+import com.dnd.bbok.common.BaseTimeEntity;
 import com.sun.istack.NotNull;
 
 import javax.persistence.*;
@@ -47,5 +47,9 @@ public class MemberChecklistEntity extends BaseTimeEntity {
     this.isGood = isGood;
     this.isUsed = isUsed;
     this.member = member;
+  }
+
+  public void updateChecklist(String criteria) {
+    this.criteria = criteria;
   }
 }

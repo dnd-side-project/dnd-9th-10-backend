@@ -1,6 +1,6 @@
 package com.dnd.bbok.member.adapter.out.persistence.entity;
 
-import com.dnd.bbok.domain.common.BaseTimeEntity;
+import com.dnd.bbok.common.BaseTimeEntity;
 import com.dnd.bbok.member.domain.OAuth2Provider;
 import com.dnd.bbok.member.domain.Role;
 import com.github.f4b6a3.uuid.UuidCreator;

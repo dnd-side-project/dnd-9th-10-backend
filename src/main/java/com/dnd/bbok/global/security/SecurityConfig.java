@@ -30,8 +30,9 @@ public class SecurityConfig {
 
     http//HTTP 헤더에 사용자의 이름과 암호 포함을 비활성화
         .authorizeRequests()
-        .antMatchers(HttpMethod.GET, "/test", "/api/v1/member", "/api/v1/checklist", "/api/v1/character", "/friend").authenticated() //해당 요청은 인증이 필요하다.
-        .antMatchers(HttpMethod.POST, "/friend").authenticated()
+        .antMatchers(HttpMethod.GET, "/test", "/api/v1/member", "/api/v1/checklist", "/api/v1/character", "/api/v1//friend").authenticated() //해당 요청은 인증이 필요하다.
+        .antMatchers(HttpMethod.POST, "/api/v1/friend").authenticated()
+        .antMatchers(HttpMethod.PATCH, "/api/v1/friend/{id}", "/api/v1/friend/{id}/deactivate").authenticated()
         .antMatchers("/**").permitAll() //해당 요청은 누구나 다 들어올 수 있다.
         .and()
         .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)

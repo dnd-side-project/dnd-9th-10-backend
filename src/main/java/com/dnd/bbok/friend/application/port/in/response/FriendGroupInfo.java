@@ -8,12 +8,12 @@ import lombok.Getter;
  * 친구 목록 response Dto
  */
 @Getter
-public class FriendsDto {
+public class FriendGroupInfo {
 
   @ApiModelProperty(value = "친구 목록")
-  private final List<FriendDto> friends;
+  private final List<FriendInfo> friends;
 
-  public FriendsDto(List<FriendDto> friends) {
+  public FriendGroupInfo(List<FriendInfo> friends) {
     this.friends = friends;
   }
 

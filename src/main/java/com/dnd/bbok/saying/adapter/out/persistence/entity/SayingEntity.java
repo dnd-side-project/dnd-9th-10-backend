@@ -2,7 +2,7 @@ package com.dnd.bbok.saying.adapter.out.persistence.entity;
 
 import static javax.persistence.GenerationType.*;
 
-import com.dnd.bbok.domain.common.BaseTimeEntity;
+import com.dnd.bbok.common.BaseTimeEntity;
 import com.sun.istack.NotNull;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;

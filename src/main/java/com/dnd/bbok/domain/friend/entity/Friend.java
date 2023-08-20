@@ -3,7 +3,7 @@ package com.dnd.bbok.domain.friend.entity;
 import static javax.persistence.FetchType.*;
 import static javax.persistence.GenerationType.IDENTITY;
 
-import com.dnd.bbok.domain.common.BaseTimeEntity;
+import com.dnd.bbok.common.BaseTimeEntity;
 import com.dnd.bbok.domain.member.entity.Member;
 import com.sun.istack.NotNull;
 import javax.persistence.Entity;

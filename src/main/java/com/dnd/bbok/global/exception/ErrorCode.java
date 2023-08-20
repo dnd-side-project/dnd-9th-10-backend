@@ -26,6 +26,8 @@ public enum ErrorCode {
   OTHER_FRIEND_ALREADY_ACTIVE(HttpStatus.BAD_REQUEST, "F002", "동시에 2명 이상의 친구를 생성할 수 없습니다."),
   FRIEND_NOT_FOUND(HttpStatus.BAD_REQUEST, "F003", "해당 아이디를 가진 친구를 찾을 수 없습니다."),
   INVALID_FRIEND_NAME(HttpStatus.BAD_REQUEST, "F004", "친구의 이름은 한글 또는 영문, 숫자의 조합으로 12자 이내로 설정할 수 있습니다."),
+  FRIEND_IS_NOT_ACTIVE(HttpStatus.BAD_REQUEST, "F005", "이미 비활성화된 친구입니다."),
+
 
   // Diary
   INVALID_MEMBER_CHECKLIST_ID(HttpStatus.BAD_REQUEST, "D001","Member Checklist Id가 올바르지 않습니다."),
@@ -35,7 +37,8 @@ public enum ErrorCode {
   REFRESH_JWT_EXPIRED(HttpStatus.UNAUTHORIZED, "J001", "만료된 리프레시 토큰입니다."),
   JWT_INVALID_TOKEN(HttpStatus.UNAUTHORIZED, "J002", "유효하지 않은 토큰입니다."),
   JWT_EXPIRED_TOKEN(HttpStatus.UNAUTHORIZED, "J003", "만료된 토큰입니다."),
-  JWT_SIGNATURE_INVALID_TOKEN(HttpStatus.UNAUTHORIZED, "J004", "서명이 유효하지 않습니다.");
+  JWT_SIGNATURE_INVALID_TOKEN(HttpStatus.UNAUTHORIZED, "J004", "서명이 유효하지 않습니다."),
+  JWT_MISSING(HttpStatus.UNAUTHORIZED, "J005", "입력된 토큰이 없습니다.");
 
 
 

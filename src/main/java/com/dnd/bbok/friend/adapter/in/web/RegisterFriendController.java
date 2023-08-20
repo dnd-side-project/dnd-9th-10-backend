@@ -1,12 +1,14 @@
 package com.dnd.bbok.friend.adapter.in.web;
 
-import com.dnd.bbok.friend.application.port.in.request.FriendRequestDto;
+import com.dnd.bbok.friend.application.port.in.request.FriendInfoRequest;
 import com.dnd.bbok.friend.application.port.in.usecase.RegisterFriendUseCase;
-import com.dnd.bbok.global.response.MessageResponse;
 import com.dnd.bbok.member.application.port.in.response.SessionUser;
+import com.dnd.bbok.global.response.MessageResponse;
+
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -29,7 +31,7 @@ public class RegisterFriendController {
   @PreAuthorize("isAuthenticated()")
   public ResponseEntity<MessageResponse> createFriend(
       @AuthenticationPrincipal SessionUser sessionUser,
-      @RequestBody FriendRequestDto requestFriend) {
+      @RequestBody FriendInfoRequest requestFriend) {
     registerFriendUseCase.createFriendCharacter(sessionUser.getUuid(), requestFriend);
     return new ResponseEntity<>(
         MessageResponse.of(HttpStatus.CREATED, "친구 등록 성공"), HttpStatus.CREATED);

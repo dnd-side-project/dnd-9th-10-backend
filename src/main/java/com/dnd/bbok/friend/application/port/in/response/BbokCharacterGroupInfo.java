@@ -9,12 +9,12 @@ import lombok.Getter;
  * 서비스 캐릭터 전체에 대한 response Dto
  */
 @Getter
-public class BbokCharactersDto {
+public class BbokCharacterGroupInfo {
 
   @ApiModelProperty(value = "캐릭터 목록")
-  private final List<BbokCharacterDto> characters = new ArrayList<>();
+  private final List<BbokCharacterInfo> characters = new ArrayList<>();
 
-  public BbokCharactersDto(List<BbokCharacterDto> dtos) {
+  public BbokCharacterGroupInfo(List<BbokCharacterInfo> dtos) {
     characters.addAll(dtos);
   }
 

@@ -1,6 +1,6 @@
 package com.dnd.bbok.domain.member.entity;
 
-import com.dnd.bbok.domain.common.BaseTimeEntity;
+import com.dnd.bbok.common.BaseTimeEntity;
 import com.github.f4b6a3.uuid.UuidCreator;
 import java.util.UUID;
 import javax.persistence.Column;

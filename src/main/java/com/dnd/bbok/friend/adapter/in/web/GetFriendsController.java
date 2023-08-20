@@ -1,6 +1,6 @@
 package com.dnd.bbok.friend.adapter.in.web;
 
-import com.dnd.bbok.friend.application.port.in.response.FriendsDto;
+import com.dnd.bbok.friend.application.port.in.response.FriendGroupInfo;
 import com.dnd.bbok.friend.application.port.in.usecase.GetFriendsQuery;
 import com.dnd.bbok.global.response.DataResponse;
 import com.dnd.bbok.member.application.port.in.response.SessionUser;
@@ -26,10 +26,10 @@ public class GetFriendsController {
   @ApiOperation(value = "친구 목록 조회")
   @GetMapping("/friend")
   @PreAuthorize("isAuthenticated()")
-  public ResponseEntity<DataResponse<FriendsDto>> getFriends(
+  public ResponseEntity<DataResponse<FriendGroupInfo>> getFriends(
       @AuthenticationPrincipal SessionUser sessionUser
   ) {
-    FriendsDto friends = getFriendsQuery.getFriends(sessionUser.getUuid());
+    FriendGroupInfo friends = getFriendsQuery.getFriends(sessionUser.getUuid());
     return new ResponseEntity<>(
         DataResponse.of(HttpStatus.OK, "친구 목록 조회 성공", friends), HttpStatus.OK);
   }
