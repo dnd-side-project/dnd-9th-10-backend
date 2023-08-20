@@ -2,14 +2,13 @@ package com.dnd.bbok.diary.application.port.in.response;
 
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
-
-import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 public class GetDiariesResponse {
 
     @ApiModelProperty("일화 목록")
-    private final ArrayList<GetDiaryResponse> diaries;
+    private final List<GetDiaryResponse> diaries;
 
     @ApiModelProperty("시작 offset")
     private final int offset;
@@ -29,7 +28,7 @@ public class GetDiariesResponse {
     @ApiModelProperty("현재 페이지에 담긴 데이터 개수")
     private final int numberOfElements;
 
-    public GetDiariesResponse(ArrayList<GetDiaryResponse> diaries) {
+    public GetDiariesResponse(List<GetDiaryResponse> diaries) {
         this.diaries = diaries;
         this.offset = 0;
         this.pageNumber = 0;

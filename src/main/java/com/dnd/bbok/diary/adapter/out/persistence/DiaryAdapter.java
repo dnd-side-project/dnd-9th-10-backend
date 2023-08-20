@@ -3,12 +3,17 @@ package com.dnd.bbok.diary.adapter.out.persistence;
 import com.dnd.bbok.diary.adapter.out.persistence.entity.DiaryChecklistEntity;
 import com.dnd.bbok.diary.adapter.out.persistence.entity.DiaryEntity;
 import com.dnd.bbok.diary.adapter.out.persistence.entity.DiaryTagEntity;
+import com.dnd.bbok.diary.adapter.out.persistence.mapper.DiaryChecklistMapper;
+import com.dnd.bbok.diary.adapter.out.persistence.mapper.DiaryMapper;
+import com.dnd.bbok.diary.adapter.out.persistence.mapper.DiaryTagMapper;
 import com.dnd.bbok.diary.adapter.out.persistence.repository.DiaryRepository;
 import com.dnd.bbok.diary.adapter.out.persistence.repository.DiaryTagRepository;
+import com.dnd.bbok.diary.application.port.out.LoadDiaryPort;
 import com.dnd.bbok.diary.application.port.out.SaveDiaryPort;
 import com.dnd.bbok.diary.domain.Diary;
 import com.dnd.bbok.diary.domain.DiaryChecklist;
 import com.dnd.bbok.diary.adapter.out.persistence.repository.DiaryChecklistRepository;
+import com.dnd.bbok.diary.domain.Tag;
 import com.dnd.bbok.friend.adapter.out.persistence.entity.FriendEntity;
 import com.dnd.bbok.friend.adapter.out.persistence.entity.FriendTagEntity;
 import com.dnd.bbok.friend.adapter.out.persistence.repository.FriendTagRepository;
@@ -26,12 +31,13 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
+import static com.dnd.bbok.global.exception.ErrorCode.DIARY_NOT_FOUND;
 import static com.dnd.bbok.global.exception.ErrorCode.FRIEND_NOT_FOUND;
 
 @Component
 @RequiredArgsConstructor
 @Slf4j
-public class DiaryAdapter implements SaveDiaryPort {
+public class DiaryAdapter implements SaveDiaryPort, LoadDiaryPort {
     private final FriendTagRepository friendTagRepository;
     private final FriendTestRepository friendTestRepository;
     private final DiaryRepository diaryRepository;
@@ -39,9 +45,13 @@ public class DiaryAdapter implements SaveDiaryPort {
     private final DiaryChecklistRepository diaryChecklistRepository;
     private final MemberChecklistRepository memberChecklistRepository;
 
+    private final DiaryTagMapper diaryTagMapper;
+    private final DiaryChecklistMapper diaryChecklistMapper;
+    private final DiaryMapper diaryMapper;
+
     @Override
     @Transactional
-    public void saveDiary(Long friendId, Diary diary) {
+    public void createDiary(Long friendId, Diary diary) {
         FriendEntity friend = friendTestRepository.findById(friendId).orElseThrow(() -> new BusinessException(FRIEND_NOT_FOUND));
 
         // 1. 태그들 중 id 가 없는 태그가 있다면 Friend Tag Entity 생성
@@ -86,8 +96,26 @@ public class DiaryAdapter implements SaveDiaryPort {
             diaryChecklistEntities.add(DiaryChecklistEntity.builder()
                     .diaryEntity(diaryEntity)
                     .memberChecklistEntity(memberChecklistEntity)
+                    .isChecked(diaryChecklist.getIsChecked())
                     .build());
         });
         diaryChecklistRepository.saveAll(diaryChecklistEntities);
+    }
+
+    @Override
+    public Diary loadDiary(Long diaryId) {
+        List<Tag> tags = diaryTagMapper.toDomain(diaryTagRepository.findByDiaryId(diaryId));
+        List<DiaryChecklist> diaryChecklists = diaryChecklistMapper.toDomain(diaryChecklistRepository.getDiaryChecklistByDiaryId(diaryId));
+        return diaryMapper.toEntity(diaryRepository.findById(diaryId).orElseThrow(() -> new BusinessException(DIARY_NOT_FOUND)), tags, diaryChecklists);
+    }
+
+    @Override
+    public List<Diary> loadDiaries(Long friendId) {
+        List<DiaryEntity> diaryEntities = diaryRepository.findAllByFriendId(friendId);
+        List<Long> diaryIds = diaryEntities.stream().map(DiaryEntity::getId).collect(Collectors.toList());
+        List<Tag> tags = diaryTagMapper.toDomain(diaryTagRepository.findByDiaryIds(diaryIds));
+        List<DiaryChecklist> checklists = diaryChecklistMapper.toDomain(diaryChecklistRepository.getDiaryChecklistByDiaryIds(diaryIds));
+
+        return diaryMapper.toEntities(diaryEntities, tags, checklists);
     }
 }

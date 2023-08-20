@@ -43,7 +43,7 @@ public class CreateDiaryService implements CreateDiaryUseCase {
         // 2. 일기 생성 (Friend Tag, Diary, Diary Tag, Diary Checklist Entity)
         List<DiaryChecklist> checklist = createDiaryRequest.getChecklist().stream().map(ele -> new DiaryChecklist(null, ele.getIsChecked(), ele.getId())).collect(Collectors.toList());
         Diary diary = new Diary(null, createDiaryRequest.getEmoji(), createDiaryRequest.getContent(), createDiaryRequest.getDate(), createDiaryRequest.getSticker(), tags, checklist);
-        saveDiaryPort.saveDiary(friendId, diary);
+        saveDiaryPort.createDiary(friendId, diary);
 
         // 3. TODO 점수 계산 및 업데이트
         // Friend friend = loadFriendPort.load();
