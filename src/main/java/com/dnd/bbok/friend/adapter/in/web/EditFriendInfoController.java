@@ -32,7 +32,7 @@ public class EditFriendInfoController {
   @ApiOperation(value = "친구 정보 수정")
   @PatchMapping("/friend/{id}")
   @PreAuthorize("isAuthenticated()")
-  public ResponseEntity<MessageResponse> getBbokCharacter(
+  public ResponseEntity<MessageResponse> editFriendName(
       @Parameter(name = "id", in = ParameterIn.PATH, description = "친구 id") @PathVariable("id") Long friendId,
       @RequestBody UpdateFriendRequest updateFriendRequest,
       @AuthenticationPrincipal SessionUser sessionUser
@@ -45,7 +45,7 @@ public class EditFriendInfoController {
   @ApiOperation(value = "친구 관계 정리")
   @PatchMapping("/friend/{id}/deactivate")
   @PreAuthorize("isAuthenticated()")
-  public ResponseEntity<MessageResponse> getBbokCharacter(
+  public ResponseEntity<MessageResponse> deactivateFriend(
       @Parameter(name = "id", in = ParameterIn.PATH, description = "친구 id") @PathVariable("id") Long friendId,
       @AuthenticationPrincipal SessionUser sessionUser
   ) {
