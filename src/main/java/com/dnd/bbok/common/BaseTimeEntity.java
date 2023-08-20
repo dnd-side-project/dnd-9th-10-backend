@@ -1,4 +1,4 @@
-package com.dnd.bbok.domain.common;
+package com.dnd.bbok.common;
 
 import java.time.LocalDate;
 import javax.persistence.Column;
@@ -21,5 +21,9 @@ public abstract class BaseTimeEntity {
   @LastModifiedDate
   @Column(name = "MODIFIED_AT")
   private LocalDate modifiedAt;
+
+  protected void setCreatedAt(LocalDate date) {
+    this.createdAt = date;
+  }
 
 }

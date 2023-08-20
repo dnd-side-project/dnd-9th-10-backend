@@ -6,12 +6,9 @@ import lombok.NoArgsConstructor;
 
 @Getter
 @NoArgsConstructor
-public class FriendRequestInfo {
+public class UpdateFriendRequest {
 
-  @ApiModelProperty(value = "친구 이름")
+  @ApiModelProperty(name = "친구 이름")
   private String name;
-
-  @ApiModelProperty(value = "친구 캐릭터")
-  private String character;
 
 }

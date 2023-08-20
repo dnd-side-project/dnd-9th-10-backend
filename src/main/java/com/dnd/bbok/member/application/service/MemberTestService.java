@@ -1,14 +1,21 @@
 package com.dnd.bbok.member.application.service;
 
+import com.dnd.bbok.member.application.port.in.request.ChecklistInfoRequest;
 import com.dnd.bbok.member.application.port.in.request.CreateMemberChecklistRequest;
+import com.dnd.bbok.member.application.port.in.request.EditMemberChecklistRequest;
 import com.dnd.bbok.member.application.port.in.response.GetMemberChecklistResponse;
 import com.dnd.bbok.member.application.port.in.response.GetMemberInfoResponse;
+
 import com.dnd.bbok.member.application.port.in.usecase.CreateMemberChecklistUseCase;
+import com.dnd.bbok.member.application.port.in.usecase.EditMemberChecklistUseCase;
 import com.dnd.bbok.member.application.port.in.usecase.GetMemberChecklistQuery;
 import com.dnd.bbok.member.application.port.in.usecase.GetMemberQuery;
+
+import com.dnd.bbok.member.application.port.out.EditMemberChecklistPort;
 import com.dnd.bbok.member.application.port.out.LoadMemberChecklistPort;
 import com.dnd.bbok.member.application.port.out.LoadMemberPort;
 import com.dnd.bbok.member.application.port.out.SaveMemberChecklistPort;
+
 import com.dnd.bbok.member.domain.ChecklistInfo;
 import com.dnd.bbok.member.domain.Member;
 
@@ -28,11 +35,14 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 @Slf4j
 //TODO: 기존 구조에서 MemberService 지울 때, 이름 변경하기
-public class MemberTestService implements GetMemberQuery, CreateMemberChecklistUseCase, GetMemberChecklistQuery {
+public class MemberTestService implements
+    GetMemberQuery, CreateMemberChecklistUseCase, GetMemberChecklistQuery,
+    EditMemberChecklistUseCase {
 
   private final LoadMemberPort loadMemberPort;
   private final LoadMemberChecklistPort loadMemberChecklistPort;
   private final SaveMemberChecklistPort saveMemberChecklistPort;
+  private final EditMemberChecklistPort editMemberChecklistPort;
 
   @Override
   public GetMemberInfoResponse getMember(UUID memberId) {
@@ -64,5 +74,12 @@ public class MemberTestService implements GetMemberQuery, CreateMemberChecklistU
     // log.info(memberChecklist.getGoodChecklist().get(0).getCriteria());
     // log.info(memberChecklist.getBadChecklist().get(0).getCriteria());
     return new GetMemberChecklistResponse(memberChecklist.getGoodChecklist(), memberChecklist.getBadChecklist()) ;
+  }
+
+  @Override
+  public void edit(UUID memberId, EditMemberChecklistRequest memberChecklistRequest) {
+    List<ChecklistInfoRequest> badChecklist = memberChecklistRequest.getBadChecklist();
+    List<ChecklistInfoRequest> goodChecklist = memberChecklistRequest.getGoodChecklist();
+    editMemberChecklistPort.editChecklist(memberId, badChecklist, goodChecklist);
   }
 }

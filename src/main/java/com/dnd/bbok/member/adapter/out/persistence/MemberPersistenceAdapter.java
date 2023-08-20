@@ -11,6 +11,8 @@ import com.dnd.bbok.member.adapter.out.persistence.mapper.MemberChecklistMapper;
 import com.dnd.bbok.member.adapter.out.persistence.mapper.MemberMapper;
 import com.dnd.bbok.member.adapter.out.persistence.repository.MemberChecklistRepository;
 import com.dnd.bbok.member.adapter.out.persistence.repository.MemberTestRepository;
+import com.dnd.bbok.member.application.port.in.request.ChecklistInfoRequest;
+import com.dnd.bbok.member.application.port.out.EditMemberChecklistPort;
 import com.dnd.bbok.member.application.port.out.LoadMemberChecklistPort;
 import com.dnd.bbok.member.application.port.out.LoadMemberPort;
 import com.dnd.bbok.member.application.port.out.SaveMemberPort;
@@ -36,7 +38,8 @@ import org.springframework.stereotype.Repository;
 @Repository
 @RequiredArgsConstructor
 public class MemberPersistenceAdapter
-    implements LoadMemberPort, SaveMemberPort, UpdateMemberPort, LoadMemberChecklistPort, SaveMemberChecklistPort {
+    implements LoadMemberPort, SaveMemberPort, UpdateMemberPort,
+    LoadMemberChecklistPort, SaveMemberChecklistPort, EditMemberChecklistPort {
 
   private final MemberTestRepository memberTestRepository;
   private final MemberChecklistRepository memberChecklistRepository;
@@ -82,5 +85,14 @@ public class MemberPersistenceAdapter
         .orElseThrow(() -> new BusinessException(MEMBER_NOT_FOUND));
     List<MemberChecklistEntity> memberChecklistEntities = memberChecklistMapper.toEntity(memberChecklist, memberEntity);
     memberChecklistRepository.saveAll(memberChecklistEntities);
+  }
+
+  @Override
+  public void editChecklist(
+      UUID memberId, List<ChecklistInfoRequest> good, List<ChecklistInfoRequest> bad) {
+    for(ChecklistInfoRequest contents : good) {
+//      memberChecklistRepository.up
+      //TODO: 체크리스트 수정 로직 짜기
+    }
   }
 }

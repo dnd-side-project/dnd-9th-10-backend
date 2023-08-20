@@ -34,6 +34,7 @@ public class CreateDiaryService implements CreateDiaryUseCase {
     private final LoadBookmarkPort loadBookmarkPort;
 
 
+    //TODO: 친구가 없는 상태인데 다이어리 생성 요청했을 때의 에러도 필요할 것 같습니다!
     @Override
     public CreateDiaryResponse createDiary(UUID memberId, Long friendId, CreateDiaryRequest createDiaryRequest) {
         // 1. 다섯 개 이상의 태그를 사용하려 했다면 에러

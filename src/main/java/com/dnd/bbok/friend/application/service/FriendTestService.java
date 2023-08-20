@@ -2,15 +2,18 @@ package com.dnd.bbok.friend.application.service;
 
 import com.dnd.bbok.domain.diary.service.DiaryEntityService;
 
-import com.dnd.bbok.friend.application.port.in.request.FriendRequestInfo;
+import com.dnd.bbok.friend.application.port.in.request.FriendInfoRequest;
+import com.dnd.bbok.friend.application.port.in.request.UpdateFriendRequest;
 import com.dnd.bbok.friend.application.port.in.response.FriendInfo;
 import com.dnd.bbok.friend.application.port.in.response.FriendGroupInfo;
+import com.dnd.bbok.friend.application.port.in.usecase.EditFriendUseCase;
 import com.dnd.bbok.friend.application.port.in.usecase.GetFriendsQuery;
 import com.dnd.bbok.friend.application.port.in.usecase.RegisterFriendUseCase;
 
 import com.dnd.bbok.friend.application.port.out.FriendValidatorPort;
 import com.dnd.bbok.friend.application.port.out.LoadFriendPort;
 import com.dnd.bbok.friend.application.port.out.SaveFriendPort;
+import com.dnd.bbok.friend.application.port.out.UpdateFriendPort;
 import com.dnd.bbok.member.application.port.out.LoadMemberPort;
 
 import com.dnd.bbok.friend.domain.Friend;
@@ -23,17 +26,20 @@ import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
 @Slf4j
-public class FriendTestService implements GetFriendsQuery, RegisterFriendUseCase {
+public class FriendTestService implements GetFriendsQuery, RegisterFriendUseCase,
+    EditFriendUseCase {
 
   private final S3Downloader s3Downloader;
   private final LoadFriendPort loadFriendPort;
   private final LoadMemberPort loadMemberPort;
   private final FriendValidatorPort friendValidatorPort;
   private final SaveFriendPort saveFriendPort;
+  private final UpdateFriendPort updateFriendPort;
 
   //TODO: 이후에 수정해야 하는 부분.
   private final DiaryEntityService diaryEntityService;
@@ -52,7 +58,7 @@ public class FriendTestService implements GetFriendsQuery, RegisterFriendUseCase
   }
 
   @Override
-  public void createFriendCharacter(UUID memberId, FriendRequestInfo friend) {
+  public void createFriendCharacter(UUID memberId, FriendInfoRequest friend) {
     //1. member가 있는지 확인한다.
     Member member = loadMemberPort.loadById(memberId);
 
@@ -64,5 +70,27 @@ public class FriendTestService implements GetFriendsQuery, RegisterFriendUseCase
 
     //4. 무사히 통과되면 friend를 저장한다.
     saveFriendPort.saveFriend(member.getId(), friend);
+  }
+
+  @Transactional
+  @Override
+  public void editName(UUID memberId, Long friendId, UpdateFriendRequest updateFriendRequest) {
+    //1. 현재 active한 친구인지 확인한다.
+    Friend activeFriend = friendValidatorPort.isActiveFriend(memberId, friendId);
+
+    //2. 요청한 이름이 조건에 부합한지 확인한다.
+    friendValidatorPort.validateNaming(updateFriendRequest.getName());
+
+    //3. request 내용 반영하기
+    updateFriendPort.updateFriend(activeFriend, updateFriendRequest);
+  }
+
+  @Override
+  public void editStatus(UUID memberId, Long friendId) {
+    //1. 현재 active한 친구인지 확인한다.
+    Friend friend = friendValidatorPort.isActiveFriend(memberId, friendId);
+
+    //2. friend의 상태를 비활성화로 업데이트한다.
+    updateFriendPort.updateStatus(memberId, friend);
   }
 }
