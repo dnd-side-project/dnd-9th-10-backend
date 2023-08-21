@@ -27,10 +27,11 @@ public class GetFriendTagsController {
 
     @ApiOperation("태그 목록 조회")
     @PreAuthorize("isAuthenticated()")
-    @GetMapping("{id}/tag")
+    @GetMapping("/{id}/tag")
     public ResponseEntity<DataResponse<GetFriendTagsResponse>> getTags(
             @Parameter(name = "id", in = ParameterIn.PATH, description = "친구 id") @PathVariable("id") Long id
     ) {
-        return new ResponseEntity<>(DataResponse.of(HttpStatus.OK , "태그 목록 조회 성공", getFriendTagsQuery.getTags(id)), HttpStatus.OK);
+        GetFriendTagsResponse getFriendTagsResponse = getFriendTagsQuery.getTags(id);
+        return new ResponseEntity<>(DataResponse.of(HttpStatus.OK , "태그 목록 조회 성공", getFriendTagsResponse), HttpStatus.OK);
     }
 }

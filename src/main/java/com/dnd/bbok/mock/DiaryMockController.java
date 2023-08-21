@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.*;
 @Api(tags = "Mock 일기 관련 컨트롤러")
 public class DiaryMockController {
     @ApiOperation("스티커 목록 조회")
-    @GetMapping("diary/sticker")
+    @GetMapping("/diary/sticker")
     public ResponseEntity<DataResponse<DiaryStickerDto>> getStickers() {
         return new ResponseEntity<>(DataResponse.of(HttpStatus.OK, "스티커 목록 조회 성공", new DiaryStickerDto()), HttpStatus.OK);
     }

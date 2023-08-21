@@ -25,7 +25,7 @@ public class GetDiariesController {
 
     @ApiOperation(value = "일기 목록 조회")
     @PreAuthorize("isAuthenticated()")
-    @GetMapping("{id}/diary")
+    @GetMapping("/{id}/diary")
     public ResponseEntity<DataResponse<GetDiariesResponse>> getDiaries(
             @Parameter(name = "id", in = ParameterIn.PATH, description = "친구 id") @PathVariable("id") Long id,
             @Parameter(name = "offset", in = ParameterIn.QUERY, description = "목록 오프셋") @RequestParam(value = "offset", required = false) Integer offset,
@@ -34,16 +34,18 @@ public class GetDiariesController {
             @Parameter(name = "tag", in = ParameterIn.QUERY, description = "태그") @RequestParam(value = "tag", required = false) String tag
     ) {
         // TODO 남의 일기를 조회 요청한 경우 에러처러??
-        return new ResponseEntity<>(DataResponse.of(HttpStatus.OK, "일기 목록 조회 성공", getDiariesQuery.getDiariesQuery(id, offset, order, keyword, tag)), HttpStatus.OK);
+        GetDiariesResponse getDiariesResponse = getDiariesQuery.getDiariesQuery(id, offset, order, keyword, tag);
+        return new ResponseEntity<>(DataResponse.of(HttpStatus.OK, "일기 목록 조회 성공", getDiariesResponse), HttpStatus.OK);
     }
 
     @ApiOperation(value = "일기 상세 조회")
     @PreAuthorize("isAuthenticated()")
-    @GetMapping("{id}/diary/detail/{id}")
+    @GetMapping("/diary/detail/{id}")
     public ResponseEntity<DataResponse<GetDiaryResponse>> getDiary(
             @Parameter(name = "id", in = ParameterIn.PATH, description = "일기 id") @PathVariable("id") Long id
     ) {
         // TODO 남의 일기를 조회 요청한 경우 에러처러??
-        return new ResponseEntity<>(DataResponse.of(HttpStatus.OK, "일기 조회 성공", getDiaryQuery.getDiary(id)), HttpStatus.OK);
+        GetDiaryResponse getDiaryResponse = getDiaryQuery.getDiary(id);
+        return new ResponseEntity<>(DataResponse.of(HttpStatus.OK, "일기 조회 성공", getDiaryResponse), HttpStatus.OK);
     }
 }
