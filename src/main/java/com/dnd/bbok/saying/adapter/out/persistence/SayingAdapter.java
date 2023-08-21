@@ -1,5 +1,8 @@
 package com.dnd.bbok.saying.adapter.out.persistence;
 
+import static com.dnd.bbok.global.exception.ErrorCode.SAYING_NOT_FOUND;
+
+import com.dnd.bbok.global.exception.BusinessException;
 import com.dnd.bbok.saying.adapter.out.persistence.entity.SayingEntity;
 import com.dnd.bbok.saying.adapter.out.persistence.mapper.SayingMapper;
 import com.dnd.bbok.saying.adapter.out.persistence.repository.SayingRepository;
@@ -20,6 +23,13 @@ public class SayingAdapter implements LoadSayingPort {
     @Override
     public List<Saying> getAllSaying() {
         List<SayingEntity> sayingEntities = sayingRepository.findAll();
-        return sayingEntities.stream().map(sayingMapper::toEntity).collect(Collectors.toList());
+        return sayingEntities.stream().map(sayingMapper::toDomain).collect(Collectors.toList());
+    }
+
+    @Override
+    public Saying getSaying(Long sayingId) {
+        SayingEntity saying = sayingRepository.findSayingById(sayingId)
+            .orElseThrow(() -> new BusinessException(SAYING_NOT_FOUND));
+        return sayingMapper.toDomain(saying);
     }
 }
