@@ -33,6 +33,7 @@ public class SecurityConfig {
         .antMatchers(HttpMethod.GET, "/test", "/api/v1/member", "/api/v1/checklist", "/api/v1/character", "/api/v1//friend").authenticated() //해당 요청은 인증이 필요하다.
         .antMatchers(HttpMethod.POST, "/api/v1/friend", "/api/v1/bookmark").authenticated()
         .antMatchers(HttpMethod.PATCH, "/api/v1/friend/{id}", "/api/v1/friend/{id}/deactivate").authenticated()
+        .antMatchers(HttpMethod.DELETE, "/api/v1/bookmark/{id}").authenticated()
         .antMatchers("/**").permitAll() //해당 요청은 누구나 다 들어올 수 있다.
         .and()
         .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)

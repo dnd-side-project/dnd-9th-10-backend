@@ -43,7 +43,8 @@ public enum ErrorCode {
 
   // Saying
   SAYING_NOT_FOUND(HttpStatus.BAD_REQUEST, "S001", "해당 아이디를 가진 명언을 찾을 수 없습니다."),
-  ALREADY_BOOKMARKED(HttpStatus.BAD_REQUEST, "S002", "해당 명언은 이미 북마크하셨습니다.");
+  ALREADY_BOOKMARKED(HttpStatus.BAD_REQUEST, "S002", "해당 명언은 이미 북마크하셨습니다."),
+  BOOKMARK_NOT_FOUND(HttpStatus.BAD_REQUEST, "S003", "북마크 이력이 없습니다.");
 
 
   private final HttpStatus status;

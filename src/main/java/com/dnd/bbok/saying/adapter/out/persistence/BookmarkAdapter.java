@@ -12,6 +12,7 @@ import com.dnd.bbok.saying.adapter.out.persistence.mapper.BookmarkMapper;
 import com.dnd.bbok.saying.adapter.out.persistence.mapper.SayingMapper;
 import com.dnd.bbok.saying.adapter.out.persistence.repository.BookmarkRepository;
 import com.dnd.bbok.saying.application.port.out.BookmarkSayingPort;
+import com.dnd.bbok.saying.application.port.out.DeleteBookmarkPort;
 import com.dnd.bbok.saying.application.port.out.LoadBookmarkPort;
 import com.dnd.bbok.saying.domain.Bookmark;
 import com.dnd.bbok.saying.domain.Saying;
@@ -27,7 +28,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Component
 @RequiredArgsConstructor
-public class BookmarkAdapter implements LoadBookmarkPort, BookmarkSayingPort {
+public class BookmarkAdapter implements LoadBookmarkPort, BookmarkSayingPort, DeleteBookmarkPort {
     private final BookmarkRepository bookmarkRepository;
     private final BookmarkMapper bookmarkMapper;
     private final MemberMapper memberMapper;
@@ -70,4 +71,11 @@ public class BookmarkAdapter implements LoadBookmarkPort, BookmarkSayingPort {
             sayingEntity);
         bookmarkRepository.save(bookmarkEntity);
     }
+
+  @Override
+  public void delete(UUID memberId, Long sayingId) {
+    BookmarkEntity bookmark = bookmarkRepository.findBookmark(sayingId, memberId)
+        .orElseThrow(() -> new BusinessException(BOOKMARK_NOT_FOUND));
+    bookmarkRepository.delete(bookmark);
+  }
 }
