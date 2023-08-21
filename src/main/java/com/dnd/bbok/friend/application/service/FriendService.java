@@ -2,10 +2,10 @@ package com.dnd.bbok.friend.application.service;
 
 import com.dnd.bbok.domain.diary.service.DiaryEntityService;
 
-import com.dnd.bbok.friend.application.port.in.request.FriendInfoRequest;
+import com.dnd.bbok.friend.application.port.in.request.CreateFriendRequest;
 import com.dnd.bbok.friend.application.port.in.request.UpdateFriendRequest;
-import com.dnd.bbok.friend.application.port.in.response.FriendInfo;
-import com.dnd.bbok.friend.application.port.in.response.FriendGroupInfo;
+import com.dnd.bbok.friend.application.port.in.response.GetFriendResponse;
+import com.dnd.bbok.friend.application.port.in.response.GetFriendGroupResponse;
 import com.dnd.bbok.friend.application.port.in.usecase.EditFriendUseCase;
 import com.dnd.bbok.friend.application.port.in.usecase.GetFriendsQuery;
 import com.dnd.bbok.friend.application.port.in.usecase.RegisterFriendUseCase;
@@ -31,7 +31,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @RequiredArgsConstructor
 @Slf4j
-public class FriendTestService implements GetFriendsQuery, RegisterFriendUseCase,
+public class FriendService implements GetFriendsQuery, RegisterFriendUseCase,
     EditFriendUseCase {
 
   private final S3Downloader s3Downloader;
@@ -45,20 +45,20 @@ public class FriendTestService implements GetFriendsQuery, RegisterFriendUseCase
   private final DiaryEntityService diaryEntityService;
 
   @Override
-  public FriendGroupInfo getFriends(UUID memberID) {
+  public GetFriendGroupResponse getFriends(UUID memberID) {
     List<Friend> friends = loadFriendPort.getByMemberId(memberID);
-    List<FriendInfo> friendsInfo = friends.stream()
+    List<GetFriendResponse> friendsInfo = friends.stream()
         .map(friend -> {
           String iconUrl = s3Downloader.getIconUrl(friend.getBbok().getIconFile());
           int countDiary = diaryEntityService.countDiariesByFriendId(friend.getId());
-          return new FriendInfo(friend, iconUrl, countDiary);
+          return new GetFriendResponse(friend, iconUrl, countDiary);
         })
         .collect(Collectors.toList());
-    return new FriendGroupInfo(friendsInfo);
+    return new GetFriendGroupResponse(friendsInfo);
   }
 
   @Override
-  public void createFriendCharacter(UUID memberId, FriendInfoRequest friend) {
+  public void createFriendCharacter(UUID memberId, CreateFriendRequest friend) {
     //1. member가 있는지 확인한다.
     Member member = loadMemberPort.loadById(memberId);
 

@@ -9,7 +9,7 @@ import lombok.Getter;
  * 친구 1명에 대한 response Dto
  */
 @Getter
-public class FriendInfo {
+public class GetFriendResponse {
 
   @ApiModelProperty(value = "친구 고유 ID")
   private final Long id;
@@ -32,7 +32,7 @@ public class FriendInfo {
   @ApiModelProperty(value = "친구 활성화 상태")
   private final boolean isActive;
 
-  public FriendInfo(Friend friend, String iconUrl, int diaryCount) {
+  public GetFriendResponse(Friend friend, String iconUrl, int diaryCount) {
     this.id = friend.getId();
     this.startedAt = friend.getCreatedAt();
     this.characterUrl = iconUrl;

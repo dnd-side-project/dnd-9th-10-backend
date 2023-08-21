@@ -5,7 +5,7 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 
 @Getter
-public class BbokCharacterInfo {
+public class GetBbokCharacterResponse {
 
   @ApiModelProperty(value = "캐릭터 타입(CACTUS, HEDGEHOG)")
   private final String type;
@@ -17,7 +17,7 @@ public class BbokCharacterInfo {
   private final String name;
 
 
-  public BbokCharacterInfo(BbokCharacter character, String signedUrl) {
+  public GetBbokCharacterResponse(BbokCharacter character, String signedUrl) {
     this.type = character.getType();
     this.iconUrl = signedUrl;
     this.name = character.getName();

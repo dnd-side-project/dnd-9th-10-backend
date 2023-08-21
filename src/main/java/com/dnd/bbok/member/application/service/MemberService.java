@@ -34,8 +34,7 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor
 @Slf4j
-//TODO: 기존 구조에서 MemberService 지울 때, 이름 변경하기
-public class MemberTestService implements
+public class MemberService implements
     GetMemberQuery, CreateMemberChecklistUseCase, GetMemberChecklistQuery,
     EditMemberChecklistUseCase {
 
