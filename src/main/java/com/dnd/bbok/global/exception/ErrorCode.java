@@ -32,6 +32,7 @@ public enum ErrorCode {
   // Diary
   INVALID_MEMBER_CHECKLIST_ID(HttpStatus.BAD_REQUEST, "D001","Member Checklist Id가 올바르지 않습니다."),
   EXCEED_MAX_TAG_COUNT(HttpStatus.BAD_REQUEST, "D002", "친구 당 최대 태그 갯수를 벗어났습니다."),
+  DIARY_NOT_FOUND(HttpStatus.NOT_FOUND, "D003", "해당 일기를 찾을 수 없습니다."),
 
   // JWT
   REFRESH_JWT_EXPIRED(HttpStatus.UNAUTHORIZED, "J001", "만료된 리프레시 토큰입니다."),

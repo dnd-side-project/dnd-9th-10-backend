@@ -1,7 +1,6 @@
 package com.dnd.bbok.mock;
 
 import com.dnd.bbok.diary.application.port.in.response.CreateDiaryResponse;
-import com.dnd.bbok.diary.application.port.in.response.GetDiaryResponse;
 import com.dnd.bbok.domain.diary.dto.response.*;
 import com.dnd.bbok.global.response.DataResponse;
 import com.dnd.bbok.global.response.MessageResponse;
@@ -17,16 +16,8 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("api/v1/friend")
 @Api(tags = "Mock 일기 관련 컨트롤러")
 public class DiaryMockController {
-
-    @ApiOperation(value = "일기 상세 조회")
-    @GetMapping("/diary/detail/{id}")
-    public ResponseEntity<DataResponse<GetDiaryResponse>> getDiary(@PathVariable("id") Long id) {
-        GetDiaryResponse diary = new GetDiaryResponse(id);
-        return new ResponseEntity<>(DataResponse.of(HttpStatus.OK, "일기 조회 성공", diary), HttpStatus.OK);
-    }
-
     @ApiOperation("스티커 목록 조회")
-    @GetMapping("diary/sticker")
+    @GetMapping("/diary/sticker")
     public ResponseEntity<DataResponse<DiaryStickerDto>> getStickers() {
         return new ResponseEntity<>(DataResponse.of(HttpStatus.OK, "스티커 목록 조회 성공", new DiaryStickerDto()), HttpStatus.OK);
     }
