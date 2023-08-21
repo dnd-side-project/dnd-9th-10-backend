@@ -11,14 +11,12 @@ import org.springframework.stereotype.Component;
 @Component
 public class BookmarkMapper {
 
-  public Bookmark toDomain(BookmarkEntity bookmarkEntity, Member member, Saying saying) {
-    return new Bookmark(
-        bookmarkEntity.getId(), member, saying);
+  public Bookmark toDomain(Member member, Saying saying) {
+    return new Bookmark(null, member, saying);
   }
 
-  public BookmarkEntity toEntity(Bookmark bookmark, MemberEntity member, SayingEntity saying) {
+  public BookmarkEntity toEntity(MemberEntity member, SayingEntity saying) {
     return BookmarkEntity.builder()
-        .id(bookmark.getId())
         .member(member)
         .saying(saying)
         .build();

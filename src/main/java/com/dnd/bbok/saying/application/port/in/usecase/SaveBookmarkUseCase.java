@@ -1,9 +1,10 @@
 package com.dnd.bbok.saying.application.port.in.usecase;
 
-import com.dnd.bbok.saying.application.port.in.request.BookmarkRequestDto;
+import com.dnd.bbok.saying.application.port.in.request.CreateBookmarkRequest;
 import java.util.UUID;
 
 public interface SaveBookmarkUseCase {
-  void bookmarkSaying(UUID memberId, BookmarkRequestDto bookmarkRequest);
+
+  void createBookmark(UUID memberId, CreateBookmarkRequest bookmarkRequest);
 
 }

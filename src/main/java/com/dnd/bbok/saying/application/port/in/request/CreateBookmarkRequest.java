@@ -6,7 +6,7 @@ import lombok.NoArgsConstructor;
 
 @Getter
 @NoArgsConstructor
-public class BookmarkRequestDto {
+public class CreateBookmarkRequest {
 
   @ApiModelProperty(value = "북마크하는 명언 Id")
   private Long id;

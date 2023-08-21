@@ -16,8 +16,9 @@ import java.util.UUID;
 public class BookmarkEntityService {
     private final BookmarkRepository bookmarkRepository;
 
+    //TODO: 바꾸기
     public boolean isMarked(UUID memberId, Long sayingId) {
-        Optional<BookmarkEntity> bookmark = this.bookmarkRepository.findByMemberIdAndSayingEntityId(memberId, sayingId);
+        Optional<BookmarkEntity> bookmark = this.bookmarkRepository.findBookmark(sayingId, memberId);
         return bookmark.isPresent();
     }
 }
