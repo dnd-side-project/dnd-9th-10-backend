@@ -34,6 +34,7 @@ public class CreateDiaryController {
             @RequestBody CreateDiaryRequest createDiaryRequest,
             @AuthenticationPrincipal SessionUser sessionUser
     ){
-        return new ResponseEntity<>(DataResponse.of(HttpStatus.OK , "일기 생성 성공", createDiaryUseCase.createDiary(sessionUser.getUuid(), id, createDiaryRequest)), HttpStatus.OK);
+        CreateDiaryResponse createDiaryResponse = createDiaryUseCase.createDiary(sessionUser.getUuid(), id, createDiaryRequest);
+        return new ResponseEntity<>(DataResponse.of(HttpStatus.OK , "일기 생성 성공", createDiaryResponse), HttpStatus.OK);
     }
 }

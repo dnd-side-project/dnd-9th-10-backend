@@ -24,7 +24,6 @@ public class BasicChecklistController {
     @PreAuthorize("isAuthenticated()")
     @GetMapping("")
     public ResponseEntity<DataResponse<GetBasicChecklistResponse>> getBasicChecklist() {
-
         GetBasicChecklistResponse basicChecklist = getBasicChecklistQuery.getBasicChecklist();
         return new ResponseEntity<>(
                 DataResponse.of(HttpStatus.OK, "기본 체크리스트 제공 성공", basicChecklist), HttpStatus.OK);
