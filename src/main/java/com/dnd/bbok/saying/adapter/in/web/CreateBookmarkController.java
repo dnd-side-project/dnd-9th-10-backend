@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/v1/bookmark")
 @RequiredArgsConstructor
 @Api(tags = "북마크 관련 컨트롤러")
-public class BookmarkSayingController {
+public class CreateBookmarkController {
 
   private final SaveBookmarkUseCase saveBookmarkUseCase;
 
