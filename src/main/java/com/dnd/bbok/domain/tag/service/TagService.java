@@ -1,9 +1,9 @@
 package com.dnd.bbok.domain.tag.service;
 
 import com.dnd.bbok.diary.adapter.out.persistence.entity.DiaryEntity;
-import com.dnd.bbok.domain.friend.entity.Friend;
 import com.dnd.bbok.diary.adapter.out.persistence.entity.DiaryTagEntity;
 import com.dnd.bbok.friend.adapter.out.persistence.entity.FriendTagEntity;
+import com.dnd.bbok.friend.domain.Friend;
 import com.dnd.bbok.global.exception.BusinessException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

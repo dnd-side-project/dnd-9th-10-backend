@@ -10,7 +10,7 @@ import com.dnd.bbok.member.adapter.out.persistence.entity.MemberEntity;
 import com.dnd.bbok.member.adapter.out.persistence.mapper.MemberChecklistMapper;
 import com.dnd.bbok.member.adapter.out.persistence.mapper.MemberMapper;
 import com.dnd.bbok.member.adapter.out.persistence.repository.MemberChecklistRepository;
-import com.dnd.bbok.member.adapter.out.persistence.repository.MemberTestRepository;
+import com.dnd.bbok.member.adapter.out.persistence.repository.MemberRepository;
 import com.dnd.bbok.member.application.port.in.request.ChecklistInfoRequest;
 import com.dnd.bbok.member.application.port.out.EditMemberChecklistPort;
 import com.dnd.bbok.member.application.port.out.LoadMemberChecklistPort;
@@ -41,21 +41,21 @@ public class MemberPersistenceAdapter
     implements LoadMemberPort, SaveMemberPort, UpdateMemberPort,
     LoadMemberChecklistPort, SaveMemberChecklistPort, EditMemberChecklistPort {
 
-  private final MemberTestRepository memberTestRepository;
+  private final MemberRepository memberRepository;
   private final MemberChecklistRepository memberChecklistRepository;
   private final MemberMapper memberMapper;
   private final MemberChecklistMapper memberChecklistMapper;
 
   @Override
   public Member loadById(UUID memberId) {
-    MemberEntity member = memberTestRepository.findById(memberId)
+    MemberEntity member = memberRepository.findById(memberId)
         .orElseThrow(() -> new BusinessException(MEMBER_NOT_FOUND));
     return memberMapper.toDomain(member);
   }
 
   @Override
   public Member loadByUserNumber(String userNumber) {
-    MemberEntity member = memberTestRepository.findByUserNumber(userNumber)
+    MemberEntity member = memberRepository.findByUserNumber(userNumber)
         .orElseThrow(() -> new BusinessException(MEMBER_NOT_FOUND));
     return memberMapper.toDomain(member);
   }
@@ -63,13 +63,13 @@ public class MemberPersistenceAdapter
   @Override
   public Member saveMember(Member member) {
     MemberEntity memberEntity = memberMapper.toEntity(member);
-    MemberEntity savedMember = memberTestRepository.save(memberEntity);
+    MemberEntity savedMember = memberRepository.save(memberEntity);
     return memberMapper.toDomain(savedMember);
   }
 
   @Override
   public void updateInfo(KakaoUserInfoResponse kakaoInfo, Member member) {
-    MemberEntity memberEntity = memberTestRepository.findById(member.getId())
+    MemberEntity memberEntity = memberRepository.findById(member.getId())
         .orElseThrow(() -> new BusinessException(MEMBER_NOT_FOUND));
     memberEntity.changeLatestInfo(kakaoInfo.getProfileImg(), kakaoInfo.getUsername());
   }
@@ -81,7 +81,7 @@ public class MemberPersistenceAdapter
 
   @Override
   public void saveMemberChecklist(UUID memberId, MemberChecklist memberChecklist) {
-    MemberEntity memberEntity = memberTestRepository.findById(memberId)
+    MemberEntity memberEntity = memberRepository.findById(memberId)
         .orElseThrow(() -> new BusinessException(MEMBER_NOT_FOUND));
     List<MemberChecklistEntity> memberChecklistEntities = memberChecklistMapper.toEntity(memberChecklist, memberEntity);
     memberChecklistRepository.saveAll(memberChecklistEntities);

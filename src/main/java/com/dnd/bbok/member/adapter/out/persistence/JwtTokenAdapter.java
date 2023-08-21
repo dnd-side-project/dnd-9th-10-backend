@@ -9,7 +9,7 @@ import com.dnd.bbok.infra.redis.RefreshTokenRepository;
 
 import com.dnd.bbok.member.adapter.out.persistence.entity.MemberEntity;
 import com.dnd.bbok.member.adapter.out.persistence.mapper.MemberMapper;
-import com.dnd.bbok.member.adapter.out.persistence.repository.MemberTestRepository;
+import com.dnd.bbok.member.adapter.out.persistence.repository.MemberRepository;
 import com.dnd.bbok.member.application.exception.JwtException;
 import com.dnd.bbok.member.application.port.out.JwtTokenPort;
 
@@ -42,7 +42,7 @@ import org.springframework.stereotype.Repository;
 public class JwtTokenAdapter implements JwtTokenPort {
 
   private final JwtTokenInitializer jwtTokenInitializer;
-  private final MemberTestRepository memberTestRepository;
+  private final MemberRepository memberRepository;
   private final RefreshTokenRepository refreshTokenRepository;
   private final MemberMapper memberMapper;
 
@@ -124,7 +124,7 @@ public class JwtTokenAdapter implements JwtTokenPort {
   private SessionUser getSessionUser(String uuid) {
     UUID changeUuid = UUID.fromString(uuid);
 
-    Optional<MemberEntity> optionalMember = memberTestRepository.findById(changeUuid);
+    Optional<MemberEntity> optionalMember = memberRepository.findById(changeUuid);
     if (optionalMember.isEmpty()) {
       throw new JwtException(JWT_INVALID_TOKEN);
     }

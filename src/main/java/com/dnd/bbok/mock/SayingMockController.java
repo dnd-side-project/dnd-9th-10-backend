@@ -1,6 +1,5 @@
 package com.dnd.bbok.mock;
 
-import com.dnd.bbok.domain.saying.dto.request.BookmarkRequestDto;
 import com.dnd.bbok.domain.saying.dto.response.BookmarkInfoDto;
 import com.dnd.bbok.global.response.DataResponse;
 import com.dnd.bbok.global.response.MessageResponse;
@@ -11,8 +10,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -27,15 +24,6 @@ public class SayingMockController {
     BookmarkInfoDto bookmarks = new BookmarkInfoDto();
     return new ResponseEntity<>(
         DataResponse.of(HttpStatus.OK, "북마크 목록 조회 성공", bookmarks), HttpStatus.OK);
-  }
-
-  @ApiOperation(value = "북마크 추가")
-  @PostMapping("")
-  public ResponseEntity<MessageResponse> createBookmark(
-      @RequestBody BookmarkRequestDto bookmarkRequest
-  ) {
-    return new ResponseEntity<>(
-        MessageResponse.of(HttpStatus.CREATED, "북마크 등록 성공"), HttpStatus.CREATED);
   }
 
   @ApiOperation(value = "북마크 삭제")
