@@ -17,7 +17,7 @@ import com.dnd.bbok.diary.domain.Tag;
 import com.dnd.bbok.friend.adapter.out.persistence.entity.FriendEntity;
 import com.dnd.bbok.friend.adapter.out.persistence.entity.FriendTagEntity;
 import com.dnd.bbok.friend.adapter.out.persistence.repository.FriendTagRepository;
-import com.dnd.bbok.friend.adapter.out.persistence.repository.FriendTestRepository;
+import com.dnd.bbok.friend.adapter.out.persistence.repository.FriendRepository;
 import com.dnd.bbok.global.exception.BusinessException;
 import com.dnd.bbok.member.adapter.out.persistence.entity.MemberChecklistEntity;
 import com.dnd.bbok.member.adapter.out.persistence.repository.MemberChecklistRepository;
@@ -39,7 +39,7 @@ import static com.dnd.bbok.global.exception.ErrorCode.FRIEND_NOT_FOUND;
 @Slf4j
 public class DiaryAdapter implements SaveDiaryPort, LoadDiaryPort {
     private final FriendTagRepository friendTagRepository;
-    private final FriendTestRepository friendTestRepository;
+    private final FriendRepository friendRepository;
     private final DiaryRepository diaryRepository;
     private final DiaryTagRepository diaryTagRepository;
     private final DiaryChecklistRepository diaryChecklistRepository;
@@ -52,7 +52,7 @@ public class DiaryAdapter implements SaveDiaryPort, LoadDiaryPort {
     @Override
     @Transactional
     public void createDiary(Long friendId, Diary diary) {
-        FriendEntity friend = friendTestRepository.findById(friendId).orElseThrow(() -> new BusinessException(FRIEND_NOT_FOUND));
+        FriendEntity friend = friendRepository.findById(friendId).orElseThrow(() -> new BusinessException(FRIEND_NOT_FOUND));
 
         // 1. 태그들 중 id 가 없는 태그가 있다면 Friend Tag Entity 생성
         diary.getTags().forEach(tag -> {

@@ -62,7 +62,8 @@ public class SwaggerConfig {
                 .or(RequestHandlerSelectors.basePackage("com.dnd.bbok.basicchecklist"))
                 .or(RequestHandlerSelectors.basePackage("com.dnd.bbok.member"))
                 .or(RequestHandlerSelectors.basePackage("com.dnd.bbok.friend"))
-                .or(RequestHandlerSelectors.basePackage("com.dnd.bbok.diary")))
+                .or(RequestHandlerSelectors.basePackage("com.dnd.bbok.diary"))
+                .or(RequestHandlerSelectors.basePackage("com.dnd.bbok.saying")))
         .build()
         .apiInfo(apiInfo());
   }
