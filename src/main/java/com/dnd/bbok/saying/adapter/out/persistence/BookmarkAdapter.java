@@ -16,6 +16,8 @@ import com.dnd.bbok.saying.application.port.out.LoadBookmarkPort;
 import com.dnd.bbok.saying.domain.Bookmark;
 import com.dnd.bbok.saying.domain.Saying;
 import com.dnd.bbok.member.domain.Member;
+import java.util.List;
+import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -38,7 +40,18 @@ public class BookmarkAdapter implements LoadBookmarkPort, BookmarkSayingPort {
         return bookmarkEntity.isPresent();
     }
 
-    @Override
+  @Override
+  public List<Bookmark> getBookmarks(UUID memberId) {
+    List<BookmarkEntity> memberBookmark = bookmarkRepository.findMemberBookmark(memberId);
+    return memberBookmark.stream()
+        .map(bookmark -> bookmarkMapper.toDomain(
+            memberMapper.toDomain(bookmark.getMember()),
+            sayingMapper.toDomain(bookmark.getSaying())
+        ))
+        .collect(Collectors.toList());
+  }
+
+  @Override
     public Bookmark checkBookmark(Saying saying, Member member) {
         Optional<BookmarkEntity> bookmark =
             bookmarkRepository.findBookmark(saying.getId(), member.getId());

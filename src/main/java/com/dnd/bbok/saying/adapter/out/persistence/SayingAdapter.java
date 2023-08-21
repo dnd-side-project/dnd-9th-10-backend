@@ -7,6 +7,7 @@ import com.dnd.bbok.saying.adapter.out.persistence.entity.SayingEntity;
 import com.dnd.bbok.saying.adapter.out.persistence.mapper.SayingMapper;
 import com.dnd.bbok.saying.adapter.out.persistence.repository.SayingRepository;
 import com.dnd.bbok.saying.application.port.out.LoadSayingPort;
+import com.dnd.bbok.saying.domain.Bookmark;
 import com.dnd.bbok.saying.domain.Saying;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -31,5 +32,13 @@ public class SayingAdapter implements LoadSayingPort {
         SayingEntity saying = sayingRepository.findSayingById(sayingId)
             .orElseThrow(() -> new BusinessException(SAYING_NOT_FOUND));
         return sayingMapper.toDomain(saying);
+    }
+
+    @Override
+    public List<Saying> getBookmarkSaying(List<Bookmark> bookmarks) {
+         return bookmarks.stream()
+            .map(bookmark -> sayingMapper.toEntity(bookmark.getSaying()))
+            .map(sayingMapper::toDomain)
+            .collect(Collectors.toList());
     }
 }
