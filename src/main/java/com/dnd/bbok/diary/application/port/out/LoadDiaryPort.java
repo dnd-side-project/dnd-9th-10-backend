@@ -1,11 +1,10 @@
 package com.dnd.bbok.diary.application.port.out;
 
 import com.dnd.bbok.diary.domain.Diary;
-
-import java.util.List;
+import org.springframework.data.domain.Page;
 
 public interface LoadDiaryPort {
     Diary loadDiary(Long diaryId);
-    List<Diary> loadDiaries(Long friendId);
+    Page<Diary> loadDiaries(Long friendId, Integer offset, String order, String keyword, String tag);
     int countDiariesByFriendId(Long friendId);
 }

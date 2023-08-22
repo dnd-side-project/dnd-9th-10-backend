@@ -8,9 +8,6 @@ import com.dnd.bbok.diary.application.port.out.LoadDiaryPort;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.stream.Collectors;
-
 @Service
 @RequiredArgsConstructor
 public class GetDiaryService implements GetDiariesQuery, GetDiaryQuery {
@@ -18,8 +15,7 @@ public class GetDiaryService implements GetDiariesQuery, GetDiaryQuery {
 
     @Override
     public GetDiariesResponse getDiariesQuery(Long friendId, Integer offset, String order, String keyword, String tag) {
-        List<GetDiaryResponse> getDiaryResponses = loadDiaryPort.loadDiaries(friendId).stream().map(GetDiaryResponse::new).collect(Collectors.toList());
-        return new GetDiariesResponse(getDiaryResponses);
+        return new GetDiariesResponse(loadDiaryPort.loadDiaries(friendId, offset,order, keyword, tag));
     }
 
     @Override
