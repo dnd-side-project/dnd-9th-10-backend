@@ -42,6 +42,8 @@ import static com.dnd.bbok.global.exception.ErrorCode.FRIEND_NOT_FOUND;
 @RequiredArgsConstructor
 @Slf4j
 public class DiaryAdapter implements SaveDiaryPort, LoadDiaryPort {
+    private final int PAGE_SIZE = 20;
+
     private final FriendTagRepository friendTagRepository;
     private final FriendRepository friendRepository;
     private final DiaryRepository diaryRepository;
@@ -121,9 +123,9 @@ public class DiaryAdapter implements SaveDiaryPort, LoadDiaryPort {
 
         Pageable pageable;
         if (Objects.equals(order, "asc")) {
-            pageable = PageRequest.of(offset / 20, 20, Sort.Direction.ASC, "diaryDate");
+            pageable = PageRequest.of(offset / PAGE_SIZE, PAGE_SIZE, Sort.Direction.ASC, "diaryDate");
         } else {
-            pageable = PageRequest.of(offset / 20, 20, Sort.Direction.DESC, "diaryDate");
+            pageable = PageRequest.of(offset / PAGE_SIZE, PAGE_SIZE, Sort.Direction.DESC, "diaryDate");
         }
 
         if (keyword == null) {
