@@ -42,17 +42,27 @@ public class CreateDiaryService implements CreateDiaryUseCase {
     @Override
     public CreateDiaryResponse createDiary(UUID memberId, Long friendId, CreateDiaryRequest createDiaryRequest) {
         // 1. 다섯 개 이상의 태그를 사용하려 했다면 에러
-        List<Tag> tags = checkFriendTagCount(friendId, createDiaryRequest.getTags());
+        List<Tag> tags = null;
+        if (createDiaryRequest.getTags() != null) {
+            tags = checkFriendTagCount(friendId, createDiaryRequest.getTags());
+        }
 
         // 2. 일기 생성 (Friend Tag, Diary, Diary Tag, Diary Checklist Entity)
-        List<DiaryChecklist> checklist = createDiaryRequest.getChecklist().stream().map(ele -> new DiaryChecklist(null, ele.getIsChecked(), ele.getId())).collect(Collectors.toList());
+        List<DiaryChecklist> checklist = null;
+        if (createDiaryRequest.getChecklist() != null) {
+            checklist = createDiaryRequest.getChecklist().stream().map(ele -> new DiaryChecklist(null, ele.getIsChecked(), ele.getId())).collect(Collectors.toList());
+        }
+
         Diary diary = new Diary(null, createDiaryRequest.getEmoji(), createDiaryRequest.getContent(), createDiaryRequest.getDate(), createDiaryRequest.getSticker(), tags, checklist);
         saveDiaryPort.createDiary(friendId, diary);
 
         // 3. 점수 계산 및 업데이트
         Friend friend = loadFriendPort.loadByFriendId(friendId);
-        Long score = calculateScore(Math.abs(friend.getFriendScore()), createDiaryRequest.getChecklist());
-        updateFriendPort.updateFriendScore(friend, score);
+        Long score = friend.getFriendScore();
+        if (createDiaryRequest.getChecklist() != null) {
+            score = calculateScore(Math.abs(friend.getFriendScore()), createDiaryRequest.getChecklist());
+            updateFriendPort.updateFriendScore(friend, score);
+        }
 
         // 4. 랜덤 명언 조회
         DiarySaying diarySaying = getRandomSaying(memberId);

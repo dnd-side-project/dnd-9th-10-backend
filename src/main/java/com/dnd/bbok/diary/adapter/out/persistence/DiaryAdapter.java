@@ -42,7 +42,6 @@ import static com.dnd.bbok.global.exception.ErrorCode.FRIEND_NOT_FOUND;
 @RequiredArgsConstructor
 @Slf4j
 public class DiaryAdapter implements SaveDiaryPort, LoadDiaryPort {
-    private final int PAGE_SIZE = 20;
 
     private final FriendTagRepository friendTagRepository;
     private final FriendRepository friendRepository;
@@ -61,16 +60,17 @@ public class DiaryAdapter implements SaveDiaryPort, LoadDiaryPort {
         FriendEntity friend = friendRepository.findById(friendId).orElseThrow(() -> new BusinessException(FRIEND_NOT_FOUND));
 
         // 1. 태그들 중 id 가 없는 태그가 있다면 Friend Tag Entity 생성
-        diary.getTags().forEach(tag -> {
-            if (tag.getId() == null) {
-                FriendTagEntity friendTagEntity = friendTagRepository.save(FriendTagEntity.builder()
-                        .friend(friend)
-                        .name(tag.getTag())
-                        .build());
-                tag.setId(friendTagEntity.getId());
-            }
-        });
-
+        if (diary.getTags() != null) {
+            diary.getTags().forEach(tag -> {
+                if (tag.getId() == null) {
+                    FriendTagEntity friendTagEntity = friendTagRepository.save(FriendTagEntity.builder()
+                            .friend(friend)
+                            .name(tag.getTag())
+                            .build());
+                    tag.setId(friendTagEntity.getId());
+                }
+            });
+        }
 
         // 2. 다이어리 생성
         DiaryEntity diaryEntity = diaryRepository.save(DiaryEntity.builder()
@@ -82,30 +82,35 @@ public class DiaryAdapter implements SaveDiaryPort, LoadDiaryPort {
                 .build());
 
         // 3. 다이어리 태그 생성
-        List<FriendTagEntity> friendTagEntities = friendTagRepository.findAllByFriendId(friendId);
-        List<DiaryTagEntity> diaryTagEntities = new ArrayList<>();
-        diary.getTags().forEach(tag -> {
-            FriendTagEntity friendTagEntity = friendTagEntities.stream().filter(ele -> Objects.equals(ele.getName(), tag.getTag())).findFirst().orElseThrow();
-            diaryTagEntities.add(DiaryTagEntity.builder()
-                    .diaryEntity(diaryEntity)
-                    .friendTagEntity(friendTagEntity)
-                    .build());
-        });
-        diaryTagRepository.saveAll(diaryTagEntities);
+        if (diary.getTags() != null) {
+            List<FriendTagEntity> friendTagEntities = friendTagRepository.findAllByFriendId(friendId);
+            List<DiaryTagEntity> diaryTagEntities = new ArrayList<>();
+            diary.getTags().forEach(tag -> {
+                FriendTagEntity friendTagEntity = friendTagEntities.stream().filter(ele -> Objects.equals(ele.getName(), tag.getTag())).findFirst().orElseThrow();
+                diaryTagEntities.add(DiaryTagEntity.builder()
+                        .diaryEntity(diaryEntity)
+                        .friendTagEntity(friendTagEntity)
+                        .build());
+            });
+            diaryTagRepository.saveAll(diaryTagEntities);
+        }
+
 
         // 4. 다이어리 체크리스트 생성
-        List<MemberChecklistEntity> memberChecklistEntities = memberChecklistRepository.findByIdIn(diary.getDiaryChecklist().stream().map(DiaryChecklist::getMemberChecklistId).collect(Collectors.toList()));
-        List<DiaryChecklistEntity> diaryChecklistEntities = new ArrayList<>();
-        diary.getDiaryChecklist().forEach(diaryChecklist -> {
-            log.info(String.valueOf(diaryChecklist.getMemberChecklistId()));
-            MemberChecklistEntity memberChecklistEntity = memberChecklistEntities.stream().filter(ele -> Objects.equals(ele.getId(), diaryChecklist.getMemberChecklistId())).findFirst().orElseThrow();
-            diaryChecklistEntities.add(DiaryChecklistEntity.builder()
-                    .diaryEntity(diaryEntity)
-                    .memberChecklistEntity(memberChecklistEntity)
-                    .isChecked(diaryChecklist.getIsChecked())
-                    .build());
-        });
-        diaryChecklistRepository.saveAll(diaryChecklistEntities);
+        if (diary.getDiaryChecklist() != null) {
+            List<MemberChecklistEntity> memberChecklistEntities = memberChecklistRepository.findByIdIn(diary.getDiaryChecklist().stream().map(DiaryChecklist::getMemberChecklistId).collect(Collectors.toList()));
+            List<DiaryChecklistEntity> diaryChecklistEntities = new ArrayList<>();
+            diary.getDiaryChecklist().forEach(diaryChecklist -> {
+                log.info(String.valueOf(diaryChecklist.getMemberChecklistId()));
+                MemberChecklistEntity memberChecklistEntity = memberChecklistEntities.stream().filter(ele -> Objects.equals(ele.getId(), diaryChecklist.getMemberChecklistId())).findFirst().orElseThrow();
+                diaryChecklistEntities.add(DiaryChecklistEntity.builder()
+                        .diaryEntity(diaryEntity)
+                        .memberChecklistEntity(memberChecklistEntity)
+                        .isChecked(diaryChecklist.getIsChecked())
+                        .build());
+            });
+            diaryChecklistRepository.saveAll(diaryChecklistEntities);
+        }
     }
 
     @Override
@@ -122,6 +127,7 @@ public class DiaryAdapter implements SaveDiaryPort, LoadDiaryPort {
         }
 
         Pageable pageable;
+        int PAGE_SIZE = 20;
         if (Objects.equals(order, "asc")) {
             pageable = PageRequest.of(offset / PAGE_SIZE, PAGE_SIZE, Sort.Direction.ASC, "diaryDate");
         } else {
