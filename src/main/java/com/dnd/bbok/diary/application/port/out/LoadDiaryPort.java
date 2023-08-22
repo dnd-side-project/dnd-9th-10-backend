@@ -7,4 +7,5 @@ import java.util.List;
 public interface LoadDiaryPort {
     Diary loadDiary(Long diaryId);
     List<Diary> loadDiaries(Long friendId);
+    int countDiariesByFriendId(Long friendId);
 }

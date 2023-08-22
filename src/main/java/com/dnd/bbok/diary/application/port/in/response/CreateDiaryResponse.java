@@ -1,5 +1,6 @@
 package com.dnd.bbok.diary.application.port.in.response;
 
+import com.dnd.bbok.diary.domain.DiarySaying;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 

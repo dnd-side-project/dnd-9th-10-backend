@@ -1,7 +1,6 @@
 package com.dnd.bbok.friend.application.service;
 
-import com.dnd.bbok.domain.diary.service.DiaryEntityService;
-
+import com.dnd.bbok.diary.application.port.out.LoadDiaryPort;
 import com.dnd.bbok.friend.application.port.in.request.CreateFriendRequest;
 import com.dnd.bbok.friend.application.port.in.request.UpdateFriendRequest;
 import com.dnd.bbok.friend.application.port.in.response.GetFriendResponse;
@@ -40,9 +39,7 @@ public class FriendService implements GetFriendsQuery, RegisterFriendUseCase,
   private final FriendValidatorPort friendValidatorPort;
   private final SaveFriendPort saveFriendPort;
   private final UpdateFriendPort updateFriendPort;
-
-  //TODO: 이후에 수정해야 하는 부분.
-  private final DiaryEntityService diaryEntityService;
+  private final LoadDiaryPort loadDiaryPort;
 
   @Override
   public GetFriendGroupResponse getFriends(UUID memberID) {
@@ -50,7 +47,7 @@ public class FriendService implements GetFriendsQuery, RegisterFriendUseCase,
     List<GetFriendResponse> friendsInfo = friends.stream()
         .map(friend -> {
           String iconUrl = s3Downloader.getIconUrl(friend.getBbok().getIconFile());
-          int countDiary = diaryEntityService.countDiariesByFriendId(friend.getId());
+          int countDiary = loadDiaryPort.countDiariesByFriendId(friend.getId());
           return new GetFriendResponse(friend, iconUrl, countDiary);
         })
         .collect(Collectors.toList());

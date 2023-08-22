@@ -1,7 +1,7 @@
 package com.dnd.bbok.mock;
 
-import com.dnd.bbok.domain.checklist.dto.request.ChecklistInfoRequestDto;
 import com.dnd.bbok.global.response.MessageResponse;
+import com.dnd.bbok.member.application.port.in.request.EditMemberChecklistRequest;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.http.HttpStatus;
@@ -19,7 +19,7 @@ public class FriendMockController {
   @ApiOperation(value = "나만의 기준 수정")
   @PatchMapping("/friend/checklist")
   public ResponseEntity<MessageResponse> updateChecklist(
-      @RequestBody ChecklistInfoRequestDto requestChecklist
+      @RequestBody EditMemberChecklistRequest requestChecklist
   ){
     return new ResponseEntity<>(
         MessageResponse.of(HttpStatus.OK, "기준 정보 수정 성공"), HttpStatus.OK
