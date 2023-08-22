@@ -23,6 +23,10 @@ import com.dnd.bbok.member.adapter.out.persistence.entity.MemberChecklistEntity;
 import com.dnd.bbok.member.adapter.out.persistence.repository.MemberChecklistRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Component;
 
 import javax.transaction.Transactional;
@@ -110,17 +114,38 @@ public class DiaryAdapter implements SaveDiaryPort, LoadDiaryPort {
     }
 
     @Override
-    public List<Diary> loadDiaries(Long friendId) {
-        List<DiaryEntity> diaryEntities = diaryRepository.findAllByFriendId(friendId);
-        List<Long> diaryIds = diaryEntities.stream().map(DiaryEntity::getId).collect(Collectors.toList());
+    public Page<Diary> loadDiaries(Long friendId, Integer offset, String order, String keyword, String tag) {
+        if (offset == null) {
+            offset = 0;
+        }
+
+        Pageable pageable;
+        if (Objects.equals(order, "asc")) {
+            pageable = PageRequest.of(offset / 20, 20, Sort.Direction.ASC, "diaryDate");
+        } else {
+            pageable = PageRequest.of(offset / 20, 20, Sort.Direction.DESC, "diaryDate");
+        }
+
+        if (keyword == null) {
+            keyword = "";
+        }
+
+        if (tag == null) {
+            tag = "";
+        }
+
+
+        Page<DiaryEntity> diaryEntityPage = diaryRepository.findDiaries(friendId, keyword, tag, pageable);
+        List<Long> diaryIds = diaryEntityPage.stream().map(DiaryEntity::getId).collect(Collectors.toList());
         List<Tag> tags = diaryTagMapper.toDomain(diaryTagRepository.findByDiaryIds(diaryIds));
         List<DiaryChecklist> checklists = diaryChecklistMapper.toDomain(diaryChecklistRepository.getDiaryChecklistByDiaryIds(diaryIds));
 
-        return diaryMapper.toEntities(diaryEntities, tags, checklists);
+        Page<Diary> diaryPage = diaryEntityPage.map(diaryEntity -> diaryMapper.toEntity(diaryEntity, tags, checklists));
+        return diaryPage;
     }
 
     @Override
     public int countDiariesByFriendId(Long friendId) {
-        return this.diaryRepository.countDiaries(friendId);
+        return this.diaryRepository.countDiariesByFriendId(friendId);
     }
 }

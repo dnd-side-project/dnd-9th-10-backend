@@ -8,6 +8,8 @@ import com.dnd.bbok.diary.domain.Emoji;
 import com.dnd.bbok.friend.adapter.out.persistence.entity.FriendEntity;
 import com.sun.istack.NotNull;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 import javax.persistence.*;
 
 import lombok.Builder;
@@ -43,8 +45,15 @@ public class DiaryEntity extends BaseTimeEntity {
   @JoinColumn(name = "friend_id")
   private FriendEntity friend;
 
+  @OneToMany(mappedBy = "diaryEntity", cascade = CascadeType.ALL, orphanRemoval = true)
+  private List<DiaryTagEntity> diaryTags = new ArrayList<>();
+
+  @OneToMany(mappedBy = "diaryEntity", cascade = CascadeType.ALL, orphanRemoval = true)
+  private List<DiaryChecklistEntity> diaryChecklists = new ArrayList<>();
+
   @Builder
-  public DiaryEntity(Emoji emoji, String contents, LocalDate diaryDate, FriendEntity friend, String sticker) {
+  public DiaryEntity(Long id, Emoji emoji, String contents, LocalDate diaryDate, FriendEntity friend, String sticker) {
+    this.id = id;
     this.emoji = emoji;
     this.contents = contents;
     this.diaryDate = diaryDate;
