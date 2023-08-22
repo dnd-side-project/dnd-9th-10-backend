@@ -11,7 +11,7 @@ import org.springframework.data.repository.query.Param;
 import java.util.List;
 
 public interface DiaryRepository extends JpaRepository<DiaryEntity, Long> {
-    @Query("select count(*) from DiaryEntity d where d.friend.id = :friendId")
+    @Query("select count(*) from DiaryEntity d where d.friend.id = :friendId AND d.isDeleted = false")
     int countDiariesByFriendId(@Param("friendId") Long friendId);
 
     @Query(value = "SELECT DISTINCT d FROM DiaryEntity d "
@@ -19,14 +19,16 @@ public interface DiaryRepository extends JpaRepository<DiaryEntity, Long> {
             + "LEFT JOIN dt.friendTagEntity ft "
             + "WHERE d.friend.id = :friendId "
             + "AND d.contents LIKE %:keyword%"
-            + "AND ft.name LIKE %:tag%",
+            + "AND ft.name LIKE %:tag%"
+            + "AND d.isDeleted = false",
     countQuery = "SELECT COUNT(DISTINCT d) FROM DiaryEntity d "
             + "LEFT JOIN d.diaryTags dt "
             + "LEFT JOIN dt.friendTagEntity ft "
             + "WHERE d.friend.id = :friendId "
             + "AND d.contents LIKE %:keyword%"
-            + "AND ft.name LIKE %:tag%")
+            + "AND ft.name LIKE %:tag%"
+            + "AND d.isDeleted = false")
     Page<DiaryEntity> findDiaries(Long friendId, String keyword, String tag, Pageable pageable);
 
-    List<DiaryEntity> findAllByFriendId(Long friendId);
+    List<DiaryEntity> findAllByFriendIdAndIsDeletedIsFalse(Long friendId);
 }

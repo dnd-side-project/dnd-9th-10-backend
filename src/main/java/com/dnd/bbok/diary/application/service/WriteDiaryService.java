@@ -75,6 +75,7 @@ public class WriteDiaryService implements CreateDiaryUseCase, UpdateDiaryUseCase
                 createDiaryRequest.getDate(),
                 createDiaryRequest.getSticker(),
                 diaryScore,
+                false,
                 tags,
                 checklist);
         saveDiaryPort.createDiary(friendId, diary);

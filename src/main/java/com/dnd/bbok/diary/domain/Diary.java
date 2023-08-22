@@ -18,10 +18,11 @@ public class Diary {
     private LocalDate diaryDate;
     private String sticker;
     private Integer diaryScore;
+    private Boolean isDeleted;
     private List<Tag> tags;
     private List<DiaryChecklist> diaryChecklist;
 
-    public Diary(Long id, Long friendId, Emoji emoji, String contents, LocalDate diaryDate, String sticker, Integer diaryScore, List<Tag> tags, List<DiaryChecklist> diaryChecklist) {
+    public Diary(Long id, Long friendId, Emoji emoji, String contents, LocalDate diaryDate, String sticker, Integer diaryScore, Boolean isDeleted, List<Tag> tags, List<DiaryChecklist> diaryChecklist) {
         this.id = id;
         this.friendId = friendId;
         this.emoji = emoji;
@@ -29,6 +30,7 @@ public class Diary {
         this.diaryDate = diaryDate;
         this.sticker = sticker;
         this.diaryScore = diaryScore;
+        this.isDeleted = isDeleted;
         this.tags = Objects.requireNonNullElseGet(tags, ArrayList::new);
         this.diaryChecklist = Objects.requireNonNullElseGet(diaryChecklist, ArrayList::new);
     }

@@ -18,7 +18,7 @@ public class DiaryMapper {
     public Diary toDomain(DiaryEntity diaryEntity, List<Tag> tags, List<DiaryChecklist> diaryChecklists) {
         List<Tag> targetTags = tags.stream().filter(tag -> Objects.equals(tag.getDiaryId(), diaryEntity.getId())).collect(Collectors.toList());
         List<DiaryChecklist> targetChecklists = diaryChecklists.stream().filter(diaryChecklist -> Objects.equals(diaryChecklist.getDiaryId(), diaryEntity.getId())).collect(Collectors.toList());
-        return new Diary(diaryEntity.getId(), diaryEntity.getFriend().getId(), diaryEntity.getEmoji(), diaryEntity.getContents(), diaryEntity.getDiaryDate(), diaryEntity.getSticker(), diaryEntity.getDiaryScore(), targetTags, targetChecklists);
+        return new Diary(diaryEntity.getId(), diaryEntity.getFriend().getId(), diaryEntity.getEmoji(), diaryEntity.getContents(), diaryEntity.getDiaryDate(), diaryEntity.getSticker(), diaryEntity.getDiaryScore(), diaryEntity.getIsDeleted(), targetTags, targetChecklists);
     }
 
     public DiaryEntity toEntity(Diary diary, FriendEntity friendEntity) {
@@ -30,6 +30,7 @@ public class DiaryMapper {
                 .diaryScore(diary.getDiaryScore())
                 .emoji(diary.getEmoji())
                 .sticker(diary.getSticker())
+                .isDeleted(diary.getIsDeleted())
                 .build();
     }
 }
