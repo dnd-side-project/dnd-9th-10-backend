@@ -3,14 +3,12 @@ package com.dnd.bbok.diary.application.port.in.request;
 import com.dnd.bbok.diary.domain.Emoji;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
 
 @Getter
-@NoArgsConstructor
-public class CreateDiaryRequest {
+public class UpdateDiaryRequest {
     @ApiModelProperty(value = "사용한 이모지")
     private Emoji emoji;
 

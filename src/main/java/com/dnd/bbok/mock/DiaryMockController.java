@@ -22,15 +22,6 @@ public class DiaryMockController {
         return new ResponseEntity<>(DataResponse.of(HttpStatus.OK, "스티커 목록 조회 성공", new GetDiaryStickerResponse()), HttpStatus.OK);
     }
 
-    @ApiOperation("일기 수정")
-    @PatchMapping("diary/{id}")
-    public ResponseEntity<MessageResponse> updateDiary(
-            @Parameter(name = "id", in = ParameterIn.PATH, description = "일기 id") @PathVariable("id") Long id,
-            @RequestBody CreateDiaryResponse diaryCreateDto
-    ) {
-        return new ResponseEntity<>(MessageResponse.of(HttpStatus.OK, "일기 수정 성공"), HttpStatus.OK);
-    }
-
     @ApiOperation("일기 삭제")
     @DeleteMapping("diary/{id}")
     public ResponseEntity<MessageResponse> deleteDiary(@Parameter(name = "id", in = ParameterIn.PATH, description = "일기 id") @PathVariable("id") Long id) {

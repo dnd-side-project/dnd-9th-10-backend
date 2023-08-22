@@ -38,6 +38,9 @@ public class DiaryEntity extends BaseTimeEntity {
   @NotNull
   private String sticker;
 
+  @NotNull
+  private Integer diaryScore;
+
   /**
    * 일화와 친구를 다대일 관계 매핑
    */
@@ -52,12 +55,23 @@ public class DiaryEntity extends BaseTimeEntity {
   private List<DiaryChecklistEntity> diaryChecklists = new ArrayList<>();
 
   @Builder
-  public DiaryEntity(Long id, Emoji emoji, String contents, LocalDate diaryDate, FriendEntity friend, String sticker) {
+  public DiaryEntity(Long id, Emoji emoji, String contents, LocalDate diaryDate, String sticker, Integer diaryScore, FriendEntity friend, List<DiaryTagEntity> diaryTags, List<DiaryChecklistEntity> diaryChecklists) {
     this.id = id;
     this.emoji = emoji;
     this.contents = contents;
     this.diaryDate = diaryDate;
-    this.friend = friend;
     this.sticker = sticker;
+    this.diaryScore = diaryScore;
+    this.friend = friend;
+    this.diaryTags = diaryTags;
+    this.diaryChecklists = diaryChecklists;
+  }
+
+  public void setDiaryTags(List<DiaryTagEntity> diaryTags) {
+    this.diaryTags = diaryTags;
+  }
+
+  public void setDiaryChecklists(List<DiaryChecklistEntity> diaryChecklists) {
+    this.diaryChecklists = diaryChecklists;
   }
 }

@@ -53,8 +53,8 @@ public class GetDiaryResponse {
 
         this.goodChecklist = new ArrayList<>();
         this.badChecklist = new ArrayList<>();
-        diary.getDiaryChecklist().stream().filter(DiaryChecklist::getIsGood).forEach(ele -> this.goodChecklist.add(new DiaryChecklistResponse(ele.getId(), ele.getCriteria(), ele.getIsChecked())));
-        diary.getDiaryChecklist().stream().filter(ele -> !ele.getIsGood()).forEach(ele -> this.badChecklist.add(new DiaryChecklistResponse(ele.getId(), ele.getCriteria(), ele.getIsChecked())));
+        diary.getDiaryChecklist().stream().filter(DiaryChecklist::getIsGood).forEach(ele -> this.goodChecklist.add(new DiaryChecklistResponse(ele.getMemberChecklistId(), ele.getCriteria(), ele.getIsChecked())));
+        diary.getDiaryChecklist().stream().filter(ele -> !ele.getIsGood()).forEach(ele -> this.badChecklist.add(new DiaryChecklistResponse(ele.getMemberChecklistId(), ele.getCriteria(), ele.getIsChecked())));
 
         // TODO 수정필요
         this.emojiUrl = "https://i.ibb.co/zbHrDVm/angry.png";
@@ -62,6 +62,7 @@ public class GetDiaryResponse {
 
     @Getter
     public static class DiaryChecklistResponse {
+        @ApiModelProperty(value = "Member Checklist ID")
         private final Long id;
         private final String criteria;
         private final Boolean isChecked;

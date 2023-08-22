@@ -1,27 +1,28 @@
 package com.dnd.bbok.diary.domain;
 
-import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 
 @Getter
 public class Tag {
-    @ApiModelProperty(value = "태그 id")
     private Long id;
+    private Long friendTagId;
 
-    @ApiModelProperty(value = "태그 이름")
     private final String tag;
 
-    @ApiModelProperty(value = "다이어리 id")
-    private final Long diaryId;
+    private Long diaryId = null;
 
-    public Tag(Long id, String tag) {
-        this.id = id;
+    public Tag(String tag) {
         this.tag = tag;
-        this.diaryId = null;
     }
 
-    public Tag(Long id, String tag, Long diaryId) {
+    public Tag(Long friendTagId, String tag) {
+        this.friendTagId = friendTagId;
+        this.tag = tag;
+    }
+
+    public Tag(Long id, Long friendTagId, String tag, Long diaryId) {
         this.id = id;
+        this.friendTagId = friendTagId;
         this.tag = tag;
         this.diaryId = diaryId;
     }
