@@ -118,4 +118,9 @@ public class DiaryAdapter implements SaveDiaryPort, LoadDiaryPort {
 
         return diaryMapper.toEntities(diaryEntities, tags, checklists);
     }
+
+    @Override
+    public int countDiariesByFriendId(Long friendId) {
+        return this.diaryRepository.countDiaries(friendId);
+    }
 }

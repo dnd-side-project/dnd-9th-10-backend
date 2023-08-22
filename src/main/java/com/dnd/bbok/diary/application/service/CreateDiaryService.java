@@ -2,7 +2,7 @@ package com.dnd.bbok.diary.application.service;
 
 import com.dnd.bbok.diary.application.port.in.request.CreateDiaryRequest;
 import com.dnd.bbok.diary.application.port.in.response.CreateDiaryResponse;
-import com.dnd.bbok.diary.application.port.in.response.DiarySaying;
+import com.dnd.bbok.diary.domain.DiarySaying;
 import com.dnd.bbok.diary.application.port.in.usecase.CreateDiaryUseCase;
 import com.dnd.bbok.diary.application.port.out.SaveDiaryPort;
 import com.dnd.bbok.diary.domain.Diary;
