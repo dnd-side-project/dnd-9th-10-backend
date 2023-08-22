@@ -6,7 +6,12 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class SayingMapper {
-    public Saying toEntity(SayingEntity sayingEntity) {
+    public Saying toDomain(SayingEntity sayingEntity) {
         return new Saying(sayingEntity.getId(), sayingEntity.getContents(), sayingEntity.getReference());
+    }
+
+    public SayingEntity toEntity(Saying saying) {
+        return new SayingEntity(
+            saying.getId(), saying.getContents(), saying.getReference());
     }
 }

@@ -1,8 +1,8 @@
 package com.dnd.bbok.infra.feign.dto.response;
 
-import com.dnd.bbok.domain.member.entity.Member;
-import com.dnd.bbok.domain.member.entity.OAuth2Provider;
-import com.dnd.bbok.domain.member.entity.Role;
+import com.dnd.bbok.member.domain.Member;
+import com.dnd.bbok.member.domain.OAuth2Provider;
+import com.dnd.bbok.member.domain.Role;
 import lombok.Getter;
 
 /**
@@ -57,7 +57,7 @@ public class KakaoUserInfoResponse {
         .username(this.getUsername())
         .userNumber(createUserNumber())
         .role(Role.ROLE_SOCIAL)
-        .oauth2Provider(OAuth2Provider.KAKAO)
+        .oAuth2Provider(OAuth2Provider.KAKAO)
         .profileUrl(this.getProfileImg())
         .build();
   }

@@ -8,7 +8,10 @@ import com.dnd.bbok.diary.application.port.out.SaveDiaryPort;
 import com.dnd.bbok.diary.domain.Diary;
 import com.dnd.bbok.diary.domain.DiaryChecklist;
 import com.dnd.bbok.diary.domain.Tag;
+import com.dnd.bbok.friend.application.port.out.LoadFriendPort;
 import com.dnd.bbok.friend.application.port.out.LoadFriendTagPort;
+import com.dnd.bbok.friend.application.port.out.UpdateFriendPort;
+import com.dnd.bbok.friend.domain.Friend;
 import com.dnd.bbok.friend.domain.FriendTag;
 import com.dnd.bbok.global.exception.BusinessException;
 import com.dnd.bbok.saying.application.port.out.LoadBookmarkPort;
@@ -32,6 +35,8 @@ public class CreateDiaryService implements CreateDiaryUseCase {
     private final SaveDiaryPort saveDiaryPort;
     private final LoadSayingPort loadSayingPort;
     private final LoadBookmarkPort loadBookmarkPort;
+    private final LoadFriendPort loadFriendPort;
+    private final UpdateFriendPort updateFriendPort;
 
 
     @Override
@@ -44,11 +49,10 @@ public class CreateDiaryService implements CreateDiaryUseCase {
         Diary diary = new Diary(null, createDiaryRequest.getEmoji(), createDiaryRequest.getContent(), createDiaryRequest.getDate(), createDiaryRequest.getSticker(), tags, checklist);
         saveDiaryPort.createDiary(friendId, diary);
 
-        // 3. TODO 점수 계산 및 업데이트
-        // Friend friend = loadFriendPort.load(friend);
-        Long score = calculateScore(Math.abs(new Random().nextLong() % 100), createDiaryRequest.getChecklist());
-        // friend.score = score;
-        // saveFriendPort.save(friend)
+        // 3. 점수 계산 및 업데이트
+        Friend friend = loadFriendPort.loadByFriendId(friendId);
+        Long score = calculateScore(Math.abs(friend.getFriendScore()), createDiaryRequest.getChecklist());
+        updateFriendPort.updateFriendScore(friend, score);
 
         // 4. 랜덤 명언 조회
         DiarySaying diarySaying = getRandomSaying(memberId);

@@ -10,4 +10,5 @@ public interface UpdateFriendPort {
 
   void updateStatus(UUID memberId, Friend friend);
 
+  void updateFriendScore(Friend friend, Long score);
 }

@@ -21,8 +21,25 @@ public class MemberMapper {
         .build();
   }
 
+  /**
+   * id 가 없는 member를 entity로 변경
+   */
   public MemberEntity toEntity(Member member) {
     return MemberEntity.builder()
+        .userNumber(member.getUserNumber())
+        .role(member.getRole())
+        .oAuth2Provider(member.getOAuth2Provider())
+        .profileUrl(member.getProfileUrl())
+        .username(member.getUsername())
+        .build();
+  }
+
+  /**
+   * id 가 존재하는 member 를 entity로 변경
+   */
+  public MemberEntity toEntityWithId(Member member) {
+    return MemberEntity.builder()
+        .id(member.getId())
         .userNumber(member.getUserNumber())
         .role(member.getRole())
         .oAuth2Provider(member.getOAuth2Provider())

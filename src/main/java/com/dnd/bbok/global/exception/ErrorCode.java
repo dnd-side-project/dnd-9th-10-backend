@@ -39,8 +39,12 @@ public enum ErrorCode {
   JWT_INVALID_TOKEN(HttpStatus.UNAUTHORIZED, "J002", "유효하지 않은 토큰입니다."),
   JWT_EXPIRED_TOKEN(HttpStatus.UNAUTHORIZED, "J003", "만료된 토큰입니다."),
   JWT_SIGNATURE_INVALID_TOKEN(HttpStatus.UNAUTHORIZED, "J004", "서명이 유효하지 않습니다."),
-  JWT_MISSING(HttpStatus.UNAUTHORIZED, "J005", "입력된 토큰이 없습니다.");
+  JWT_MISSING(HttpStatus.UNAUTHORIZED, "J005", "입력된 토큰이 없습니다."),
 
+  // Saying
+  SAYING_NOT_FOUND(HttpStatus.BAD_REQUEST, "S001", "해당 아이디를 가진 명언을 찾을 수 없습니다."),
+  ALREADY_BOOKMARKED(HttpStatus.BAD_REQUEST, "S002", "해당 명언은 이미 북마크하셨습니다."),
+  BOOKMARK_NOT_FOUND(HttpStatus.BAD_REQUEST, "S003", "북마크 이력이 없습니다.");
 
 
   private final HttpStatus status;

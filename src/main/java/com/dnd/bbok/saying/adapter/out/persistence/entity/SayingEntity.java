@@ -10,9 +10,11 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Getter
+@NoArgsConstructor
 @Table(name = "saying")
 public class SayingEntity extends BaseTimeEntity {
 
@@ -25,5 +27,11 @@ public class SayingEntity extends BaseTimeEntity {
 
   @NotNull
   private String reference;
+
+  public SayingEntity(Long id, String contents, String reference) {
+    this.id = id;
+    this.contents = contents;
+    this.reference = reference;
+  }
 
 }

@@ -1,9 +1,9 @@
-package com.dnd.bbok.friend.adapter.in.web;
+package com.dnd.bbok.saying.adapter.in.web;
 
-import com.dnd.bbok.friend.application.port.in.response.GetFriendGroupResponse;
-import com.dnd.bbok.friend.application.port.in.usecase.GetFriendsQuery;
 import com.dnd.bbok.global.response.DataResponse;
 import com.dnd.bbok.member.application.port.in.response.SessionUser;
+import com.dnd.bbok.saying.application.port.in.response.GetBookmarkGroupResponse;
+import com.dnd.bbok.saying.application.port.in.usecase.GetBookmarksQuery;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
@@ -16,22 +16,22 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/api/v1")
-@Api(tags = "친구 관련 컨트롤러")
+@RequestMapping("/api/v1/bookmark")
 @RequiredArgsConstructor
-public class GetFriendsController {
+@Api(tags = "북마크 관련 컨트롤러")
+public class GetBookmarkController {
 
-  private final GetFriendsQuery getFriendsQuery;
+  private final GetBookmarksQuery getBookmarksQuery;
 
-  @ApiOperation(value = "친구 목록 조회")
-  @GetMapping("/friend")
+  @ApiOperation(value = "북마크 목록 조회")
   @PreAuthorize("isAuthenticated()")
-  public ResponseEntity<DataResponse<GetFriendGroupResponse>> getFriends(
+  @GetMapping("")
+  public ResponseEntity<DataResponse<GetBookmarkGroupResponse>> getBookmarks(
       @AuthenticationPrincipal SessionUser sessionUser
   ) {
-    GetFriendGroupResponse friends = getFriendsQuery.getFriends(sessionUser.getUuid());
+    GetBookmarkGroupResponse bookmarks = getBookmarksQuery.getBookmarks(sessionUser.getUuid());
     return new ResponseEntity<>(
-        DataResponse.of(HttpStatus.OK, "친구 목록 조회 성공", friends), HttpStatus.OK);
+        DataResponse.of(HttpStatus.OK, "북마크 목록 조회 성공", bookmarks), HttpStatus.OK);
   }
 
 }

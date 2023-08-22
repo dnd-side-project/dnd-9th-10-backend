@@ -8,4 +8,5 @@ public interface LoadFriendPort {
 
   List<Friend> getByMemberId(UUID memberId);
 
+  Friend loadByFriendId(Long friendId);
 }
