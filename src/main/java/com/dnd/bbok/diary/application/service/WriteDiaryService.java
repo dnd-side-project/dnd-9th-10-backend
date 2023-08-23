@@ -21,6 +21,7 @@ import com.dnd.bbok.saying.application.port.out.LoadBookmarkPort;
 import com.dnd.bbok.saying.application.port.out.LoadSayingPort;
 import com.dnd.bbok.saying.domain.Saying;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -29,6 +30,7 @@ import java.util.stream.Collectors;
 
 import static com.dnd.bbok.global.exception.ErrorCode.EXCEED_MAX_TAG_COUNT;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class WriteDiaryService implements CreateDiaryUseCase, UpdateDiaryUseCase {
@@ -58,7 +60,7 @@ public class WriteDiaryService implements CreateDiaryUseCase, UpdateDiaryUseCase
         Long friendScore = null;
         if (createDiaryRequest.getChecklist() != null) {
             checklist = createDiaryRequest.getChecklist().stream().map(
-                    ele -> new DiaryChecklist(null, ele.getIsChecked(), ele.getId())).collect(Collectors.toList());
+                    ele -> new DiaryChecklist(null, ele.getIsGood(), ele.getIsChecked(), ele.getId())).collect(Collectors.toList());
 
             Friend friend = loadFriendPort.loadByFriendId(friendId);
             diaryScore = calculateDiaryScore(checklist);
@@ -153,6 +155,10 @@ public class WriteDiaryService implements CreateDiaryUseCase, UpdateDiaryUseCase
     private final static int GOOD_CHECK_WEIGHT = 2;
     private Integer calculateDiaryScore(List<DiaryChecklist> checklists) {
         // 일기 점수 = (부정 체크 * 4 - (부정 체크 안한 갯수 * 1 + 긍정 체크 * 2))
+        log.info(String.valueOf(checklists.size()));
+        checklists.forEach(ele -> {
+            log.info(ele.getIsGood() + " " + ele.getIsChecked());
+        });
         long badCheckCount = checklists.stream().filter(ele -> ele.getIsChecked() && !ele.getIsGood()).count();
         long goodCheckCount = checklists.stream().filter(ele -> ele.getIsChecked() && ele.getIsGood()).count();
         return Math.toIntExact(BAD_CHECK_WEIGHT - ((MAX_CHECKLIST - badCheckCount) * BAD_UNCHECK_WEIGHT + goodCheckCount * GOOD_CHECK_WEIGHT));
