@@ -132,12 +132,14 @@ public class WriteDiaryService implements CreateDiaryUseCase, UpdateDiaryUseCase
         List<Tag> tags = new ArrayList<>();
         List<FriendTag> friendTags = loadFriendTagPort.loadFriendTag(friendId);
         AtomicInteger count = new AtomicInteger(friendTags.size());
+        log.info("친구 태그 갯수: " + count.get());
         usedTags.forEach(tag -> {
             Optional<FriendTag> friendTag = friendTags.stream().filter(ele -> Objects.equals(ele.getName(), tag)).findFirst();
             if (friendTag.isEmpty()) {
-                if (count.get() == MAX_TAG_COUNT) {
+                if (count.get() >= MAX_TAG_COUNT) {
                     throw new BusinessException(EXCEED_MAX_TAG_COUNT);
                 }
+                log.info("친구 태그 없음!!");
                 count.addAndGet(1);
                 tags.add(new Tag(tag));
             } else {
