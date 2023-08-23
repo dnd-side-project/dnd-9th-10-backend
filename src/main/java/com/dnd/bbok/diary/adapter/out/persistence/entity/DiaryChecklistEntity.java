@@ -35,7 +35,8 @@ public class DiaryChecklistEntity {
   private MemberChecklistEntity memberChecklistEntity;
 
   @Builder
-  public DiaryChecklistEntity(boolean isChecked, DiaryEntity diaryEntity, MemberChecklistEntity memberChecklistEntity) {
+  public DiaryChecklistEntity(Long id, boolean isChecked, DiaryEntity diaryEntity, MemberChecklistEntity memberChecklistEntity) {
+    this.id = id;
     this.isChecked = isChecked;
     this.diaryEntity = diaryEntity;
     this.memberChecklistEntity = memberChecklistEntity;

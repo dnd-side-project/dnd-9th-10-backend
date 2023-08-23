@@ -21,10 +21,10 @@ public class DiaryChecklist {
         this.isGood = null;
     }
 
-    public DiaryChecklist(Long id, Boolean isChecked, String criteria, Long diaryId, Boolean isGood) {
+    public DiaryChecklist(Long id, Long memberChecklistId, Boolean isChecked, String criteria, Long diaryId, Boolean isGood) {
         this.id = id;
         this.isChecked = isChecked;
-        this.memberChecklistId = null;
+        this.memberChecklistId = memberChecklistId;
         this.criteria = criteria;
         this.diaryId = diaryId;
         this.isGood = isGood;
