@@ -278,7 +278,7 @@ public class DiaryAdapter implements SaveDiaryPort, LoadDiaryPort {
      */
     @Override
     public List<Diary> loadDiariesByFriendId(Long friendId) {
-        return diaryRepository.findAllByFriendIdAndIsDeletedIsFalse(friendId).stream().map(entity -> diaryMapper.toDomain(entity, new ArrayList<>(), new ArrayList<>())).collect(Collectors.toList());
+        return diaryRepository.findAllByFriendId(friendId).stream().map(entity -> diaryMapper.toDomain(entity, new ArrayList<>(), new ArrayList<>())).collect(Collectors.toList());
     }
 
     @Override

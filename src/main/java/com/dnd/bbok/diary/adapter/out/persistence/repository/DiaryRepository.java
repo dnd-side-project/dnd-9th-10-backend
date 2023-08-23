@@ -30,5 +30,6 @@ public interface DiaryRepository extends JpaRepository<DiaryEntity, Long> {
             + "AND d.isDeleted = false")
     Page<DiaryEntity> findDiaries(Long friendId, String keyword, String tag, Pageable pageable);
 
-    List<DiaryEntity> findAllByFriendIdAndIsDeletedIsFalse(Long friendId);
+    @Query(value = "SELECT d FROM DiaryEntity d WHERE d.friend.id = :friendId AND d.isDeleted = false")
+    List<DiaryEntity> findAllByFriendId(Long friendId);
 }
