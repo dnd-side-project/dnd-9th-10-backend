@@ -1,6 +1,5 @@
 package com.dnd.bbok.member.application.service;
 
-import com.dnd.bbok.member.application.port.in.request.ChecklistInfoRequest;
 import com.dnd.bbok.member.application.port.in.request.CreateMemberChecklistRequest;
 import com.dnd.bbok.member.application.port.in.request.EditMemberChecklistRequest;
 import com.dnd.bbok.member.application.port.in.response.GetMemberChecklistResponse;
@@ -11,7 +10,6 @@ import com.dnd.bbok.member.application.port.in.usecase.EditMemberChecklistUseCas
 import com.dnd.bbok.member.application.port.in.usecase.GetMemberChecklistQuery;
 import com.dnd.bbok.member.application.port.in.usecase.GetMemberQuery;
 
-import com.dnd.bbok.member.application.port.out.EditMemberChecklistPort;
 import com.dnd.bbok.member.application.port.out.LoadMemberChecklistPort;
 import com.dnd.bbok.member.application.port.out.LoadMemberPort;
 import com.dnd.bbok.member.application.port.out.SaveMemberChecklistPort;
@@ -41,7 +39,6 @@ public class MemberService implements
   private final LoadMemberPort loadMemberPort;
   private final LoadMemberChecklistPort loadMemberChecklistPort;
   private final SaveMemberChecklistPort saveMemberChecklistPort;
-  private final EditMemberChecklistPort editMemberChecklistPort;
 
   @Override
   public GetMemberInfoResponse getMember(UUID memberId) {
@@ -75,10 +72,14 @@ public class MemberService implements
     return new GetMemberChecklistResponse(memberChecklist.getGoodChecklist(), memberChecklist.getBadChecklist()) ;
   }
 
+  /**
+   * member checklist 수정하기
+   */
   @Override
   public void edit(UUID memberId, EditMemberChecklistRequest memberChecklistRequest) {
-    List<ChecklistInfoRequest> badChecklist = memberChecklistRequest.getBadChecklist();
-    List<ChecklistInfoRequest> goodChecklist = memberChecklistRequest.getGoodChecklist();
-    editMemberChecklistPort.editChecklist(memberId, badChecklist, goodChecklist);
+
+
+    //memberId를 체크리스트를 저장할 때 넣어준다.
+//    saveMemberChecklistPort.saveMemberChecklist(memberId, );
   }
 }

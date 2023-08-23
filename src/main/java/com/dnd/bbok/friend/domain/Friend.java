@@ -34,11 +34,11 @@ public class Friend {
     this.member = member;
   }
 
-  public void changeName(String name) {
+  public void setName(String name) {
     this.name = name;
   }
 
-  public void changeStatus() {
+  public void setStatus() {
     this.active = false;
   }
 }

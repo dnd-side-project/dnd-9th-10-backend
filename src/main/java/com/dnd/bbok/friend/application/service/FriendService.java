@@ -92,7 +92,7 @@ public class FriendService implements GetFriendsQuery, RegisterFriendUseCase,
     //2. 요청한 이름이 조건에 부합한지 확인한다.
     friendValidatorPort.validateNaming(updateFriendRequest.getName());
 
-    friend.changeName(updateFriendRequest.getName());
+    friend.setName(updateFriendRequest.getName());
 
     //3. request 내용 반영하기
     saveFriendPort.saveFriend(member, friend);
@@ -101,9 +101,10 @@ public class FriendService implements GetFriendsQuery, RegisterFriendUseCase,
   @Override
   public void editStatus(UUID memberId, Long friendId) {
     Member member = loadMemberPort.loadById(memberId);
+
     //1. 현재 active한 친구인지 확인한다.
     Friend friend = friendValidatorPort.isActiveFriend(memberId, friendId);
-    friend.changeStatus();
+    friend.setStatus();
 
     //2. friend의 상태를 비활성화로 업데이트한다.
     saveFriendPort.saveFriend(member, friend);
