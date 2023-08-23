@@ -3,14 +3,11 @@ package com.dnd.bbok.friend.adapter.out.persistence;
 import static com.dnd.bbok.global.exception.ErrorCode.FRIEND_IS_NOT_ACTIVE;
 import static com.dnd.bbok.global.exception.ErrorCode.FRIEND_NOT_FOUND;
 import static com.dnd.bbok.global.exception.ErrorCode.INVALID_FRIEND_NAME;
-import static com.dnd.bbok.global.exception.ErrorCode.MEMBER_NOT_FOUND;
 import static com.dnd.bbok.global.exception.ErrorCode.OTHER_FRIEND_ALREADY_ACTIVE;
 
 import com.dnd.bbok.friend.adapter.out.persistence.entity.FriendEntity;
 import com.dnd.bbok.friend.adapter.out.persistence.mapper.FriendMapper;
 import com.dnd.bbok.friend.adapter.out.persistence.repository.FriendRepository;
-import com.dnd.bbok.friend.application.port.in.request.CreateFriendRequest;
-import com.dnd.bbok.friend.application.port.in.request.UpdateFriendRequest;
 import com.dnd.bbok.friend.application.port.out.FriendValidatorPort;
 import com.dnd.bbok.friend.application.port.out.LoadFriendPort;
 import com.dnd.bbok.friend.application.port.out.SaveFriendPort;
@@ -35,7 +32,6 @@ public class FriendPersistenceAdapter
     implements LoadFriendPort, FriendValidatorPort, SaveFriendPort, UpdateFriendPort {
 
   private final FriendRepository friendRepository;
-  private final MemberRepository memberRepository;
   private final FriendMapper friendMapper;
   private final MemberMapper memberMapper;
 
@@ -72,7 +68,7 @@ public class FriendPersistenceAdapter
 
   @Override
   public Friend isActiveFriend(UUID memberId, Long friendId) {
-    FriendEntity friend = friendRepository.findFriendById(friendId)
+    FriendEntity friend = friendRepository.findById(friendId)
         .orElseThrow(() -> new BusinessException(FRIEND_NOT_FOUND));
     if(!friend.isActive()) {
       throw new BusinessException(FRIEND_IS_NOT_ACTIVE);
@@ -84,37 +80,16 @@ public class FriendPersistenceAdapter
 
   @Transactional
   @Override
-  public void saveFriend(UUID memberId, CreateFriendRequest friendRequest) {
-    MemberEntity member = memberRepository.findById(memberId)
-        .orElseThrow(() -> new BusinessException(MEMBER_NOT_FOUND));
-    FriendEntity friendEntity = friendMapper.convertDtoToEntity(member, friendRequest);
-    friendRepository.save(friendEntity);
-  }
-
-  @Transactional
-  @Override
-  public void updateFriend(Friend friend, UpdateFriendRequest friendRequest) {
-    MemberEntity member = memberRepository.findById(friend.getMember().getId())
-        .orElseThrow(() -> new BusinessException(MEMBER_NOT_FOUND));
-    FriendEntity friendEntity = friendMapper.toEntity(member, friend);
-    friendEntity.changeFriendName(friendRequest.getName());
-    friendRepository.save(friendEntity);
-  }
-
-  @Transactional
-  @Override
-  public void updateStatus(UUID memberId, Friend friend) {
-    MemberEntity member = memberRepository.findById(memberId)
-        .orElseThrow(() -> new BusinessException(MEMBER_NOT_FOUND));
-    FriendEntity friendEntity = friendMapper.toEntity(member, friend);
-    friendEntity.deactivateFriend();
+  public void saveFriend(Member member, Friend friend) {
+    MemberEntity memberEntity = memberMapper.toEntity(member);
+    FriendEntity friendEntity = friendMapper.toEntity(memberEntity, friend);
     friendRepository.save(friendEntity);
   }
 
   @Transactional
   @Override
   public void updateFriendScore(Friend friend, Long score) {
-    MemberEntity memberEntity = memberMapper.toEntityWithId(friend.getMember());
+    MemberEntity memberEntity = memberMapper.toEntity(friend.getMember());
     FriendEntity friendEntity = friendMapper.toEntity(memberEntity, friend);
     friendEntity.changeFriendScore(score);
     friendRepository.save(friendEntity);

@@ -65,7 +65,7 @@ public class BookmarkAdapter implements LoadBookmarkPort, BookmarkSayingPort, De
     @Transactional
     @Override
     public void saveBookmark(Bookmark bookmark) {
-        MemberEntity memberEntity = memberMapper.toEntityWithId(bookmark.getMember());
+        MemberEntity memberEntity = memberMapper.toEntity(bookmark.getMember());
         SayingEntity sayingEntity = sayingMapper.toEntity(bookmark.getSaying());
         BookmarkEntity bookmarkEntity = bookmarkMapper.toEntity(memberEntity,
             sayingEntity);

@@ -11,8 +11,9 @@ import com.dnd.bbok.friend.application.port.in.usecase.RegisterFriendUseCase;
 
 import com.dnd.bbok.friend.application.port.out.FriendValidatorPort;
 import com.dnd.bbok.friend.application.port.out.LoadFriendPort;
+import com.dnd.bbok.friend.application.port.out.LoadIconPort;
 import com.dnd.bbok.friend.application.port.out.SaveFriendPort;
-import com.dnd.bbok.friend.application.port.out.UpdateFriendPort;
+import com.dnd.bbok.friend.domain.BbokCharacter;
 import com.dnd.bbok.member.application.port.out.LoadMemberPort;
 
 import com.dnd.bbok.friend.domain.Friend;
@@ -36,9 +37,9 @@ public class FriendService implements GetFriendsQuery, RegisterFriendUseCase,
   private final S3Downloader s3Downloader;
   private final LoadFriendPort loadFriendPort;
   private final LoadMemberPort loadMemberPort;
+  private final LoadIconPort loadIconPort;
   private final FriendValidatorPort friendValidatorPort;
   private final SaveFriendPort saveFriendPort;
-  private final UpdateFriendPort updateFriendPort;
   private final LoadDiaryPort loadDiaryPort;
 
   @Override
@@ -56,7 +57,7 @@ public class FriendService implements GetFriendsQuery, RegisterFriendUseCase,
 
   @Override
   public void createFriendCharacter(UUID memberId, CreateFriendRequest friend) {
-    //1. member가 있는지 확인한다.
+    //1. member가 있는지 확인한다. (없으면, MEMBER_NOT_FOUND 처리)
     Member member = loadMemberPort.loadById(memberId);
 
     //2. member가 다른 active한 친구가 있는지 체크한다.
@@ -65,29 +66,46 @@ public class FriendService implements GetFriendsQuery, RegisterFriendUseCase,
     //3. request 내용을 검증한다.
     friendValidatorPort.validateNaming(friend.getName());
 
-    //4. 무사히 통과되면 friend를 저장한다.
-    saveFriendPort.saveFriend(member.getId(), friend);
+    //요청한 리퀘바디의 캐릭터를 꺼내온다.
+    BbokCharacter character = loadIconPort.getCharacter(friend.getCharacter());
+
+    //새로운 친구를 생성한다.
+    Friend newFriend = Friend.builder()
+        .friendScore(0L)
+        .active(true)
+        .name(friend.getName())
+        .bbok(character)
+        .build();
+
+    //4. friend를 저장한다.
+    saveFriendPort.saveFriend(member, newFriend);
   }
 
   @Transactional
   @Override
   public void editName(UUID memberId, Long friendId, UpdateFriendRequest updateFriendRequest) {
+    Member member = loadMemberPort.loadById(memberId);
+
     //1. 현재 active한 친구인지 확인한다.
-    Friend activeFriend = friendValidatorPort.isActiveFriend(memberId, friendId);
+    Friend friend = friendValidatorPort.isActiveFriend(memberId, friendId);
 
     //2. 요청한 이름이 조건에 부합한지 확인한다.
     friendValidatorPort.validateNaming(updateFriendRequest.getName());
 
+    friend.changeName(updateFriendRequest.getName());
+
     //3. request 내용 반영하기
-    updateFriendPort.updateFriend(activeFriend, updateFriendRequest);
+    saveFriendPort.saveFriend(member, friend);
   }
 
   @Override
   public void editStatus(UUID memberId, Long friendId) {
+    Member member = loadMemberPort.loadById(memberId);
     //1. 현재 active한 친구인지 확인한다.
     Friend friend = friendValidatorPort.isActiveFriend(memberId, friendId);
+    friend.changeStatus();
 
     //2. friend의 상태를 비활성화로 업데이트한다.
-    updateFriendPort.updateStatus(memberId, friend);
+    saveFriendPort.saveFriend(member, friend);
   }
 }
