@@ -68,12 +68,12 @@ public class WriteDiaryService implements CreateDiaryUseCase, UpdateDiaryUseCase
                     ele -> new DiaryChecklist(null, ele.getIsGood(), ele.getIsChecked(), ele.getId())).collect(Collectors.toList());
 
             Friend friend = loadFriendPort.loadByFriendId(friendId);
+            //TODO: diaryScore 반영이 안되서 친구도 점수가 누적되지 않고 있음
             diaryScore = calculateDiaryScore(checklist);
             friendScore = calculateFriendScore(friend.getFriendScore(), diaryScore);
             friend.setFriendScore(friendScore);
             saveFriendPort.saveFriend(member, friend);
         }
-
 
         // 3. 다이어리 도메인 생성 및 저장
         Diary diary = new Diary(null,
