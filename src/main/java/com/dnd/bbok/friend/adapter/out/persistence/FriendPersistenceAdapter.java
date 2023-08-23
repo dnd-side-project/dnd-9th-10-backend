@@ -11,12 +11,10 @@ import com.dnd.bbok.friend.adapter.out.persistence.repository.FriendRepository;
 import com.dnd.bbok.friend.application.port.out.FriendValidatorPort;
 import com.dnd.bbok.friend.application.port.out.LoadFriendPort;
 import com.dnd.bbok.friend.application.port.out.SaveFriendPort;
-import com.dnd.bbok.friend.application.port.out.UpdateFriendPort;
 import com.dnd.bbok.friend.domain.Friend;
 import com.dnd.bbok.global.exception.BusinessException;
 import com.dnd.bbok.member.adapter.out.persistence.entity.MemberEntity;
 import com.dnd.bbok.member.adapter.out.persistence.mapper.MemberMapper;
-import com.dnd.bbok.member.adapter.out.persistence.repository.MemberRepository;
 import com.dnd.bbok.member.domain.Member;
 import java.util.List;
 import java.util.UUID;
@@ -29,7 +27,7 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 @Slf4j
 public class FriendPersistenceAdapter
-    implements LoadFriendPort, FriendValidatorPort, SaveFriendPort, UpdateFriendPort {
+    implements LoadFriendPort, FriendValidatorPort, SaveFriendPort {
 
   private final FriendRepository friendRepository;
   private final FriendMapper friendMapper;
@@ -83,15 +81,6 @@ public class FriendPersistenceAdapter
   public void saveFriend(Member member, Friend friend) {
     MemberEntity memberEntity = memberMapper.toEntity(member);
     FriendEntity friendEntity = friendMapper.toEntity(memberEntity, friend);
-    friendRepository.save(friendEntity);
-  }
-
-  @Transactional
-  @Override
-  public void updateFriendScore(Friend friend, Long score) {
-    MemberEntity memberEntity = memberMapper.toEntity(friend.getMember());
-    FriendEntity friendEntity = friendMapper.toEntity(memberEntity, friend);
-    friendEntity.changeFriendScore(score);
     friendRepository.save(friendEntity);
   }
 }

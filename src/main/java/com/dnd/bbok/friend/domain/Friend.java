@@ -41,4 +41,8 @@ public class Friend {
   public void setStatus() {
     this.active = false;
   }
+
+  public void setFriendScore(Long friendScore) {
+    this.friendScore = friendScore;
+  }
 }
