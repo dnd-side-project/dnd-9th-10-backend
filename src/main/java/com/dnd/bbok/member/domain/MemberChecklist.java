@@ -13,5 +13,4 @@ public class MemberChecklist {
         this.goodChecklist = goodChecklist;
         this.badChecklist = badChecklist;
     }
-
 }

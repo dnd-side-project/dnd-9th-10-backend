@@ -16,6 +16,7 @@ import com.dnd.bbok.member.application.port.out.LoadMemberPort;
 import com.dnd.bbok.member.application.port.out.SaveMemberPort;
 import com.dnd.bbok.member.application.port.out.UpdateMemberPort;
 import com.dnd.bbok.member.application.port.out.SaveMemberChecklistPort;
+import com.dnd.bbok.member.domain.ChecklistInfo;
 import com.dnd.bbok.member.domain.Member;
 
 import java.util.List;
@@ -78,10 +79,28 @@ public class MemberPersistenceAdapter
   }
 
   @Override
+  public ChecklistInfo loadOneById(Long id) {
+    MemberChecklistEntity memberChecklistEntity = memberChecklistRepository.findById(id)
+        .orElseThrow(() -> new BusinessException(INVALID_MEMBER_CHECKLIST_ID));
+    return memberChecklistMapper.toOneDomain(memberChecklistEntity);
+  }
+
+  /**
+   * MemberChecklist의 모든 체크리스트들을 사용중인 체크리스트로 저장한다.
+   */
+  @Override
   public void saveMemberChecklist(UUID memberId, MemberChecklist memberChecklist) {
     MemberEntity memberEntity = memberRepository.findById(memberId)
         .orElseThrow(() -> new BusinessException(MEMBER_NOT_FOUND));
     List<MemberChecklistEntity> memberChecklistEntities = memberChecklistMapper.toEntity(memberChecklist, memberEntity);
+    memberChecklistRepository.saveAll(memberChecklistEntities);
+  }
+
+  @Override
+  public void saveMemberChecklistWithCond(UUID memberId, List<ChecklistInfo> newChecklist) {
+    MemberEntity memberEntity = memberRepository.findById(memberId)
+        .orElseThrow(() -> new BusinessException(MEMBER_NOT_FOUND));
+    List<MemberChecklistEntity> memberChecklistEntities = memberChecklistMapper.updateEntity(memberEntity, newChecklist);
     memberChecklistRepository.saveAll(memberChecklistEntities);
   }
 

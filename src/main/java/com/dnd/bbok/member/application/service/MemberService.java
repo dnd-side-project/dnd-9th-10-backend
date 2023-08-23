@@ -1,5 +1,5 @@
 package com.dnd.bbok.member.application.service;
-
+import com.dnd.bbok.member.application.port.in.request.ChecklistInfoRequest;
 import com.dnd.bbok.member.application.port.in.request.CreateMemberChecklistRequest;
 import com.dnd.bbok.member.application.port.in.request.EditMemberChecklistRequest;
 import com.dnd.bbok.member.application.port.in.response.GetMemberChecklistResponse;
@@ -52,11 +52,11 @@ public class MemberService implements
     List<ChecklistInfo> badChecklist = new ArrayList<>();
 
     createMemberChecklistRequest.getBadChecklist().forEach(ele ->
-      badChecklist.add(new ChecklistInfo(null, ele))
+      badChecklist.add(new ChecklistInfo(null, ele, false, true))
     );
 
     createMemberChecklistRequest.getGoodChecklist().forEach(ele ->
-      goodChecklist.add(new ChecklistInfo(null, ele))
+      goodChecklist.add(new ChecklistInfo(null, ele, true, true))
     );
 
 
@@ -74,12 +74,32 @@ public class MemberService implements
 
   /**
    * member checklist 수정하기
+   * EditMemberChecklistRequest - 사용자가 수정한 체크리스트들만 request body 에 담겨온다.
    */
   @Override
   public void edit(UUID memberId, EditMemberChecklistRequest memberChecklistRequest) {
+    List<ChecklistInfo> newChecklist = new ArrayList<>();
 
+    //수정하려는 체크리스트를 가져온다.
+    List<ChecklistInfoRequest> updateChecklist = memberChecklistRequest.getChecklist();
 
-    //memberId를 체크리스트를 저장할 때 넣어준다.
-//    saveMemberChecklistPort.saveMemberChecklist(memberId, );
+    for(ChecklistInfoRequest checklist : updateChecklist) {
+      //id가 있다면 바꾸려는 것이므로 해당 Id의 상태를 false로 바꾸고, criteria는 새롭게 저장해줘야 한다.
+      if(checklist.getId() != null) {
+        ChecklistInfo checklistInfo = loadMemberChecklistPort.loadOneById(checklist.getId());
+        checklistInfo.setUsingStatus(false);
+        newChecklist.add(checklistInfo);
+      }
+      //id를 null로 지정해도 기존 Id를 가져오는 이슈 발생. -> ChecklistInfo 필드값 변경
+      ChecklistInfo newChecklistInfo = ChecklistInfo.builder()
+          .id(null)
+          .criteria(checklist.getCriteria())
+          .isGood(memberChecklistRequest.isGood())
+          .isUsed(true)
+          .build();
+      newChecklist.add(newChecklistInfo);
+    }
+    //good인지, bad인지에 따라 save하는 메서드를 만든다.
+    saveMemberChecklistPort.saveMemberChecklistWithCond(memberId, newChecklist);
   }
 }

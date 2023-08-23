@@ -20,6 +20,7 @@ public enum ErrorCode {
 
   // Member
   MEMBER_NOT_FOUND(HttpStatus.NOT_FOUND, "M001", "해당 uuid를 가진 멤버를 찾을 수 없습니다."),
+  DUPLICATE_CRITERIA(HttpStatus.BAD_REQUEST, "M002", "중복된 기준을 입력할 수 없습니다."),
 
   // Friend
   CHARACTER_NOT_FOUND(HttpStatus.NOT_FOUND, "F001", "해당 이름을 가진 캐릭터를 찾을 수 없습니다."),
