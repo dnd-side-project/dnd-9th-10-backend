@@ -30,7 +30,7 @@ public class SecurityConfig {
 
     http//HTTP 헤더에 사용자의 이름과 암호 포함을 비활성화
         .authorizeRequests()
-        .antMatchers(HttpMethod.GET, "/test", "/api/v1/member", "/api/v1/checklist", "/api/v1/character", "/api/v1/friend").authenticated() //해당 요청은 인증이 필요하다.
+        .antMatchers(HttpMethod.GET, "/test", "/api/v1/member", "/api/v1/checklist", "/api/v1/character", "/api/v1/friend", "/api/v1/member/checklist").authenticated() //해당 요청은 인증이 필요하다.
         .antMatchers(HttpMethod.POST, "/api/v1/friend", "/api/v1/bookmark").authenticated()
         .antMatchers(HttpMethod.PATCH, "/api/v1/friend/{id}", "/api/v1/friend/{id}/deactivate", "/api/v1/member/checklist").authenticated()
         .antMatchers(HttpMethod.DELETE, "/api/v1/bookmark/{id}").authenticated()
