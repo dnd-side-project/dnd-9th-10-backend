@@ -1,7 +1,6 @@
 package com.dnd.bbok.diary.domain;
 
 import lombok.Getter;
-import lombok.Setter;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -9,10 +8,9 @@ import java.util.List;
 import java.util.Objects;
 
 @Getter
-@Setter
 public class Diary {
-    private Long id;
-    private Long friendId;
+    private final Long  id;
+    private final Long friendId;
     private Emoji emoji;
     private String contents;
     private LocalDate diaryDate;
@@ -33,5 +31,37 @@ public class Diary {
         this.isDeleted = isDeleted;
         this.tags = Objects.requireNonNullElseGet(tags, ArrayList::new);
         this.diaryChecklist = Objects.requireNonNullElseGet(diaryChecklist, ArrayList::new);
+    }
+
+    public void setEmoji(Emoji emoji) {
+        this.emoji = emoji;
+    }
+
+    public void setContents(String contents) {
+        this.contents = contents;
+    }
+
+    public void setDiaryDate(LocalDate diaryDate) {
+        this.diaryDate = diaryDate;
+    }
+
+    public void setSticker(String sticker) {
+        this.sticker = sticker;
+    }
+
+    public void setDiaryScore(Integer diaryScore) {
+        this.diaryScore = diaryScore;
+    }
+
+    public void setIsDeleted(Boolean deleted) {
+        isDeleted = deleted;
+    }
+
+    public void setTags(List<Tag> tags) {
+        this.tags = tags;
+    }
+
+    public void setDiaryChecklist(List<DiaryChecklist> diaryChecklist) {
+        this.diaryChecklist = diaryChecklist;
     }
 }

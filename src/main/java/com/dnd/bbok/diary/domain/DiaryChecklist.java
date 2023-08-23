@@ -12,13 +12,13 @@ public class DiaryChecklist {
     private final Long diaryId;
     private final Boolean isGood;
 
-    public DiaryChecklist(Long id, Boolean isChecked, Long memberChecklistId) {
+    public DiaryChecklist(Long id, Boolean isGood, Boolean isChecked, Long memberChecklistId) {
         this.id = id;
         this.isChecked = isChecked;
         this.memberChecklistId = memberChecklistId;
         this.criteria = null;
         this.diaryId = null;
-        this.isGood = null;
+        this.isGood = isGood;
     }
 
     public DiaryChecklist(Long id, Long memberChecklistId, Boolean isChecked, String criteria, Long diaryId, Boolean isGood) {

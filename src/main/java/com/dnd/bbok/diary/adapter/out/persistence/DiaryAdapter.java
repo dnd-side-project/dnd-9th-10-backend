@@ -146,76 +146,6 @@ public class DiaryAdapter implements SaveDiaryPort, LoadDiaryPort {
         diaryRepository.save(diaryEntity);
     }
 
-    // @Transactional
-    // public void saveDiary(Diary diary) {
-    //     FriendEntity friendEntity = friendRepository.findById(diary.getFriendId()).orElseThrow(() -> new BusinessException(FRIEND_NOT_FOUND));
-    //     DiaryEntity diaryEntity = diaryMapper.toEntity(diary, friendEntity);
-    //
-    //     // 1. 다이어리 컬럼 내부 값 업데이트
-    //     diaryRepository.save(diaryEntity);
-    //
-    //     // 2. 태그 변경사항 확인하여 없어진 태그는 삭제, 생긴 태그는 추가
-    //
-    //     // 이전 태그 목록 가져와서 없어진 태그 삭제하기
-    //     List<Tag> prevTags = diaryTagMapper.toDomain(diaryTagRepository.findByDiaryId(diary.getId()));
-    //     List<Long> deleteTagIds = new ArrayList<>();
-    //     prevTags.forEach(prevTag -> {
-    //         if (diary.getTags().stream().noneMatch(tag -> Objects.equals(tag.getTag(), prevTag.getTag()))) {
-    //             deleteTagIds.add(prevTag.getId());
-    //         }
-    //     });
-    //     diaryTagRepository.deleteAllById(deleteTagIds);
-    //
-    //     // 이전 태그 목록과 대조하며 새로 생긴 태그 추가히기
-    //     List<DiaryTagEntity> diaryTagEntities = new ArrayList<>();
-    //
-    //     List<FriendTagEntity> friendTagEntities = null;
-    //     for (Tag tag : diary.getTags()) {
-    //         if (prevTags.stream().noneMatch(prevTag -> Objects.equals(tag.getTag(), prevTag.getTag()))) {
-    //             // 없던 태그가 생겼으므로 새로 생성해야 함
-    //             if (friendTagEntities == null) {
-    //                 friendTagEntities = friendTagRepository.findAllByFriendId(friendEntity.getId());
-    //             }
-    //
-    //             // 아예 처음 생기는 태그인 경우 Friend Tag 생성
-    //             FriendTagEntity friendTagEntity;
-    //             if (tag.getId() == null) {
-    //                 friendTagEntity = friendTagRepository.save(FriendTagEntity.builder()
-    //                         .friend(friendEntity)
-    //                         .name(tag.getTag())
-    //                         .build());
-    //                 tag.setId(friendTagEntity.getId());
-    //             } else {
-    //                 friendTagEntity = friendTagEntities.stream().filter(ele -> Objects.equals(ele.getName(), tag.getTag())).findFirst().orElseThrow();
-    //             }
-    //             diaryTagEntities.add(DiaryTagEntity.builder()
-    //                     .diaryEntity(diaryEntity)
-    //                     .friendTagEntity(friendTagEntity)
-    //                     .build());
-    //         }
-    //     }
-    //
-    //     diaryTagRepository.saveAll(diaryTagEntities);
-    //
-    //
-    //     // 3. 체크리스트 변경사항 확인하여 작성 안했다가 추가한 경우, 체크리스트 수정만 한 경우, 작성했다가 없앤 경우 Case 에 맞게 CRD 작업
-    //     List<DiaryChecklistEntity> prevDiaryChecklistEntities = diaryChecklistRepository.getDiaryChecklistByDiaryId(diary.getId());
-    //     log.info(String.valueOf(prevDiaryChecklistEntities.get(0).getId()));
-    //     // Case 1. 작성 안했다가 추가한 경우 처리 (전부 추가)
-    //     if (prevDiaryChecklistEntities.size() == 0 && diary.getDiaryChecklist().size() != 0) {
-    //         createDiaryChecklistEntity(diary, diaryEntity);
-    //     }
-    //
-    //     // Case 2. 작성했다가 없앤 경우 (전부 삭제)
-    //     if (prevDiaryChecklistEntities.size() > 0 && diary.getDiaryChecklist().size() == 0) {
-    //         diaryChecklistRepository.deleteAll(prevDiaryChecklistEntities);
-    //     }
-    //
-    //     // Case 3. 체크리스트 수정만 한 경우 처리
-    //     List<MemberChecklistEntity> memberChecklistEntities = memberChecklistRepository.findByIdIn(diary.getDiaryChecklist().stream().map(DiaryChecklist::getMemberChecklistId).collect(Collectors.toList()));
-    //     diaryChecklistRepository.saveAll(diaryChecklistMapper.toEntity(diary.getDiaryChecklist(), memberChecklistEntities, diaryEntity));
-    // }
-
     private void createDiaryChecklistEntity(Diary diary, DiaryEntity diaryEntity) {
         List<MemberChecklistEntity> memberChecklistEntities = memberChecklistRepository.findByIdIn(diary.getDiaryChecklist().stream().map(DiaryChecklist::getMemberChecklistId).collect(Collectors.toList()));
         List<DiaryChecklistEntity> diaryChecklistEntities = new ArrayList<>();
@@ -278,7 +208,7 @@ public class DiaryAdapter implements SaveDiaryPort, LoadDiaryPort {
      */
     @Override
     public List<Diary> loadDiariesByFriendId(Long friendId) {
-        return diaryRepository.findAllByFriendIdAndIsDeletedIsFalse(friendId).stream().map(entity -> diaryMapper.toDomain(entity, new ArrayList<>(), new ArrayList<>())).collect(Collectors.toList());
+        return diaryRepository.findAllByFriendId(friendId).stream().map(entity -> diaryMapper.toDomain(entity, new ArrayList<>(), new ArrayList<>())).collect(Collectors.toList());
     }
 
     @Override

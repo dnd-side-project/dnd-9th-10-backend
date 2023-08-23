@@ -10,9 +10,8 @@ import java.util.ArrayList;
 public class GetDiaryStickerResponse {
     private final ArrayList<StickerDto> stickers;
 
-    public GetDiaryStickerResponse() {
-        this.stickers = new ArrayList<>();
-        this.stickers.add(new StickerDto());
+    public GetDiaryStickerResponse(ArrayList<StickerDto> stickers) {
+        this.stickers = stickers;
     }
 
     @Getter
@@ -23,9 +22,9 @@ public class GetDiaryStickerResponse {
         @ApiModelProperty(value = "스티커 다운로드 주소")
         private final String stickerUrl;
 
-        public StickerDto() {
-            this.name = Sticker.POOP;
-            this.stickerUrl = "https://i.ibb.co/6v7YXHZ/cactus.png";
+        public StickerDto(Sticker name, String stickerUrl) {
+            this.name = name;
+            this.stickerUrl = stickerUrl;
         }
     }
 }
