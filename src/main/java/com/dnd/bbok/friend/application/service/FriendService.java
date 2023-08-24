@@ -86,8 +86,7 @@ public class FriendService implements GetFriendsQuery, RegisterFriendUseCase,
   public void editName(UUID memberId, Long friendId, UpdateFriendRequest updateFriendRequest) {
     Member member = loadMemberPort.loadById(memberId);
 
-    //1. 현재 active한 친구인지 확인한다.
-    Friend friend = friendValidatorPort.isActiveFriend(memberId, friendId);
+    Friend friend = loadFriendPort.loadByMemberAndFriendId(memberId, friendId);
 
     //2. 요청한 이름이 조건에 부합한지 확인한다.
     friendValidatorPort.validateNaming(updateFriendRequest.getName());
@@ -103,7 +102,7 @@ public class FriendService implements GetFriendsQuery, RegisterFriendUseCase,
     Member member = loadMemberPort.loadById(memberId);
 
     //1. 현재 active한 친구인지 확인한다.
-    Friend friend = friendValidatorPort.isActiveFriend(memberId, friendId);
+    Friend friend = loadFriendPort.loadByMemberAndFriendId(memberId, friendId);
     friend.setStatus();
 
     //2. friend의 상태를 비활성화로 업데이트한다.

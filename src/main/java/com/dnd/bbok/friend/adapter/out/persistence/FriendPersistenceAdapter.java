@@ -49,6 +49,18 @@ public class FriendPersistenceAdapter
   }
 
   @Override
+  public Friend loadByMemberAndFriendId(UUID memberId, Long friendId) {
+    FriendEntity friend = friendRepository.findById(friendId)
+        .orElseThrow(() -> new BusinessException(FRIEND_NOT_FOUND));
+    if(!friend.isActive()) {
+      throw new BusinessException(FRIEND_IS_NOT_ACTIVE);
+    }
+    Member memberDomain = memberMapper.toDomain(friend.getMember());
+    //member 도메인을 생성해주는 MemberMapper가 필요하다.
+    return friendMapper.toDomain(memberDomain, friend);
+  }
+
+  @Override
   public void checkOtherActiveFriend(Member member) {
     List<FriendEntity> otherFriends = friendRepository.findAllFriends(member.getId());
     if(otherFriends.stream().anyMatch(FriendEntity::isActive)) {
@@ -62,18 +74,6 @@ public class FriendPersistenceAdapter
     if(!friendName.matches(namingCond)) {
       throw new BusinessException(INVALID_FRIEND_NAME);
     }
-  }
-
-  @Override
-  public Friend isActiveFriend(UUID memberId, Long friendId) {
-    FriendEntity friend = friendRepository.findById(friendId)
-        .orElseThrow(() -> new BusinessException(FRIEND_NOT_FOUND));
-    if(!friend.isActive()) {
-      throw new BusinessException(FRIEND_IS_NOT_ACTIVE);
-    }
-    Member memberDomain = memberMapper.toDomain(friend.getMember());
-    //member 도메인을 생성해주는 MemberMapper가 필요하다.
-    return friendMapper.toDomain(memberDomain, friend);
   }
 
   @Transactional

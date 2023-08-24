@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 public class EditMemberChecklistRequest {
 
   @ApiModelProperty(name = "적합(true) or 부적합(false)")
-  private boolean good;
+  private Boolean isGood;
 
   @ApiModelProperty(name = "수정하려는 기준리스트")
   private List<ChecklistInfoRequest> checklist;

@@ -106,7 +106,7 @@ public class MemberService implements
       ChecklistInfo newChecklistInfo = ChecklistInfo.builder()
           .id(null)
           .criteria(checklist.getCriteria())
-          .isGood(memberChecklistRequest.isGood())
+          .isGood(memberChecklistRequest.getIsGood())
           .isUsed(true)
           .build();
       newChecklist.add(newChecklistInfo);
