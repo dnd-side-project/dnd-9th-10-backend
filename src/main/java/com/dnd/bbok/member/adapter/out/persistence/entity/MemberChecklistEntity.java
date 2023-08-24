@@ -25,10 +25,6 @@ public class MemberChecklistEntity extends BaseTimeEntity {
   @GeneratedValue(strategy = IDENTITY)
   private Long id;
 
-  /**
-   * @Column(nullable=false) 와 @NotNull의 차이점
-   * https://kafcamus.tistory.com/15
-   */
   @NotNull
   private String criteria;
 
@@ -49,7 +45,4 @@ public class MemberChecklistEntity extends BaseTimeEntity {
     this.member = member;
   }
 
-  public void updateChecklist(String criteria) {
-    this.criteria = criteria;
-  }
 }

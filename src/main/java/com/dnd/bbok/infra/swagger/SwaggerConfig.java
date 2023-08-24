@@ -10,7 +10,6 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import springfox.documentation.RequestHandler;
 import springfox.documentation.builders.ApiInfoBuilder;
-import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.builders.RequestHandlerSelectors;
 import springfox.documentation.service.ApiInfo;
 import springfox.documentation.service.ApiKey;
@@ -23,18 +22,6 @@ import springfox.documentation.spring.web.plugins.Docket;
 @Configuration
 @RequiredArgsConstructor
 public class SwaggerConfig {
-
-  //mock API
-  @Bean
-  public Docket api() {
-    return new Docket(DocumentationType.OAS_30)
-        .groupName("Mock-API")
-        .select()
-        .apis(RequestHandlerSelectors.basePackage("com.dnd.bbok.mock"))
-        .paths(PathSelectors.any())
-        .build()
-        .apiInfo(apiInfo());
-  }
 
   //Authorization이 필요없는 API
   @Bean

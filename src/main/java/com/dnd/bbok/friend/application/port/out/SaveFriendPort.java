@@ -1,10 +1,10 @@
 package com.dnd.bbok.friend.application.port.out;
 
-import com.dnd.bbok.friend.application.port.in.request.CreateFriendRequest;
-import java.util.UUID;
+import com.dnd.bbok.friend.domain.Friend;
+import com.dnd.bbok.member.domain.Member;
 
 public interface SaveFriendPort {
 
-  void saveFriend(UUID memberId, CreateFriendRequest friendRequest);
+  void saveFriend(Member member, Friend friend);
 
 }

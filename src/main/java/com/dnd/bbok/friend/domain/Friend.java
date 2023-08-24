@@ -34,4 +34,15 @@ public class Friend {
     this.member = member;
   }
 
+  public void setName(String name) {
+    this.name = name;
+  }
+
+  public void setStatus() {
+    this.active = false;
+  }
+
+  public void setFriendScore(Long friendScore) {
+    this.friendScore = friendScore;
+  }
 }

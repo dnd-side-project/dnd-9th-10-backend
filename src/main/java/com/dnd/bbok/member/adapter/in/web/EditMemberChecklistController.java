@@ -18,15 +18,15 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api/v1")
-@Api(tags = "친구 관련 컨트롤러")
+@Api(tags = "멤버 관련 컨트롤러")
 @RequiredArgsConstructor
 public class EditMemberChecklistController {
 
   private final EditMemberChecklistUseCase editMemberChecklistUseCase;
 
   @ApiOperation(value = "나만의 기준 수정")
-  @PatchMapping("/member/checklist")
   @PreAuthorize("isAuthenticated()")
+  @PatchMapping("/member/checklist")
   public ResponseEntity<MessageResponse> editChecklist(
       @RequestBody EditMemberChecklistRequest memberChecklistRequest,
       @AuthenticationPrincipal SessionUser sessionUser

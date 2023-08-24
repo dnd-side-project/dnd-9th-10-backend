@@ -13,10 +13,12 @@ import com.dnd.bbok.diary.domain.DiaryChecklist;
 import com.dnd.bbok.diary.domain.Tag;
 import com.dnd.bbok.friend.application.port.out.LoadFriendPort;
 import com.dnd.bbok.friend.application.port.out.LoadFriendTagPort;
-import com.dnd.bbok.friend.application.port.out.UpdateFriendPort;
+import com.dnd.bbok.friend.application.port.out.SaveFriendPort;
 import com.dnd.bbok.friend.domain.Friend;
 import com.dnd.bbok.friend.domain.FriendTag;
 import com.dnd.bbok.global.exception.BusinessException;
+import com.dnd.bbok.member.application.port.out.LoadMemberPort;
+import com.dnd.bbok.member.domain.Member;
 import com.dnd.bbok.saying.application.port.out.LoadBookmarkPort;
 import com.dnd.bbok.saying.application.port.out.LoadSayingPort;
 import com.dnd.bbok.saying.domain.Saying;
@@ -41,13 +43,16 @@ public class WriteDiaryService implements CreateDiaryUseCase, UpdateDiaryUseCase
     private final LoadSayingPort loadSayingPort;
     private final LoadBookmarkPort loadBookmarkPort;
     private final LoadFriendPort loadFriendPort;
-
+    private final LoadMemberPort loadMemberPort;
     private final SaveDiaryPort saveDiaryPort;
-    private final UpdateFriendPort updateFriendPort;
+    private final SaveFriendPort saveFriendPort;
+
 
 
     @Override
     public CreateDiaryResponse createDiary(UUID memberId, Long friendId, CreateDiaryRequest createDiaryRequest) {
+        Member member = loadMemberPort.loadById(memberId);
+
         // 1. 일곱 개 이상의 태그를 사용하려 했다면 에러
         List<Tag> tags = null;
         if (createDiaryRequest.getTags() != null) {
@@ -63,11 +68,12 @@ public class WriteDiaryService implements CreateDiaryUseCase, UpdateDiaryUseCase
                     ele -> new DiaryChecklist(null, ele.getIsGood(), ele.getIsChecked(), ele.getId())).collect(Collectors.toList());
 
             Friend friend = loadFriendPort.loadByFriendId(friendId);
+            //TODO: diaryScore 반영이 안되서 친구도 점수가 누적되지 않고 있음
             diaryScore = calculateDiaryScore(checklist);
             friendScore = calculateFriendScore(friend.getFriendScore(), diaryScore);
-            updateFriendPort.updateFriendScore(friend, friendScore);
+            friend.setFriendScore(friendScore);
+            saveFriendPort.saveFriend(member, friend);
         }
-
 
         // 3. 다이어리 도메인 생성 및 저장
         Diary diary = new Diary(null,
@@ -82,8 +88,6 @@ public class WriteDiaryService implements CreateDiaryUseCase, UpdateDiaryUseCase
                 checklist);
         saveDiaryPort.createDiary(friendId, diary);
 
-
-
         // 4. 랜덤 명언 조회
         DiarySaying diarySaying = getRandomSaying(memberId);
 
@@ -92,6 +96,7 @@ public class WriteDiaryService implements CreateDiaryUseCase, UpdateDiaryUseCase
 
     @Override
     public void updateDiary(UUID memberId, Long diaryId, UpdateDiaryRequest updateDiaryRequest) {
+        Member member = loadMemberPort.loadById(memberId);
         Diary diary = loadDiaryPort.loadDiary(diaryId);
         Friend friend = loadFriendPort.loadByFriendId(diary.getFriendId());
 
@@ -125,7 +130,8 @@ public class WriteDiaryService implements CreateDiaryUseCase, UpdateDiaryUseCase
         for (Diary current : diaries) {
             friendScore = (long) (friendScore * 0.9) + current.getDiaryScore();
         }
-        updateFriendPort.updateFriendScore(friend, friendScore);
+        friend.setFriendScore(friendScore);
+        saveFriendPort.saveFriend(member, friend);
     }
 
     private List<Tag> checkFriendTagCount(Long friendId, List<String> usedTags) {
