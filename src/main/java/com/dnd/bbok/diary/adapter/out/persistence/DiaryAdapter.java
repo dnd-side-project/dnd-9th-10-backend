@@ -64,7 +64,7 @@ public class DiaryAdapter implements SaveDiaryPort, LoadDiaryPort {
         // 1. 태그들 중 id 가 없는 태그가 있다면 Friend Tag Entity 생성
         if (diary.getTags() != null) {
             diary.getTags().forEach(tag -> {
-                if (tag.getId() == null) {
+                if (tag.getFriendTagId() == null) {
                     FriendTagEntity friendTagEntity = friendTagRepository.save(FriendTagEntity.builder()
                             .friend(friend)
                             .name(tag.getTag())
@@ -123,7 +123,7 @@ public class DiaryAdapter implements SaveDiaryPort, LoadDiaryPort {
 
                 // 아예 처음 생기는 태그인 경우 Friend Tag 생성
                 FriendTagEntity friendTagEntity;
-                if (tag.getId() == null) {
+                if (tag.getFriendTagId() == null) {
                     log.info("새로운 Friend Tag 저장");
                     friendTagEntity = friendTagRepository.save(FriendTagEntity.builder()
                             .friend(friendEntity)
