@@ -5,11 +5,20 @@ package com.dnd.bbok.diary.domain;
  */
 public enum Emoji {
 
-  CALM,
-  HAPPY,
-  PANIC,
-  ANGRY,
-  DISPLEASED,
-  SAD
+  CALM("calm.png"),
+  HAPPY("happy.png"),
+  PANIC("panic.png"),
+  ANGRY("angry.png"),
+  DISPLEASED("displeased.png"),
+  SAD("sad.png");
 
+  private final String iconFile;
+
+  Emoji(String iconFile) {
+    this.iconFile = iconFile;
+  }
+
+  public String getIconFile() {
+    return iconFile;
+  }
 }
