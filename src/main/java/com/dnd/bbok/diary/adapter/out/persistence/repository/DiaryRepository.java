@@ -19,14 +19,14 @@ public interface DiaryRepository extends JpaRepository<DiaryEntity, Long> {
             + "LEFT JOIN dt.friendTagEntity ft "
             + "WHERE d.friend.id = :friendId "
             + "AND d.contents LIKE %:keyword%"
-            + "AND (ft.name LIKE %:tag% OR ft.id IS NULL)"
+            + "AND (:tag IS NULL OR ft.name = :tag) "
             + "AND d.isDeleted = false",
             countQuery = "SELECT COUNT(DISTINCT d) FROM DiaryEntity d "
                     + "LEFT JOIN d.diaryTags dt "
                     + "LEFT JOIN dt.friendTagEntity ft "
                     + "WHERE d.friend.id = :friendId "
                     + "AND d.contents LIKE %:keyword%"
-                    + "AND (ft.name LIKE %:tag% OR ft.id IS NULL)"
+                    + "AND (:tag IS NULL OR ft.name = :tag) "
                     + "AND d.isDeleted = false")
     Page<DiaryEntity> findDiaries(Long friendId, String keyword, String tag, Pageable pageable);
 

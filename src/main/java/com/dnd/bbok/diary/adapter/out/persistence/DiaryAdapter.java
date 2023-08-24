@@ -186,10 +186,6 @@ public class DiaryAdapter implements SaveDiaryPort, LoadDiaryPort {
             keyword = "";
         }
 
-        if (tag == null) {
-            tag = "";
-        }
-
 
         Page<DiaryEntity> diaryEntityPage = diaryRepository.findDiaries(friendId, keyword, tag, pageable);
         List<Long> diaryIds = diaryEntityPage.stream().map(DiaryEntity::getId).collect(Collectors.toList());
