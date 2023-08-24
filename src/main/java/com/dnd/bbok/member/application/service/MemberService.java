@@ -2,6 +2,7 @@ package com.dnd.bbok.member.application.service;
 import com.dnd.bbok.member.application.port.in.request.ChecklistInfoRequest;
 import com.dnd.bbok.member.application.port.in.request.CreateMemberChecklistRequest;
 import com.dnd.bbok.member.application.port.in.request.EditMemberChecklistRequest;
+import com.dnd.bbok.member.application.port.in.response.GetDetailMemberChecklistResponse;
 import com.dnd.bbok.member.application.port.in.response.GetMemberChecklistResponse;
 import com.dnd.bbok.member.application.port.in.response.GetMemberInfoResponse;
 
@@ -22,6 +23,7 @@ import java.util.List;
 import java.util.UUID;
 
 import com.dnd.bbok.member.domain.MemberChecklist;
+import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -69,7 +71,17 @@ public class MemberService implements
     MemberChecklist memberChecklist = loadMemberChecklistPort.loadMemberChecklist(memberId);
     // log.info(memberChecklist.getGoodChecklist().get(0).getCriteria());
     // log.info(memberChecklist.getBadChecklist().get(0).getCriteria());
-    return new GetMemberChecklistResponse(memberChecklist.getGoodChecklist(), memberChecklist.getBadChecklist()) ;
+
+    List<GetDetailMemberChecklistResponse> badChecklist = memberChecklist.getBadChecklist()
+        .stream()
+        .map(ele -> new GetDetailMemberChecklistResponse(ele.getId(), ele.getCriteria()))
+        .collect(Collectors.toList());
+
+    List<GetDetailMemberChecklistResponse> goodChecklist = memberChecklist.getGoodChecklist()
+        .stream()
+        .map(ele -> new GetDetailMemberChecklistResponse(ele.getId(), ele.getCriteria()))
+        .collect(Collectors.toList());
+    return new GetMemberChecklistResponse(goodChecklist, badChecklist) ;
   }
 
   /**
