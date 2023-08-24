@@ -12,6 +12,7 @@ public class Diary {
     private final Long  id;
     private final Long friendId;
     private Emoji emoji;
+    private String emojiUrl = null;
     private String contents;
     private LocalDate diaryDate;
     private String sticker;
@@ -31,6 +32,7 @@ public class Diary {
         this.isDeleted = isDeleted;
         this.tags = Objects.requireNonNullElseGet(tags, ArrayList::new);
         this.diaryChecklist = Objects.requireNonNullElseGet(diaryChecklist, ArrayList::new);
+
     }
 
     public void setEmoji(Emoji emoji) {
@@ -63,5 +65,9 @@ public class Diary {
 
     public void setDiaryChecklist(List<DiaryChecklist> diaryChecklist) {
         this.diaryChecklist = diaryChecklist;
+    }
+
+    public void setEmojiUrl(String emojiUrl) {
+        this.emojiUrl = emojiUrl;
     }
 }

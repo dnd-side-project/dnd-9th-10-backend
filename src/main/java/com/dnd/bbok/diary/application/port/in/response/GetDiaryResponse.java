@@ -45,6 +45,7 @@ public class GetDiaryResponse {
 
         this.id = diary.getId();
         this.emoji = diary.getEmoji();
+        this.emojiUrl = diary.getEmojiUrl();
         this.date = diary.getDiaryDate();
         this.content = diary.getContents();
         this.sticker = diary.getSticker();
@@ -55,9 +56,6 @@ public class GetDiaryResponse {
         this.badChecklist = new ArrayList<>();
         diary.getDiaryChecklist().stream().filter(DiaryChecklist::getIsGood).forEach(ele -> this.goodChecklist.add(new DiaryChecklistResponse(ele.getMemberChecklistId(), ele.getCriteria(), ele.getIsChecked())));
         diary.getDiaryChecklist().stream().filter(ele -> !ele.getIsGood()).forEach(ele -> this.badChecklist.add(new DiaryChecklistResponse(ele.getMemberChecklistId(), ele.getCriteria(), ele.getIsChecked())));
-
-        // TODO 수정필요
-        this.emojiUrl = "https://i.ibb.co/zbHrDVm/angry.png";
     }
 
     @Getter
