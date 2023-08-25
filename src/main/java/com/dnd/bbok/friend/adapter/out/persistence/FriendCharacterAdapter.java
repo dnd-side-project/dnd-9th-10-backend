@@ -20,8 +20,11 @@ public class FriendCharacterAdapter implements LoadIconPort {
   }
 
   @Override
-  public BbokCharacter getCharacter() {
-    return null;
+  public BbokCharacter getCharacter(String bbok) {
+    if(bbok.equals("CACTUS")) {
+      return BbokCharacter.SIDE_CACTUS;
+    }
+    return BbokCharacter.SIDE_HEDGEHOG;
   }
 
 }

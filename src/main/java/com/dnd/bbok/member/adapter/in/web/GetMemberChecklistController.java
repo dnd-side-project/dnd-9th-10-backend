@@ -19,13 +19,13 @@ import org.springframework.web.bind.annotation.RestController;
 @Slf4j
 @RestController
 @RequestMapping("/api/v1")
-@Api(tags = "친구 관련 컨트롤러")
+@Api(tags = "멤버 관련 컨트롤러")
 @RequiredArgsConstructor
 public class GetMemberChecklistController {
     private final GetMemberChecklistQuery getMemberChecklistQuery;
 
     @ApiOperation(value = "나만의 기준 조회")
-    @GetMapping("/friend/checklist")
+    @GetMapping("/member/checklist")
     @PreAuthorize("isAuthenticated()")
     public ResponseEntity<DataResponse<GetMemberChecklistResponse>> getChecklist(
         @AuthenticationPrincipal SessionUser sessionUser

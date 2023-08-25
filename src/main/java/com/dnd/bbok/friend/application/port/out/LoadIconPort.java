@@ -7,6 +7,6 @@ public interface LoadIconPort {
 
   List<BbokCharacter> getAllCharacter();
 
-  BbokCharacter getCharacter();
+  BbokCharacter getCharacter(String bbok);
 
 }

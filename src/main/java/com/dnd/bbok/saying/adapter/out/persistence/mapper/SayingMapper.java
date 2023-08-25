@@ -11,7 +11,6 @@ public class SayingMapper {
     }
 
     public SayingEntity toEntity(Saying saying) {
-        return new SayingEntity(
-            saying.getId(), saying.getContents(), saying.getReference());
+        return new SayingEntity(saying.getId(), saying.getContents(), saying.getReference());
     }
 }

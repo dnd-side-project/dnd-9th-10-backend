@@ -7,7 +7,7 @@ import com.dnd.bbok.common.BaseTimeEntity;
 import com.dnd.bbok.friend.domain.BbokCharacter;
 import com.dnd.bbok.member.adapter.out.persistence.entity.MemberEntity;
 import com.sun.istack.NotNull;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -47,21 +47,9 @@ public class FriendEntity extends BaseTimeEntity {
   @JoinColumn(name = "member_id")
   private MemberEntity member;
 
-  public void changeFriendScore(Long friendScore) {
-    this.friendScore = friendScore;
-  }
-
-  public void changeFriendName(String friendName) {
-    this.name = friendName;
-  }
-
-  public void deactivateFriend() {
-    this.active = false;
-  }
-
   @Builder
   public FriendEntity(Long id, BbokCharacter bbok, String name, boolean active,
-      Long friendScore, MemberEntity member, LocalDate createdAt) {
+      Long friendScore, MemberEntity member, LocalDateTime createdAt) {
     this.id = id;
     this.bbok = bbok;
     this.name = name;
