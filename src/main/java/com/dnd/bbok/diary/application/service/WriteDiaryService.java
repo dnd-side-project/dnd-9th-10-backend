@@ -163,7 +163,7 @@ public class WriteDiaryService implements CreateDiaryUseCase, UpdateDiaryUseCase
         });
         long badCheckCount = checklists.stream().filter(ele -> ele.getIsChecked() && !ele.getIsGood()).count();
         long goodCheckCount = checklists.stream().filter(ele -> ele.getIsChecked() && ele.getIsGood()).count();
-        return Math.toIntExact(BAD_CHECK_WEIGHT - ((MAX_CHECKLIST - badCheckCount) * BAD_UNCHECK_WEIGHT + goodCheckCount * GOOD_CHECK_WEIGHT));
+        return Math.toIntExact(BAD_CHECK_WEIGHT * badCheckCount - ((MAX_CHECKLIST - badCheckCount) * BAD_UNCHECK_WEIGHT + goodCheckCount * GOOD_CHECK_WEIGHT));
     }
 
     private Long calculateFriendScore(Long prevScore, Integer diaryScore) {
