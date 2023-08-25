@@ -7,7 +7,7 @@ import com.dnd.bbok.common.BaseTimeEntity;
 import com.dnd.bbok.friend.domain.BbokCharacter;
 import com.dnd.bbok.member.adapter.out.persistence.entity.MemberEntity;
 import com.sun.istack.NotNull;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -49,7 +49,7 @@ public class FriendEntity extends BaseTimeEntity {
 
   @Builder
   public FriendEntity(Long id, BbokCharacter bbok, String name, boolean active,
-      Long friendScore, MemberEntity member, LocalDate createdAt) {
+      Long friendScore, MemberEntity member, LocalDateTime createdAt) {
     this.id = id;
     this.bbok = bbok;
     this.name = name;

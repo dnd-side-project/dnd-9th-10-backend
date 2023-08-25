@@ -1,8 +1,9 @@
 package com.dnd.bbok.friend.application.port.in.response;
 
 import com.dnd.bbok.friend.domain.Friend;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.annotations.ApiModelProperty;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import lombok.Getter;
 
 /**
@@ -15,7 +16,8 @@ public class GetFriendResponse {
   private final Long id;
 
   @ApiModelProperty(value = "친구 생성 날짜")
-  private final LocalDate startedAt;
+  @JsonFormat(pattern = "yyyy-MM-dd")
+  private final LocalDateTime startedAt;
 
   @ApiModelProperty(value = "친구 캐릭터 아이콘 url")
   private final String characterUrl;

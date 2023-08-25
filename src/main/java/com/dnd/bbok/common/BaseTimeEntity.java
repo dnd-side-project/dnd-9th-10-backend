@@ -1,6 +1,6 @@
 package com.dnd.bbok.common;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import javax.persistence.Column;
 import javax.persistence.EntityListeners;
 import javax.persistence.MappedSuperclass;
@@ -15,14 +15,14 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 public abstract class BaseTimeEntity {
 
   @CreatedDate
-  @Column(name = "CREATED_AT")
-  private LocalDate createdAt;
+  @Column(name = "CREATED_AT", updatable = false)
+  private LocalDateTime createdAt;
 
   @LastModifiedDate
   @Column(name = "MODIFIED_AT")
-  private LocalDate modifiedAt;
+  private LocalDateTime modifiedAt;
 
-  protected void setCreatedAt(LocalDate date) {
+  protected void setCreatedAt(LocalDateTime date) {
     this.createdAt = date;
   }
 
