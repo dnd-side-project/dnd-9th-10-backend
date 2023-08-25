@@ -47,18 +47,6 @@ public class FriendEntity extends BaseTimeEntity {
   @JoinColumn(name = "member_id")
   private MemberEntity member;
 
-  public void changeFriendScore(Long friendScore) {
-    this.friendScore = friendScore;
-  }
-
-  public void changeFriendName(String friendName) {
-    this.name = friendName;
-  }
-
-  public void deactivateFriend() {
-    this.active = false;
-  }
-
   @Builder
   public FriendEntity(Long id, BbokCharacter bbok, String name, boolean active,
       Long friendScore, MemberEntity member, LocalDate createdAt) {
