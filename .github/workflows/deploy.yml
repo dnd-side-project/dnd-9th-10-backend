@@ -8,7 +8,7 @@ on:
 
 permissions:
   contents: read
-
+  
 env:
   S3_BUCKET_NAME: ${{ secrets.S3_BUCKET_NAME }}
 
