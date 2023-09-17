@@ -1,10 +1,14 @@
+#code deploy가 참조하는 배포 설명서 - appspec.yml
+
 version: 0.0
 os: linux
 files:
   - source: /
-    destination: /home/ubuntu/backend-server
+    destination: /home /ec2-user/bbok-deploy/ # 배포 파일이 저장되는 경로
     overwrite: yes
-hooks:
-  ApplicationStart:
-    - location: ./scripts/application-start.sh
-      timeout: 900
+
+permissions:
+  - object: /
+    pattern: "**"
+    owner: ec2-user
+    group: ec2-user
