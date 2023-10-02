@@ -1,6 +1,7 @@
 package com.dnd.bbok.infra.swagger;
 
 import java.lang.annotation.Annotation;
+import java.util.Collections;
 import java.util.List;
 import java.util.function.Predicate;
 import lombok.RequiredArgsConstructor;
@@ -15,6 +16,7 @@ import springfox.documentation.service.ApiInfo;
 import springfox.documentation.service.ApiKey;
 import springfox.documentation.service.AuthorizationScope;
 import springfox.documentation.service.SecurityReference;
+import springfox.documentation.service.Server;
 import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spi.service.contexts.SecurityContext;
 import springfox.documentation.spring.web.plugins.Docket;
