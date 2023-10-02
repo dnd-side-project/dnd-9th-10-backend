@@ -1,6 +1,5 @@
 version: '3'
 services:
-
   web:
     container_name: web
     image: leeseolhui/server-web
@@ -8,6 +7,8 @@ services:
       - 8080
     ports:
       - 8080:8080
+    env_file:
+      - .env
 
   nginx:
     container_name: nginx
