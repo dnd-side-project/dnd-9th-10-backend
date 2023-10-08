@@ -18,7 +18,7 @@ spring:
     generate-ddl: true
   redis:
     port: 6379
-    host: redis
+    host: ${REDIS_HOST}
   mvc:
     pathmatch:
       matching-strategy: ant_path_matcher
