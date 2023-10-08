@@ -2,4 +2,4 @@
 # active를 dev로 바꾸면 됩니다!
 spring:
   profiles:
-    active: dev
+    active: prod
