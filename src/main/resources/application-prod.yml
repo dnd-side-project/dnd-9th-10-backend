@@ -25,7 +25,7 @@ oauth2:
     infoUrl: https://kapi.kakao.com
     baseUrl: https://kauth.kakao.com
     clientId: 3fca0db05482af0333a5fb5b9dc5b345
-    redirectUri: https://bbok.kro.kr/api/v1/account/kakao/result
+    redirectUri: https://bbok.o-r.kr/api/v1/account/kakao/result
     secretKey: ${SECRET_KEY}
 
 cloud:
