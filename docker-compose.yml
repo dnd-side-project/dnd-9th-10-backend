@@ -17,3 +17,9 @@ services:
       - 80:80
     depends_on:
       - web
+
+  redis:
+    container_name: redis
+    image: redis:latest
+    ports:
+      - 6379:6379
