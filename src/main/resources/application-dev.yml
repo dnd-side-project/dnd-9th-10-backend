@@ -17,7 +17,7 @@ spring:
     database-platform: org.hibernate.dialect.MySQL8Dialect
   redis:
     port: 6379
-    host: ${REDIS_HOST}
+    host: 127.0.0.1
   mvc:
     pathmatch:
       matching-strategy: ant_path_matcher
