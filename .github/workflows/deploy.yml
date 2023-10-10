@@ -50,5 +50,6 @@ jobs:
             sudo docker rm -f $(docker ps -qa)
             sudo docker pull ${{ secrets.DOCKER_USERNAME }}/server-web
             sudo docker pull ${{ secrets.DOCKER_USERNAME }}/server-nginx
+            sudo docker pull redis:latest
             docker-compose up -d
             docker image prune -f
