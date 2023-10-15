@@ -56,7 +56,7 @@ public class RegisterMemberController {
   @ApiOperation(
       value = "카카오 계정 회원가입",
       notes = "인가 코드를 입력하고 요청보내면, 사용자의 정보를 저장한 후 사용자의 Id를 확인할 수 있습니다.")
-  @GetMapping("/api/v1/account/kakao/result")
+  @GetMapping("/api/v1/kakao")
   public ResponseEntity<DataResponse<LoginResponse>> kakaoLogin(
       @RequestParam("code") String code, @RequestParam("redirectUri") String redirectUri) {
     //코드를 통해 액세스 토큰 발급한 후, 유저 정보를 가져온다.
