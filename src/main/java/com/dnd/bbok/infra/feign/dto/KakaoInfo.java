@@ -21,12 +21,11 @@ public class KakaoInfo {
 
   private String baseUrl;
   private String clientId;
-  private String redirectUri;
   private String secretKey;
 
-  public String kakaoUrlInit() {
+  public String kakaoUrlInit(String redirectUri) {
     Map<String, Object> params = new HashMap<>();
-    params.put("redirect_uri", getRedirectUri());
+    params.put("redirect_uri", redirectUri);
     params.put("client_id", getClientId());
     params.put("response_type", "code");
 

@@ -22,8 +22,8 @@ public class KakaoFeignService {
   private final KakaoInfoClient kakaoInfoClient;
   private final KakaoInfo kakaoInfo;
 
-  public HttpHeaders kakaoLogin(){
-    return createHttpHeader(kakaoInfo.kakaoUrlInit());
+  public HttpHeaders kakaoLogin(String redirectUri){
+    return createHttpHeader(kakaoInfo.kakaoUrlInit(redirectUri));
   }
 
   private static HttpHeaders createHttpHeader(String requestUrl) {
