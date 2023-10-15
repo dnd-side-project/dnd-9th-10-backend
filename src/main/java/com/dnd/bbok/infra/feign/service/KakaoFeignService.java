@@ -43,9 +43,9 @@ public class KakaoFeignService {
    * @param code 카카오 서버에서 내려준 인가 코드
    * @return 해당 사용자 정보 response dto
    */
-  public KakaoUserInfoResponse getKakaoInfoWithToken(String code) {
+  public KakaoUserInfoResponse getKakaoInfoWithToken(String code, String redirectUri) {
     //1. 인가 코드를 가지고 토큰을 가져온다.
-    String kakaoToken = getKakaoToken(code);
+    String kakaoToken = getKakaoToken(code, redirectUri);
     //2. 해당 토큰으로 user 정보를 들고온다.
     return getKakaoInfo(kakaoToken);
   }
@@ -62,9 +62,9 @@ public class KakaoFeignService {
    * @param code 서버에서 내려주는 인가코드.
    * @return accessToken
    */
-  private String getKakaoToken(String code) {
+  private String getKakaoToken(String code, String redirectUri) {
     KakaoTokenResponseDto token = kakaoTokenClient.getToken(
-        KakaoTokenRequestDto.newInstance(kakaoInfo, code).toString());
+        KakaoTokenRequestDto.newInstance(kakaoInfo, code, redirectUri).toString());
     return token.getAccessToken();
   }
 

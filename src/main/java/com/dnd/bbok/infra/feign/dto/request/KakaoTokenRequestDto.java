@@ -22,11 +22,11 @@ public class KakaoTokenRequestDto {
   private String redirect_uri;
   private final String grant_type = "authorization_code";
 
-  public static KakaoTokenRequestDto newInstance(KakaoInfo kakaoInfo, String code) {
+  public static KakaoTokenRequestDto newInstance(KakaoInfo kakaoInfo, String code, String redirectUri) {
     return KakaoTokenRequestDto.builder()
         .client_id(kakaoInfo.getClientId())
         .client_secret(kakaoInfo.getSecretKey())
-        .redirect_uri(kakaoInfo.getRedirectUri())
+        .redirect_uri(redirectUri)
         .code(code)
         .build();
   }
