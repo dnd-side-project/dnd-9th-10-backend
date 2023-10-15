@@ -45,8 +45,8 @@ public class RegisterMemberController {
       value = "인가 코드 발급",
       notes = "해당 url을 통해 로그인 화면으로 넘어간 후, 사용자가 정보를 입력하면 redirect url에서 코드를 발급할 수 있습니다.")
   @GetMapping("/api/v1/kakao/login")
-  public ResponseEntity<HttpHeaders> getKakaoAuthCode()  {
-    HttpHeaders httpHeaders = kakaoFeignService.kakaoLogin();
+  public ResponseEntity<HttpHeaders> getKakaoAuthCode(@RequestParam("redirectUri") String redirectUri)  {
+    HttpHeaders httpHeaders = kakaoFeignService.kakaoLogin(redirectUri);
     return new ResponseEntity<>(httpHeaders, HttpStatus.SEE_OTHER);
   }
 
@@ -57,9 +57,10 @@ public class RegisterMemberController {
       value = "카카오 계정 회원가입",
       notes = "인가 코드를 입력하고 요청보내면, 사용자의 정보를 저장한 후 사용자의 Id를 확인할 수 있습니다.")
   @GetMapping("/api/v1/account/kakao/result")
-  public ResponseEntity<DataResponse<LoginResponse>> kakaoLogin(@RequestParam("code") String code) {
+  public ResponseEntity<DataResponse<LoginResponse>> kakaoLogin(
+      @RequestParam("code") String code, @RequestParam("redirectUri") String redirectUri) {
     //코드를 통해 액세스 토큰 발급한 후, 유저 정보를 가져온다.
-    KakaoUserInfoResponse kakaoUserInfo = kakaoFeignService.getKakaoInfoWithToken(code);
+    KakaoUserInfoResponse kakaoUserInfo = kakaoFeignService.getKakaoInfoWithToken(code, redirectUri);
     LoginResponse kakaoLoginResponse = registerMemberUseCase.loginKakaoMember(kakaoUserInfo);
     return new ResponseEntity<>(
         DataResponse.of(
