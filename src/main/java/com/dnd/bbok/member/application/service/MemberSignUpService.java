@@ -32,16 +32,6 @@ public class MemberSignUpService implements RegisterMemberUseCase {
   private final JwtTokenPort jwtTokenPort;
 
   @Override
-  public LoginResponse signUpGuest() {
-    Member guest = createMemberPort.createGuest();
-    Member savedGuest = saveMemberPort.saveMember(guest);
-    String accessToken = jwtTokenPort.createAccessToken(savedGuest);
-    String refreshToken = jwtTokenPort.createRefreshToken(savedGuest);
-    jwtTokenPort.saveRefreshTokenInRedis(savedGuest, refreshToken);
-    return new LoginResponse(accessToken, refreshToken, savedGuest.getId().toString());
-  }
-
-  @Override
   public LoginResponse loginKakaoMember(KakaoUserInfoResponse kakaoUserInfo) {
     //카카오 회원 Id를 변조해서 검사해본다.(회원 Id로 해야만 고유성을 가질 수 있기 때문에)
     String userNumber = String.format("%s#%s", OAuth2Provider.KAKAO, kakaoUserInfo.getId());
