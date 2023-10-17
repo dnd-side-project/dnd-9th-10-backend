@@ -50,6 +50,6 @@ public class MemberSignUpService implements RegisterMemberUseCase {
     String accessToken = jwtTokenPort.createAccessToken(member);
     String refreshToken = jwtTokenPort.createRefreshToken(member);
     jwtTokenPort.saveRefreshTokenInRedis(member, refreshToken);
-    return new LoginResponse(accessToken, refreshToken, member.getId().toString());
+    return new LoginResponse(accessToken, refreshToken, member);
   }
 }
