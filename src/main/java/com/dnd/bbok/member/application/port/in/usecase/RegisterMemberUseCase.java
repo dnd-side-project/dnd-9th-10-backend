@@ -8,7 +8,6 @@ import com.dnd.bbok.member.application.port.in.response.LoginResponse;
  */
 public interface RegisterMemberUseCase {
 
-  LoginResponse signUpGuest();
-
   LoginResponse loginKakaoMember(KakaoUserInfoResponse kakaoUserInfo);
+
 }

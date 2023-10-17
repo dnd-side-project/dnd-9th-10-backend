@@ -1,5 +1,6 @@
 package com.dnd.bbok.member.application.port.in.response;
 
+import com.dnd.bbok.member.domain.Member;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 
@@ -15,10 +16,18 @@ public class LoginResponse {
   @ApiModelProperty("멤버의 id")
   private final String memberId;
 
-  public LoginResponse(String accessToken, String refreshToken, String memberId) {
+  @ApiModelProperty("oauth provider")
+  private final String provider;
+
+  @ApiModelProperty("멤버의 프로필 url")
+  private final String profileUrl;
+
+  public LoginResponse(String accessToken, String refreshToken, Member member) {
     this.accessToken = accessToken;
     this.refreshToken = refreshToken;
-    this.memberId = memberId;
+    this.memberId = member.getId().toString();
+    this.provider = member.getOAuth2Provider().toString();
+    this.profileUrl = member.getProfileUrl();
   }
 
 }

@@ -13,7 +13,6 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -24,19 +23,6 @@ import org.springframework.web.bind.annotation.RestController;
 public class RegisterMemberController {
   private final RegisterMemberUseCase registerMemberUseCase;
   private final KakaoFeignService kakaoFeignService;
-
-  /**
-   * 게스트 로그인 관련 컨트롤러
-   */
-  @ApiOperation(
-      value = "게스트 회원가입",
-      notes = "요청 보내면 바로 게스트가 생성되고, accessToken이 발급됩니다.")
-  @PostMapping("/api/v1/guest/signup")
-  public ResponseEntity<DataResponse<LoginResponse>> guestSignup() {
-    LoginResponse guestLoginResponse = registerMemberUseCase.signUpGuest();
-    return new ResponseEntity<>(DataResponse.of(HttpStatus.CREATED,
-        "게스트 회원 가입 성공", guestLoginResponse), HttpStatus.CREATED);
-  }
 
   /**
    * 로그인 요청을 통해 인가코드를 redirect url로 발급 가능
