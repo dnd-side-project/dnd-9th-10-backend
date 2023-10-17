@@ -29,7 +29,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
   private final TokenValidateUseCase tokenValidateUseCase;
 
   private static final List<String> EXCLUDE_URL = List.of(
-      "/api/v1/oauth/jwt/refresh", "/api/v1/account/kakao/result", "/api/v1/guest/signup");
+      "/api/v1/oauth/jwt/refresh", "/api/v1/kakao");
 
   /**
    * 1. request header 에서 Authorization 값을 가져온다.
