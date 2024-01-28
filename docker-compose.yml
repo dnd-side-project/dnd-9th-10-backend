@@ -9,6 +9,9 @@ services:
       - 8080:8080
     env_file:
       - .env
+    depends_on:
+      db:
+        condition: service_healthy
 
   nginx:
     container_name: nginx
@@ -24,7 +27,7 @@ services:
     ports:
       - 6379:6379
 
-  db: # MySQL 서비스 추가
+  db:
     container_name: mysql
     image: mysql:latest
     ports:
@@ -35,4 +38,9 @@ services:
       MYSQL_PASSWORD: ${DATABASE_PASSWORD}
       MYSQL_ROOT_PASSWORD: ${DATABASE_PASSWORD}
     volumes:
-      - mysql-data:/var/lib/mysql # 데이터 보존을 위한 볼륨 설정
+      - mysql-data:/var/lib/mysql
+    healthcheck:
+      test: [ "CMD", "mysqladmin", "ping", "-h", "localhost" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5

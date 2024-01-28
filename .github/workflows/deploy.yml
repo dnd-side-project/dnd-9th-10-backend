@@ -43,13 +43,14 @@ jobs:
       - name: executing remote ssh commands using password
         uses: appleboy/ssh-action@master
         with:
-          host: ${{ secrets.HOST }}
-          username: ubuntu
-          key: ${{ secrets.KEY }}
+          host: ${{ secrets.NCP_HOST }}
+          username: root
+          password: $ {{ secrets.NCP_PASSWORD }}
           script: |
             sudo docker rm -f $(docker ps -qa)
             sudo docker pull ${{ secrets.DOCKER_USERNAME }}/server-web
             sudo docker pull ${{ secrets.DOCKER_USERNAME }}/server-nginx
             sudo docker pull redis:latest
+            sudo docker pull mysql:latest
             docker-compose up -d
             docker image prune -f
