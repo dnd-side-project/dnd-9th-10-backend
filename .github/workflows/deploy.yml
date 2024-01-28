@@ -45,7 +45,8 @@ jobs:
         with:
           host: ${{ secrets.NCP_HOST }}
           username: root
-          password: $ {{ secrets.NCP_PASSWORD }}
+          password: ${{ secrets.NCP_PASSWORD }}
+          port: ${{ secrets.NCP_PORT }}
           script: |
             sudo docker rm -f $(docker ps -qa)
             sudo docker pull ${{ secrets.DOCKER_USERNAME }}/server-web
