@@ -23,3 +23,16 @@ services:
     image: redis:latest
     ports:
       - 6379:6379
+
+  db: # MySQL 서비스 추가
+    container_name: mysql
+    image: mysql:latest
+    ports:
+      - 3306:3306
+    environment:
+      MYSQL_DATABASE: 'bbok'
+      MYSQL_USER: ${DATABASE_USERNAME}
+      MYSQL_PASSWORD: ${DATABASE_PASSWORD}
+      MYSQL_ROOT_PASSWORD: ${DATABASE_PASSWORD}
+    volumes:
+      - mysql-data:/var/lib/mysql # 데이터 보존을 위한 볼륨 설정
