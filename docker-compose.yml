@@ -1,6 +1,7 @@
 version: '3'
 services:
   web:
+    platform: linux/amd64
     container_name: web
     image: leeseolhui/server-web
     expose:
@@ -14,12 +15,15 @@ services:
         condition: service_healthy
 
   nginx:
+    platform: linux/amd64
     container_name: nginx
     image: leeseolhui/server-nginx
     ports:
       - 80:80
     depends_on:
       - web
+    volumes:
+      - /etc/letsencrypt:/etc/letsencrypt
 
   redis:
     container_name: redis
