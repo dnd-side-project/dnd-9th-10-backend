@@ -61,6 +61,9 @@ jobs:
           password: ${{ secrets.NCP_PASSWORD }}
           port: ${{ secrets.NCP_PORT }}
           script: |
+            cd ~
+            git stash
+            git pull
             sudo docker rm -f $(docker ps -qa)
             sudo docker pull ${{ secrets.DOCKER_USERNAME }}/server-web
             sudo docker pull ${{ secrets.DOCKER_USERNAME }}/server-nginx
