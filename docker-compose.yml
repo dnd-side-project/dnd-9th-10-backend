@@ -36,7 +36,7 @@ services:
     container_name: mysql
     image: mysql:latest
     ports:
-      - 3306:33306
+      - 33306:3306
     environment:
       MYSQL_DATABASE: 'bbok'
       MYSQL_USER: ${DATABASE_USERNAME}
