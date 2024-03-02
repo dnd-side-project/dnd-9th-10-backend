@@ -1,7 +1,7 @@
 version: '3'
 services:
   web:
-    platform: linux/amd64
+    platform: linux/arm64
     container_name: web
     image: leeseolhui/server-web
     expose:
@@ -15,7 +15,7 @@ services:
         condition: service_healthy
 
   nginx:
-    platform: linux/amd64
+    platform: linux/arm64
     container_name: nginx
     image: leeseolhui/server-nginx
     ports:
