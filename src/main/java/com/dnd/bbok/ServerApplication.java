@@ -27,7 +27,7 @@ public class ServerApplication {
 						.allowedOrigins(
 								"http://localhost:3000",
 								"https://bbok.vercel.app",
-								"https://bbok.o-r.kr")
+								"https://bbok.kro.kr")
 						.allowedMethods(
 								HttpMethod.GET.name(),
 								HttpMethod.PATCH.name(),
