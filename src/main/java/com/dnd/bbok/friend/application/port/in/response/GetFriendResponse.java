@@ -22,6 +22,9 @@ public class GetFriendResponse {
   @ApiModelProperty(value = "친구 캐릭터 아이콘 url")
   private final String characterUrl;
 
+  @ApiModelProperty(value = "친구 캐릭터 타입")
+  private final String characterType;
+
   @ApiModelProperty(value = "친구 이름")
   private final String name;
 
@@ -38,6 +41,7 @@ public class GetFriendResponse {
     this.id = friend.getId();
     this.startedAt = friend.getCreatedAt();
     this.characterUrl = iconUrl;
+    this.characterType = friend.getBbok().getType();
     this.name = friend.getName();
     this.countingDiary = diaryCount;
     this.score = friend.getFriendScore();
