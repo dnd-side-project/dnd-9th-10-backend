@@ -22,12 +22,16 @@ public class LoginResponse {
   @ApiModelProperty("멤버의 프로필 url")
   private final String profileUrl;
 
-  public LoginResponse(String accessToken, String refreshToken, Member member) {
+  @ApiModelProperty("새로 가입 여부")
+  private final boolean isNewMember;
+
+  public LoginResponse(String accessToken, String refreshToken, Member member, boolean isNewMember) {
     this.accessToken = accessToken;
     this.refreshToken = refreshToken;
     this.memberId = member.getId().toString();
     this.provider = member.getOAuth2Provider().toString();
     this.profileUrl = member.getProfileUrl();
+    this.isNewMember = isNewMember;
   }
 
 }

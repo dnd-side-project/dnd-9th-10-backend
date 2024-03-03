@@ -38,18 +38,18 @@ public class MemberSignUpService implements RegisterMemberUseCase {
     try {
       Member loginMember = loadMemberPort.loadByUserNumber(userNumber);
       updateMemberPort.updateInfo(kakaoUserInfo, loginMember);
-      return createAllToken(loginMember);
+      return createAllToken(loginMember, false);
     } catch (BusinessException e) {
       Member member = createMemberPort.createKakaoMember(kakaoUserInfo);
       Member savedMember = saveMemberPort.saveMember(member);
-      return createAllToken(savedMember);
+      return createAllToken(savedMember, true);
     }
   }
 
-  private LoginResponse createAllToken(Member member) {
+  private LoginResponse createAllToken(Member member, boolean isNewMember) {
     String accessToken = jwtTokenPort.createAccessToken(member);
     String refreshToken = jwtTokenPort.createRefreshToken(member);
     jwtTokenPort.saveRefreshTokenInRedis(member, refreshToken);
-    return new LoginResponse(accessToken, refreshToken, member);
+    return new LoginResponse(accessToken, refreshToken, member, isNewMember);
   }
 }
