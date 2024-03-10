@@ -60,7 +60,8 @@ jobs:
         with:
           host: ${{ secrets.NCP_HOST }}
           username: root
-          password: ${{ secrets.NCP_PASSWORD }}
+#          password: ${{ secrets.NCP_PASSWORD }}
+          key: ${{ secrets.NCP_KEY}}
           port: ${{ secrets.NCP_PORT }}
           script: |
             cd ~
