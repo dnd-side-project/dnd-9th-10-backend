@@ -1,5 +1,6 @@
 package com.dnd.bbok.member.application.port.in.response;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 
@@ -13,7 +14,8 @@ public class GetDetailMemberChecklistResponse {
   private final String criteria;
 
   @ApiModelProperty(name = "사용 여부")
-  private final boolean isUsed;
+  @JsonProperty("isUsed")
+  private final Boolean isUsed;
 
   public GetDetailMemberChecklistResponse(Long id, String criteria, boolean isUsed) {
     this.id = id;
