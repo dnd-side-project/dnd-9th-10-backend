@@ -12,9 +12,13 @@ public class GetDetailMemberChecklistResponse {
   @ApiModelProperty(name = "체크리스트 설명")
   private final String criteria;
 
-  public GetDetailMemberChecklistResponse(Long id, String criteria) {
+  @ApiModelProperty(name = "사용 여부")
+  private final boolean isUsed;
+
+  public GetDetailMemberChecklistResponse(Long id, String criteria, boolean isUsed) {
     this.id = id;
     this.criteria = criteria;
+    this.isUsed = isUsed;
   }
 
 }

@@ -74,12 +74,12 @@ public class MemberService implements
 
     List<GetDetailMemberChecklistResponse> badChecklist = memberChecklist.getBadChecklist()
         .stream()
-        .map(ele -> new GetDetailMemberChecklistResponse(ele.getId(), ele.getCriteria()))
+        .map(ele -> new GetDetailMemberChecklistResponse(ele.getId(), ele.getCriteria(), ele.isUsed()))
         .collect(Collectors.toList());
 
     List<GetDetailMemberChecklistResponse> goodChecklist = memberChecklist.getGoodChecklist()
         .stream()
-        .map(ele -> new GetDetailMemberChecklistResponse(ele.getId(), ele.getCriteria()))
+        .map(ele -> new GetDetailMemberChecklistResponse(ele.getId(), ele.getCriteria(), ele.isUsed()))
         .collect(Collectors.toList());
     return new GetMemberChecklistResponse(goodChecklist, badChecklist) ;
   }

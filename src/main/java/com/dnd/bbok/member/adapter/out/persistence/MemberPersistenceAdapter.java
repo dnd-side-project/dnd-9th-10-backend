@@ -75,7 +75,7 @@ public class MemberPersistenceAdapter
 
   @Override
   public MemberChecklist loadMemberChecklist(UUID memberId) {
-    return memberChecklistMapper.toDomain(memberChecklistRepository.findByChecklistInUsing(memberId));
+    return memberChecklistMapper.toDomain(memberChecklistRepository.findByMemberId(memberId));
   }
 
   @Override

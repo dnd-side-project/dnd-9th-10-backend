@@ -13,4 +13,7 @@ public interface MemberChecklistRepository extends JpaRepository<MemberChecklist
 
     @Query("select mc from MemberChecklistEntity mc where mc.isUsed = true and mc.member.id = :memberId")
     List<MemberChecklistEntity> findByChecklistInUsing(@Param("memberId") UUID memberId);
+
+    @Query("select mc from MemberChecklistEntity mc where mc.member.id = :memberId")
+    List<MemberChecklistEntity> findByMemberId(@Param("memberId") UUID memberId);
 }
