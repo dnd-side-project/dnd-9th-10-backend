@@ -35,7 +35,7 @@ public class MemberChecklistMapper {
         memberChecklist.getGoodChecklist().forEach(ele -> memberChecklistEntities.add(MemberChecklistEntity.builder()
                 .id(ele.getId())
                 .isGood(true)
-                .isUsed(true)
+                .isUsed(ele.isUsed())
                 .criteria(ele.getCriteria())
                 .member(member)
                 .build()));
@@ -43,7 +43,7 @@ public class MemberChecklistMapper {
         memberChecklist.getBadChecklist().forEach(ele -> memberChecklistEntities.add(MemberChecklistEntity.builder()
                 .id(ele.getId())
                 .isGood(false)
-                .isUsed(true)
+                .isUsed(ele.isUsed())
                 .criteria(ele.getCriteria())
                 .member(member)
                 .build()));
