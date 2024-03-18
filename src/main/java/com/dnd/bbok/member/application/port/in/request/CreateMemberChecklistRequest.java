@@ -10,9 +10,9 @@ import lombok.NoArgsConstructor;
 public class CreateMemberChecklistRequest {
 
   @ApiModelProperty(value = "사용자 정의 이상적인 기준 리스트")
-  private List<String> goodChecklist;
+  private List<AddedChecklistInfo> goodChecklist;
 
   @ApiModelProperty(value = "사용자 정의 기피하는 기준 리스트")
-  private List<String> badChecklist;
+  private List<AddedChecklistInfo> badChecklist;
 
 }

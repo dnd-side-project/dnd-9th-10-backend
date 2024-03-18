@@ -6,12 +6,12 @@ import lombok.NoArgsConstructor;
 
 @Getter
 @NoArgsConstructor
-public class ChecklistInfoRequest {
+public class ModifiedChecklistInfoRequest {
 
   @ApiModelProperty(name = "수정할 기준 Id")
   private Long id;
 
-  @ApiModelProperty(name = "수정할 내용")
-  private String criteria;
+  @ApiModelProperty(name = "사용 여부")
+  private Boolean isUsed;
 
 }
