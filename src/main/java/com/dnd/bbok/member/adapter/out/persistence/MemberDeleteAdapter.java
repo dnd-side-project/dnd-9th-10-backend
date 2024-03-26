@@ -18,6 +18,7 @@ import com.dnd.bbok.saying.adapter.out.persistence.repository.BookmarkRepository
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -36,6 +37,7 @@ public class MemberDeleteAdapter implements DeleteMemberPort {
     private final BookmarkRepository bookmarkRepository;
 
     @Override
+    @Transactional
     public void deleteMember(UUID memberId) {
         // 지워야 할 거
         // 1. bookmark

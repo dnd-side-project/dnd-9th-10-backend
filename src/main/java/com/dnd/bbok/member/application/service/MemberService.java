@@ -127,7 +127,6 @@ public class MemberService implements
 
   @Override
   public String deleteMember(UUID memberId) {
-    // TODO Transaction
     deleteMemberPort.deleteMember(memberId);
     return "success";
   }
