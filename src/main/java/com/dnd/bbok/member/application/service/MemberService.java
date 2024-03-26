@@ -7,11 +7,9 @@ import com.dnd.bbok.member.application.port.in.response.GetDetailMemberChecklist
 import com.dnd.bbok.member.application.port.in.response.GetMemberChecklistResponse;
 import com.dnd.bbok.member.application.port.in.response.GetMemberInfoResponse;
 
-import com.dnd.bbok.member.application.port.in.usecase.CreateMemberChecklistUseCase;
-import com.dnd.bbok.member.application.port.in.usecase.EditMemberChecklistUseCase;
-import com.dnd.bbok.member.application.port.in.usecase.GetMemberChecklistQuery;
-import com.dnd.bbok.member.application.port.in.usecase.GetMemberQuery;
+import com.dnd.bbok.member.application.port.in.usecase.*;
 
+import com.dnd.bbok.member.application.port.out.DeleteMemberPort;
 import com.dnd.bbok.member.application.port.out.LoadMemberChecklistPort;
 import com.dnd.bbok.member.application.port.out.LoadMemberPort;
 import com.dnd.bbok.member.application.port.out.SaveMemberChecklistPort;
@@ -37,11 +35,12 @@ import org.springframework.stereotype.Service;
 @Slf4j
 public class MemberService implements
     GetMemberQuery, CreateMemberChecklistUseCase, GetMemberChecklistQuery,
-    EditMemberChecklistUseCase {
+    EditMemberChecklistUseCase, DeleteMemberUseCase {
 
   private final LoadMemberPort loadMemberPort;
   private final LoadMemberChecklistPort loadMemberChecklistPort;
   private final SaveMemberChecklistPort saveMemberChecklistPort;
+  private final DeleteMemberPort deleteMemberPort;
 
   @Override
   public GetMemberInfoResponse getMember(UUID memberId) {
@@ -123,5 +122,13 @@ public class MemberService implements
     }
 
     saveMemberChecklistPort.saveMemberChecklistWithCond(memberId, updateChecklist);
+  }
+
+
+  @Override
+  public String deleteMember(UUID memberId) {
+    // TODO Transaction
+    deleteMemberPort.deleteMember(memberId);
+    return "success";
   }
 }
